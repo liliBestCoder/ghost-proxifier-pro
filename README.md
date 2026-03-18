@@ -47,3 +47,6 @@ A: 请在 [Issues](https://github.com/liliBestCoder/ghost-proxifier-pro/issues) 
 ---
 
 Developed with ❤️ by the GhostTeam.
+
+---
+**Telegram 频道**: [Ghost Proxifier](https://t.me/ghostproxifier)
