@@ -50,7 +50,7 @@ A: 请在 [Issues](https://github.com/liliBestCoder/ghost-proxifier-pro/issues) 
 
 ---
 
-**Telegram 群组**: [Ghost Proxifier](https://t.me/ghost-proxifier)
+**Telegram 群组**: [[Ghost Proxifier](https://t.me/+SCVIJJFocWAxN2Y9)
 
 ---
 
