@@ -26,14 +26,20 @@
 - **高级兼容性支持 (ConnectEx)**：针对现代 Windows 应用（如 Xshell、UWP 应用等）的特殊网络连接模式进行全方位优化，网络穿透力与稳定性提升 200%。
 - **状态稳定性看门狗**：内置 Watchdog 实时检测代理状态。当发生网络波动导致 Hook 状态异常时，系统会自动尝试重连并修复，确保代理链不轻易断开。
 
+![Process Management](process.png)
+
 ### 🎨 现代化酷炫 UI
 采用了全新的 **玻璃拟态 (Glassmorphism)** 设计规范，支持动态暗黑模式：
 - **可视化流量看板**：实时动画展示各进程的网络拓扑与流量峰值。
 - **平滑微交互**：每一次状态切换都伴随精致的过场动画。
 
+![Traffic Flow Visual](flow.png)
+
 ### 🛡️ 高级安全与分流
 - **内置 DNS 防污染**：集成 Local DNS 修复与 **DoH (DNS over HTTPS) 阻断**机制。
 - **精准流量画像**：确保上游 GeoIP/GeoSite 智能分流逻辑绝对精准，杜绝流量“侧漏”。
+
+![Safe DNS & DoH](safe_dns.png)
 
 ---
 
@@ -47,6 +53,8 @@
 1. 下载 `.msi` 安装包。
 2. 双击运行，根据安装向导完成部署。
 3. 软件会自动检测系统环境并完成最优配置初始化。
+
+![Upstream Settings](upstream.png)
 
 ---
 
@@ -62,6 +70,8 @@
 
 **Q: Pro 版是否收费？**
 A: **是的，Pro 版为付费授权软件。** 具体的授权费用标准请参考软件内部的激活说明，或直接联系开发者进行咨询。
+
+![License Management](license.png)
 
 **Q: 如何反馈 Bug？**
 A: 请在 [Issues](https://github.com/liliBestCoder/ghost-proxifier-pro/issues) 页面提交您的问题，Pro 版用户将获得优先级支持。
