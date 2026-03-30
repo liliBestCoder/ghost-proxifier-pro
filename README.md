@@ -47,7 +47,7 @@
 
 您可以在本仓库直接获取预编译的安装包：
 
-👉 **[下载 Ghost Proxifier Pro Installer (MSI)]([https://github.com/liliBestCoder/ghost-proxifier-pro/raw/master/GhostProxifier-Pro-Installer.msi](https://github.com/liliBestCoder/ghost-proxifier-pro/releases))**
+👉 **[下载 Ghost Proxifier Pro Installer (MSI)](https://github.com/liliBestCoder/ghost-proxifier-pro/releases)**
 
 ### 安装步骤
 1. 下载 `.msi` 安装包。
