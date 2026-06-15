@@ -436,35 +436,41 @@ section {
 .hamburger {
     display: none;
     flex-direction: column;
+    align-items: flex-end;
     justify-content: center;
-    gap: 5px;
     background: none;
     border: none;
     cursor: pointer;
-    padding: 8px;
+    padding: 10px;
     z-index: 1100;
+    flex-shrink: 0;
 }
 
 .hamburger span {
     display: block;
-    width: 24px;
-    height: 2px;
+    width: 22px;
+    height: 2.5px;
     background: var(--text-main);
     border-radius: 2px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     transform-origin: center;
 }
 
+.hamburger span + span {
+    margin-top: 5px;
+}
+
 .hamburger.active span:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
+    transform: translateY(7.5px) rotate(45deg);
 }
 
 .hamburger.active span:nth-child(2) {
     opacity: 0;
+    transform: scaleX(0);
 }
 
 .hamburger.active span:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
+    transform: translateY(-7.5px) rotate(-45deg);
 }
 
 /* ============ Responsive ============ */
