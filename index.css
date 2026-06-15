@@ -432,25 +432,269 @@ section {
     font-size: 0.8rem;
 }
 
-/* Responsive */
+/* ============ Hamburger Menu ============ */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 1100;
+}
+
+.hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--text-main);
+    border-radius: 2px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ============ Responsive ============ */
+
+/* Large tablets & small desktops */
+@media (max-width: 1024px) {
+    .hero-content h1 {
+        font-size: 3rem;
+    }
+
+    section {
+        padding: 70px 0;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 40px;
+    }
+
+    .comparison-card.active {
+        transform: none;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .pricing-grid {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+}
+
+/* Tablets */
 @media (max-width: 768px) {
     .container {
-        padding: 0 30px;
+        padding: 0 24px;
     }
-    .hero-content h1 {
-        font-size: 2.5rem;
+
+    /* Navbar */
+    .navbar {
+        padding: 14px 0;
     }
-    .comparison-grid {
-        grid-template-columns: 1fr;
+
+    .hamburger {
+        display: flex;
     }
-    .navbar .nav-links {
-        display: none;
+
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        max-width: 320px;
+        height: 100vh;
+        flex-direction: column;
+        background: rgba(10, 10, 12, 0.97);
+        backdrop-filter: blur(20px);
+        border-left: 1px solid var(--glass-border);
+        padding: 100px 40px 40px;
+        gap: 24px;
+        transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1050;
     }
+
+    .nav-links.open {
+        right: 0;
+    }
+
+    .nav-links a {
+        font-size: 1.15rem;
+    }
+
+    /* Hero */
     .hero {
+        height: auto;
+        min-height: 100vh;
+        padding-top: 120px;
+        padding-bottom: 60px;
         text-align: center;
-        justify-content: center;
     }
+
+    .hero-content {
+        max-width: 100%;
+    }
+
+    .hero-content h1 {
+        font-size: 2.2rem;
+    }
+
+    .subtitle {
+        font-size: 1.05rem;
+        margin-bottom: 32px;
+    }
+
     .hero-btns {
         align-items: center;
+    }
+
+    .btn-gradient {
+        padding: 16px 32px;
+        font-size: 0.95rem;
+    }
+
+    /* Features */
+    section {
+        padding: 60px 0;
+    }
+
+    .section-title {
+        font-size: 1.75rem;
+        margin-bottom: 32px;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .feature-item {
+        padding: 24px 20px;
+    }
+
+    /* Comparison */
+    .comparison-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .comparison-card {
+        padding: 30px 24px;
+    }
+
+    .comparison-card.active {
+        transform: none;
+        order: -1;
+    }
+
+    .active-badge {
+        top: -12px;
+        right: 16px;
+    }
+
+    /* Pricing */
+    .pricing-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .pricing-card {
+        padding: 36px 28px;
+    }
+
+    .price {
+        font-size: 2.4rem;
+    }
+
+    .pricing-card:hover {
+        transform: translateY(-5px);
+    }
+
+    /* Footer */
+    .footer {
+        padding: 40px 0 24px;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    .footer-logo {
+        justify-content: center;
+    }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 18px;
+    }
+
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
+
+    .subtitle {
+        font-size: 0.95rem;
+    }
+
+    .btn-gradient {
+        padding: 14px 28px;
+        font-size: 0.9rem;
+        width: 100%;
+    }
+
+    section {
+        padding: 48px 0;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 24px;
+    }
+
+    .feature-item {
+        padding: 20px 16px;
+    }
+
+    .comparison-card {
+        padding: 24px 18px;
+    }
+
+    .pricing-card {
+        padding: 28px 22px;
+        border-radius: 20px;
+    }
+
+    .price {
+        font-size: 2rem;
+    }
+
+    .footer .logo span {
+        font-size: 0.95rem;
+    }
+
+    .contact-info {
+        font-size: 0.85rem;
     }
 }
