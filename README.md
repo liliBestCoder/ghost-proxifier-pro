@@ -1,5 +1,7 @@
 # Ghost Proxifier Pro (幽灵代理器 专业版)
 
+🌐 **官方网站**: [www.ghostproxifier.com](https://www.ghostproxifier.com)
+
 **Ghost Proxifier Pro** 是一款专为解决「进程不走系统代理」与「多 VPN 路由冲突」而打造的 Windows 高性能进程级代理引擎。
 
 它彻底抛弃了笨重的 TUN/TAP 虚拟网卡方案，通过直接拦截应用层的网络请求，实现真正的 **透明代理** 与 **零路由侵入**。
