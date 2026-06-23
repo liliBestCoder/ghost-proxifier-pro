@@ -96,6 +96,12 @@ C++17 编写，极低内存占用，毫秒级注入完成。
 
 ---
 
+## Star History
+
+<img src="https://api.star-history.com/svg?repos=liliBestCoder/ghost-proxifier-pro&type=Date" width="680" alt="Star History Chart" />
+
+---
+
 ## FAQ
 
 **Pro 版收费吗？**
