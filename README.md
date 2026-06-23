@@ -1,89 +1,93 @@
-# Ghost Proxifier Pro (幽灵代理器 专业版)
+# Ghost Proxifier Pro
 
-🌐 **官方网站**: [www.ghostproxifier.com](https://www.ghostproxifier.com)
+🌐 **[www.ghostproxifier.com](https://www.ghostproxifier.com)**
 
-**Ghost Proxifier Pro** 是一款专为解决「进程不走系统代理」与「多 VPN 路由冲突」而打造的 Windows 高性能进程级代理引擎。
-
-它彻底抛弃了笨重的 TUN/TAP 虚拟网卡方案，通过直接拦截应用层的网络请求，实现真正的 **透明代理** 与 **零路由侵入**。
+**进程级透明代理引擎。不装虚拟网卡，不改路由表，只接管你指定的程序。**
 
 ---
 
-## 🚀 核心定位：什么是 Ghost Proxifier？
+## 解决了什么问题？
 
-如果您曾遇到以下困扰，Ghost Proxifier Pro 是您的终极解决方案：
-- **进程级细粒度控制**：特定应用（如 Chrome、Telegram、Antigravity）不走系统代理？直接定向劫持， 强制它走系统代理。
-- **VPN 完美共存**：正在使用公司私有 VPN，但又需要同时开启科学上网？Ghost Proxifier 实现零全局路由表侵入，让两者和谐共存。
-- **无感透明转发**：基于 **MinHook** 深度拦截 Winsock API，配合独创的 **Lazy Handshake (延迟握手)** 机制，完美兼容现代异步 IO 程序，流量透明转发至 HTTP 代理。
+三个最常见的痛点：
 
----
+- **应用不走系统代理。** Chrome 还算听话，但 Telegram、Antigravity、各种游戏启动器——它们根本不理 Windows 的代理设置。Ghost Proxifier 直接进入进程内部，在 Winsock 层面接管网络请求，强制走你指定的代理。
 
-## 💎 Pro 版 专属特性 (Premium Features)
+- **VPN 和代理不能同时开。** 公司 VPN 连着内网，Clash 想翻墙——路由表打架，总有一个断。Ghost Proxifier 只代理你选中的进程，其它流量纹丝不动。VPN 和代理和平共处。
 
-相较于开源版本，Pro 版在性能与体验上进行了全面重构：
-
-### 🧠 智能探测与“全家桶”接管 (Smart Injection & Tracking)
-这是 Pro 版最人性化的功能改进，让您告别复杂的父子进程配置。
-- **“全家桶”自动识别**：只需选中一个主要目标（如游戏启动器或浏览器），Pro 版会自动识别并追踪由该程序启动的**所有关联子进程**，实现真正的“一键点击，全量接管”。
-- **即启即用，零干预**：毫秒级完成新应用的接入。只要代理开关开启，Pro 引擎便在后台静默完成注入，真正做到“即装即用”。
-- **高级兼容性支持 (ConnectEx)**：针对现代 Windows 应用（如 Xshell、UWP 应用等）的特殊网络连接模式进行全方位优化，网络穿透力与稳定性提升 200%。
-- **状态稳定性看门狗**：内置 Watchdog 实时检测代理状态。当发生网络波动导致 Hook 状态异常时，系统会自动尝试重连并修复，确保代理链不轻易断开。
-
-![Process Management](process.png)
-
-### 🎨 现代化酷炫 UI
-采用了全新的 **玻璃拟态 (Glassmorphism)** 设计规范，支持动态暗黑模式：
-- **可视化流量看板**：实时动画展示各进程的网络拓扑与流量峰值。
-- **平滑微交互**：每一次状态切换都伴随精致的过场动画。
-
-![Traffic Flow Visual](flow.png)
-
-### 🛡️ 高级安全与分流
-- **内置 DNS 防污染**：集成 Local DNS 修复与 **DoH (DNS over HTTPS) 阻断**机制。
-- **精准流量画像**：确保上游 GeoIP/GeoSite 智能分流逻辑绝对精准，杜绝流量“侧漏”。
-
-![Safe DNS & DoH](safe_dns.png)
+- **子进程裸奔。** 你拖入了启动器，它 spawn 出十个子窗口——那些子窗口的流量直接走真实 IP，代理形同虚设。Pro 版自动追踪进程树，一次拖入，整个进程家族全部接管。
 
 ---
 
-## 📥 下载与安装
+## 怎么做到的？
 
-您可以在本仓库直接获取预编译的安装包：
+不装 TUN/TAP 虚拟网卡——那会被风控系统检测。不走 WFP 内核驱动——那需要 EV 证书签名。我们的路径是 **用户态 API Hook**：
 
-👉 **[下载 Ghost Proxifier Pro Installer (MSI)](https://github.com/liliBestCoder/ghost-proxifier-pro/releases)**
+```
+目标进程发起网络请求
+    │
+    ▼
+connect("google.com:443")
+    │
+    └── [MinHook 拦截] → 重定向到代理 → HTTP CONNECT 隧道 → 落地节点
+```
 
-### 安装步骤
-1. 下载 `.msi` 安装包。
-2. 双击运行，根据安装向导完成部署。
-3. 软件会自动检测系统环境并完成最优配置初始化。
+基于 MinHook 深度拦截 Winsock API（`connect`、`send`、`WSASend` 等 25+ 个函数），配合 **Lazy Handshake（延迟握手）** 机制——`connect()` 阶段非阻塞返回，首次 `send()` 才完成代理握手。Chrome 的非阻塞 IO 完全无感知，不会触发卡死检测。
 
-![Upstream Settings](upstream.png)
-
----
-
-## 🛠 技术深度
-
-- **Hook 引擎**：基于成熟的 MinHook 框架。
-- **IO 兼容性**：Lazy Handshake 技术确保在高并发、异步场景下的零延迟表现。
-- **架构设计**：采用 C++17 编写，追求极致的执行效率与极地的内存占用。
+C++17 编写，极低内存占用，毫秒级注入完成。
 
 ---
 
-## 🛡 FAQ & 反馈
+## Pro 版专属
 
-**Q: Pro 版是否收费？**
-A: **是的，Pro 版为付费授权软件。** 具体的授权费用标准请参考软件内部的激活说明，或直接联系开发者进行咨询。
+### 进程树自动追踪
 
-![License Management](license.png)
+拖入一个主进程，引擎自动识别并注入它创建的所有子进程。Chrome 的 Network Service、GPU Process、Utility Process——全部自动覆盖，不需要手动配置 PID。
 
-**Q: 如何反馈 Bug？**
-A: 请在 [Issues](https://github.com/liliBestCoder/ghost-proxifier-pro/issues) 页面提交您的问题，Pro 版用户将获得优先级支持。
+内置 Watchdog 实时检测 Hook 状态，网络波动导致代理断开时自动重连。
+
+<img src="process.png" width="680" alt="Process Management" />
+
+### 流量可视化
+
+玻璃拟态 UI + 暗黑模式。实时流量图表、进程级网络拓扑、状态指示灯（绿/黄/红）。每 2 秒刷新，流畅不抖动。
+
+<img src="flow.png" width="680" alt="Traffic Flow" />
+
+### DNS 防污染 + DoH 阻断
+
+内置 Local DNS，DNS 查询走加密隧道，杜绝 ISP 投毒。同时阻断 Chrome 等浏览器的 DoH 直连，强制所有 DNS 走本地代理，确保上游的 GeoIP/GeoSite 分流规则拿到的是真实 IP。
+
+<img src="safe_dns.png" width="680" alt="Safe DNS" />
 
 ---
 
-**✈️ 官方社群**
-- **Telegram 频道**: [Ghost Proxifier](https://t.me/ghostproxifier)
-- **Telegram 群组**: [Ghost Proxifier](https://t.me/+SCVIJJFocWAxN2Y9)
+## 下载
+
+👉 **[Ghost Proxifier Pro Installer (MSI)](https://github.com/liliBestCoder/ghost-proxifier-pro/releases)**
+
+双击安装，自动配置。桌面快捷方式、开始菜单、控制面板卸载——该有的都有。支持静默安装（`msiexec /i /qn`），B 端批量部署无压力。
+
+<img src="upstream.png" width="680" alt="Upstream Settings" />
 
 ---
 
-Developed with ❤️ by the **GhostTeam**.
+## FAQ
+
+**Pro 版收费吗？**
+
+是的，Pro 版为付费授权软件。具体费用见软件内激活说明，或直接联系开发者。
+
+**如何反馈问题？**
+
+[提交 Issue](https://github.com/liliBestCoder/ghost-proxifier-pro/issues)，Pro 版用户优先响应。
+
+---
+
+**社群**
+
+- Telegram 频道: [@ghostproxifier](https://t.me/ghostproxifier)
+- Telegram 群组: [Ghost Proxifier](https://t.me/+SCVIJJFocWAxN2Y9)
+
+---
+
+Developed by **GhostTeam**.
