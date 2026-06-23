@@ -2,7 +2,17 @@
 
 🌐 **[www.ghostproxifier.com](https://www.ghostproxifier.com)**
 
-**进程级透明代理引擎。不装虚拟网卡，不改路由表，只接管你指定的程序。**
+**进程级透明代理引擎 — 不装虚拟网卡，不改路由表，DLL 注入到目标进程内部，在 Winsock 层面接管所有网络流量，代理节点对应用完全不可见。**
+
+和 TUN/TAP 方案不同，Ghost Proxifier 不碰系统网络配置。VPN、内网、代理可以同时在线，互不干扰。拖入一个窗口，Chrome 的 Network Service、GPU 进程、Utility 进程自动全部覆盖。毫秒级注入，极低内存占用。
+
+---
+
+## 已支持应用
+
+Chrome &nbsp;·&nbsp; MS Edge &nbsp;·&nbsp; Claude Code &nbsp;·&nbsp; Codex &nbsp;·&nbsp; FinalShell &nbsp;·&nbsp; Xshell &nbsp;·&nbsp; Antigravity &nbsp;·&nbsp; MySQL Workbench &nbsp;·&nbsp; CMD &nbsp;·&nbsp; PowerShell
+
+> 理论上支持所有使用 Winsock 的 Windows 应用。以上为测试验证过的应用列表，更多应用持续验证中。
 
 ---
 
