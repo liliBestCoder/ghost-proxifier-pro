@@ -10,7 +10,22 @@
 
 ## 已支持应用
 
-Chrome &nbsp;·&nbsp; MS Edge &nbsp;·&nbsp; Claude Code &nbsp;·&nbsp; Codex &nbsp;·&nbsp; FinalShell &nbsp;·&nbsp; Xshell &nbsp;·&nbsp; Antigravity &nbsp;·&nbsp; MySQL Workbench &nbsp;·&nbsp; CMD &nbsp;·&nbsp; PowerShell
+<table>
+  <tr>
+    <td align="center"><img src="icons/chrome.exe.png" width="48" alt="Chrome"><br>Chrome</td>
+    <td align="center"><img src="icons/msedge.exe.png" width="48" alt="MS Edge"><br>MS Edge</td>
+    <td align="center"><img src="icons/claude.exe.png" width="48" alt="Claude Code"><br>Claude Code</td>
+    <td align="center"><img src="icons/Codex.exe.png" width="48" alt="Codex"><br>Codex</td>
+    <td align="center"><img src="icons/finalshell.exe.png" width="48" alt="FinalShell"><br>FinalShell</td>
+  </tr>
+  <tr>
+    <td align="center"><img src="icons/xshell.exe.png" width="48" alt="Xshell"><br>Xshell</td>
+    <td align="center"><img src="icons/antigravity.exe.png" width="48" alt="Antigravity"><br>Antigravity</td>
+    <td align="center"><img src="icons/mysqlworkbench.exe.png" width="48" alt="MySQL Workbench"><br>MySQL Workbench</td>
+    <td align="center"><img src="icons/cmd.exe.png" width="48" alt="CMD"><br>CMD</td>
+    <td align="center"><img src="icons/powershell.exe.png" width="48" alt="PowerShell"><br>PowerShell</td>
+  </tr>
+</table>
 
 > 理论上支持所有使用 Winsock 的 Windows 应用。以上为测试验证过的应用列表，更多应用持续验证中。
 
