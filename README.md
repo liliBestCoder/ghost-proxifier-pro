@@ -8,6 +8,12 @@
 
 ---
 
+## Star History
+
+<img src="https://api.star-history.com/svg?repos=liliBestCoder/ghost-proxifier-pro&type=Date" width="680" alt="Star History Chart" />
+
+---
+
 ## 已支持应用
 
 <table>
@@ -93,12 +99,6 @@ C++17 编写，极低内存占用，毫秒级注入完成。
 双击安装，自动配置。桌面快捷方式、开始菜单、控制面板卸载——该有的都有。支持静默安装（`msiexec /i /qn`），B 端批量部署无压力。
 
 <img src="upstream.png" width="680" alt="Upstream Settings" />
-
----
-
-## Star History
-
-<img src="https://api.star-history.com/svg?repos=liliBestCoder/ghost-proxifier-pro&type=Date" width="680" alt="Star History Chart" />
 
 ---
 
