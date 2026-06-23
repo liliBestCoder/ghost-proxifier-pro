@@ -12,18 +12,18 @@
 
 <table>
   <tr>
-    <td align="center"><img src="icons/chrome.exe.png" width="48" alt="Chrome"><br>Chrome</td>
-    <td align="center"><img src="icons/msedge.exe.png" width="48" alt="MS Edge"><br>MS Edge</td>
-    <td align="center"><img src="icons/claude.exe.png" width="48" alt="Claude Code"><br>Claude Code</td>
-    <td align="center"><img src="icons/Codex.exe.png" width="48" alt="Codex"><br>Codex</td>
-    <td align="center"><img src="icons/finalshell.exe.png" width="48" alt="FinalShell"><br>FinalShell</td>
+    <td align="center" width="80"><img src="icons/chrome.exe.png" width="48" alt="Chrome" title="Chrome"></td>
+    <td align="center" width="80"><img src="icons/msedge.exe.png" width="48" alt="MS Edge" title="MS Edge"></td>
+    <td align="center" width="80"><img src="icons/claude.exe.png" width="48" alt="Claude Code" title="Claude Code"></td>
+    <td align="center" width="80"><img src="icons/Codex.exe.png" width="48" alt="Codex" title="Codex"></td>
+    <td align="center" width="80"><img src="icons/finalshell.exe.png" width="48" alt="FinalShell" title="FinalShell"></td>
   </tr>
   <tr>
-    <td align="center"><img src="icons/xshell.exe.png" width="48" alt="Xshell"><br>Xshell</td>
-    <td align="center"><img src="icons/antigravity.exe.png" width="48" alt="Antigravity"><br>Antigravity</td>
-    <td align="center"><img src="icons/mysqlworkbench.exe.png" width="48" alt="MySQL Workbench"><br>MySQL Workbench</td>
-    <td align="center"><img src="icons/cmd.exe.png" width="48" alt="CMD"><br>CMD</td>
-    <td align="center"><img src="icons/powershell.exe.png" width="48" alt="PowerShell"><br>PowerShell</td>
+    <td align="center" width="80"><img src="icons/xshell.exe.png" width="48" alt="Xshell" title="Xshell"></td>
+    <td align="center" width="80"><img src="icons/antigravity.exe.png" width="48" alt="Antigravity" title="Antigravity"></td>
+    <td align="center" width="80"><img src="icons/mysqlworkbench.exe.png" width="48" alt="MySQL Workbench" title="MySQL Workbench"></td>
+    <td align="center" width="80"><img src="icons/cmd.exe.png" width="48" alt="CMD" title="CMD"></td>
+    <td align="center" width="80"><img src="icons/powershell.exe.png" width="48" alt="PowerShell" title="PowerShell"></td>
   </tr>
 </table>
 
