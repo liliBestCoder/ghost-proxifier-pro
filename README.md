@@ -1,6 +1,6 @@
 # Ghost Proxifier Pro
 
-🌐 **[www.ghostproxifier.com](https://www.ghostproxifier.com)**
+🌐 **[ghostproxifier.com](https://ghostproxifier.com)**
 
 **进程级透明代理引擎 — 不装虚拟网卡，不改路由表，DLL 注入到目标进程内部，在 Winsock 层面接管所有网络流量，代理节点对应用完全不可见。**
 
