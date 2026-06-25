@@ -20,7 +20,7 @@
   ·
   <a href="#how-it-works">How It Works</a>
   ·
-  <a href="#core-features">Core Features</a>
+  <a href="#features">Features</a>
   ·
   <a href="#usage">Usage</a>
   ·
@@ -194,7 +194,7 @@ QUIC (HTTP/3) runs over UDP 443 and likewise bypasses the proxy. Ghost Proxifier
 
 ---
 
-## Core Features
+## Features
 
 ### Automatic Process Tree Tracking
 
