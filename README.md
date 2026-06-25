@@ -215,22 +215,10 @@ QUIC（HTTP/3）基于 UDP 443，同样会绕过代理。Ghost Proxifier 在 `se
 
 ## 使用
 
-### 基本用法
-
 通过 Pro 版图形界面操作：拖入目标进程即可自动注入，引擎会自动识别并注入该进程及其所有子进程。主界面提供进程列表、代理状态、流量统计等实时信息。
 
 上游代理节点、DNS 服务器、注入规则等所有配置均在图形界面中完成，无需手动编辑配置文件。
 
-### 日志示例
-
-```
-[14:08:09] [Init] Hooks installed successfully (PID: 3188)
-[14:08:19] [DNS-Proxy] GetAddrInfoW: play.googleapis.com -> [216.239.32.223] (1 IPs)
-[14:08:19] [hook] ConnectEx: 216.239.32.223:443 | play.googleapis.com
-[14:08:19] [Proxy] Handshake OK: 216.239.32.223:443 | play.googleapis.com
-[14:10:06] [DNS] Query: www.googleapis.com. -> A: [142.250.72.234, 142.251.45.10]
-[14:10:06] [DNS] Query: www.googleapis.com. -> AAAA: [2607:f8b0:4004:800::200e]
-```
 
 ---
 
@@ -254,13 +242,13 @@ QUIC（HTTP/3）基于 UDP 443，同样会绕过代理。Ghost Proxifier 在 `se
 
 ## 运行截图
 
-<img src="process.png" width="680" alt="Process Management" />
+<img src="process.png" width="880" alt="Process Management" />
 
-<img src="flow.png" width="680" alt="Traffic Flow" />
+<img src="flow.png" width="880" alt="Traffic Flow" />
 
-<img src="safe_dns.png" width="680" alt="Safe DNS" />
+<img src="safe_dns.png" width="880" alt="Safe DNS" />
 
-<img src="upstream.png" width="680" alt="Upstream Settings" />
+<img src="upstream.png" width="880" alt="Upstream Settings" />
 
 ---
 

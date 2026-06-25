@@ -216,22 +216,10 @@ Built-in Local DNS routes all DNS queries through the encrypted tunnel, eliminat
 
 ## Usage
 
-### Getting Started
-
 Operate through the Pro graphical interface: drag and drop a target process to auto-inject. The engine automatically identifies and injects into the process and all its children. The main window provides a process list, proxy status, traffic statistics, and more in real time.
 
 All configuration — upstream proxy nodes, DNS servers, injection rules — is done within the GUI. No manual config file editing required.
 
-### Log Example
-
-```
-[14:08:09] [Init] Hooks installed successfully (PID: 3188)
-[14:08:19] [DNS-Proxy] GetAddrInfoW: play.googleapis.com -> [216.239.32.223] (1 IPs)
-[14:08:19] [hook] ConnectEx: 216.239.32.223:443 | play.googleapis.com
-[14:08:19] [Proxy] Handshake OK: 216.239.32.223:443 | play.googleapis.com
-[14:10:06] [DNS] Query: www.googleapis.com. -> A: [142.250.72.234, 142.251.45.10]
-[14:10:06] [DNS] Query: www.googleapis.com. -> AAAA: [2607:f8b0:4004:800::200e]
-```
 
 ---
 
@@ -255,13 +243,13 @@ All configuration — upstream proxy nodes, DNS servers, injection rules — is 
 
 ## Screenshots
 
-<img src="process.png" width="680" alt="Process Management" />
+<img src="process.png" width="880" alt="Process Management" />
 
-<img src="flow.png" width="680" alt="Traffic Flow" />
+<img src="flow.png" width="880" alt="Traffic Flow" />
 
-<img src="safe_dns.png" width="680" alt="Safe DNS" />
+<img src="safe_dns.png" width="880" alt="Safe DNS" />
 
-<img src="upstream.png" width="680" alt="Upstream Settings" />
+<img src="upstream.png" width="880" alt="Upstream Settings" />
 
 ---
 
