@@ -8,12 +8,6 @@
 
 ---
 
-## Star History
-
-<img src="https://api.star-history.com/svg?repos=liliBestCoder/ghost-proxifier-pro&type=Date" width="680" alt="Star History Chart" />
-
----
-
 ## 已支持应用
 
 <table>
