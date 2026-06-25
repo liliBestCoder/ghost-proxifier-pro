@@ -1,6 +1,6 @@
 <!-- LOGO -->
 <p align="center">
-  <img src="logo.png" alt="Logo" width="64">
+  <img src="app_icon.ico" alt="Logo" width="64">
 </p>
 
 <h1 align="center">Ghost Proxifier Pro</h1>
@@ -9,6 +9,8 @@
   <a href="README.md">🇨🇳 中文</a>
   &nbsp;·
   <a href="https://github.com/liliBestCoder/ghost-proxifier-pro/releases" target="_blank">Download</a>
+  &nbsp;·
+  <a href="https://ghostproxifier.com" target="_blank">Website</a>
 </p>
 
 <p align="center">
@@ -18,7 +20,7 @@
   ·
   <a href="#how-it-works">How It Works</a>
   ·
-  <a href="#pro-features">Pro Features</a>
+  <a href="#core-features">Core Features</a>
   ·
   <a href="#usage">Usage</a>
   ·
@@ -34,10 +36,6 @@
 </p>
 
 <p align="center">
-  🌐 <a href="https://ghostproxifier.com" target="_blank"><b>ghostproxifier.com</b></a> — modern UI, process rule management, traffic panel, and more
-</p>
-
-<p align="center">
   🔧 <a href="https://github.com/liliBestCoder/ghost-proxifier" target="_blank"><b>Ghost Proxifier (Open Source)</b></a> — CLI-only tool, MIT licensed, ideal for DIY and custom development
 </p>
 
@@ -47,18 +45,16 @@
 
 <table>
   <tr>
-    <td align="center" width="80"><img src="icons/chrome.exe.png" width="48" alt="Chrome" title="Chrome"></td>
-    <td align="center" width="80"><img src="icons/msedge.exe.png" width="48" alt="MS Edge" title="MS Edge"></td>
-    <td align="center" width="80"><img src="icons/claude.exe.png" width="48" alt="Claude Code" title="Claude Code"></td>
-    <td align="center" width="80"><img src="icons/Codex.exe.png" width="48" alt="Codex" title="Codex"></td>
-    <td align="center" width="80"><img src="icons/finalshell.exe.png" width="48" alt="FinalShell" title="FinalShell"></td>
-  </tr>
-  <tr>
-    <td align="center" width="80"><img src="icons/xshell.exe.png" width="48" alt="Xshell" title="Xshell"></td>
-    <td align="center" width="80"><img src="icons/antigravity.exe.png" width="48" alt="Antigravity" title="Antigravity"></td>
-    <td align="center" width="80"><img src="icons/mysqlworkbench.exe.png" width="48" alt="MySQL Workbench" title="MySQL Workbench"></td>
-    <td align="center" width="80"><img src="icons/cmd.exe.png" width="48" alt="CMD" title="CMD"></td>
-    <td align="center" width="80"><img src="icons/powershell.exe.png" width="48" alt="PowerShell" title="PowerShell"></td>
+    <td align="center"><img src="icons/chrome.exe.png" width="40" alt="Chrome"><br><sub>Chrome</sub></td>
+    <td align="center"><img src="icons/msedge.exe.png" width="40" alt="MS Edge"><br><sub>MS Edge</sub></td>
+    <td align="center"><img src="icons/claude.exe.png" width="40" alt="Claude Code"><br><sub>Claude Code</sub></td>
+    <td align="center"><img src="icons/Codex.exe.png" width="40" alt="Codex"><br><sub>Codex</sub></td>
+    <td align="center"><img src="icons/finalshell.exe.png" width="40" alt="FinalShell"><br><sub>FinalShell</sub></td>
+    <td align="center"><img src="icons/xshell.exe.png" width="40" alt="Xshell"><br><sub>Xshell</sub></td>
+    <td align="center"><img src="icons/antigravity.exe.png" width="40" alt="Antigravity"><br><sub>Antigravity</sub></td>
+    <td align="center"><img src="icons/mysqlworkbench.exe.png" width="40" alt="MySQL Workbench"><br><sub>MySQL Workbench</sub></td>
+    <td align="center"><img src="icons/cmd.exe.png" width="40" alt="CMD"><br><sub>CMD</sub></td>
+    <td align="center"><img src="icons/powershell.exe.png" width="40" alt="PowerShell"><br><sub>PowerShell</sub></td>
   </tr>
 </table>
 
@@ -200,7 +196,7 @@ QUIC (HTTP/3) runs over UDP 443 and likewise bypasses the proxy. Ghost Proxifier
 
 ---
 
-## Pro Features
+## Core Features
 
 ### Automatic Process Tree Tracking
 
