@@ -18,6 +18,8 @@
   ·
   <a href="#what-problem-does-it-solve">What Problem Does It Solve</a>
   ·
+  <a href="#architecture">Architecture</a>
+  ·
   <a href="#how-it-works">How It Works</a>
   ·
   <a href="#features">Features</a>
@@ -72,7 +74,7 @@ Ghost Proxifier **installs no virtual adapter, touches no routing table**. It on
 
 You drop a launcher into the proxy, it spawns ten child windows — and those children's traffic goes straight to real IPs, rendering the proxy useless. The Pro edition automatically tracks the process tree. Drop it once, and the entire process family is covered.
 
-## How It Works
+## Architecture
 
 ```
                         Ghost Proxifier Pro Architecture
@@ -115,6 +117,8 @@ You drop a launcher into the proxy, it spawns ten child windows — and those ch
 ```
 
 No TUN/TAP virtual adapter — that gets flagged by anti-detection systems. No WFP kernel driver — that requires an EV code-signing certificate. Our approach is **user-mode API Hooking**, deeply intercepting 25+ Winsock functions via MinHook. Written in C++17, minimal memory footprint, injection completes in milliseconds.
+
+## How It Works
 
 ### 1. HTTP CONNECT Protocol
 
