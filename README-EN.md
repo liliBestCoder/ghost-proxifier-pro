@@ -37,8 +37,6 @@
   🔧 <a href="https://github.com/liliBestCoder/ghost-proxifier" target="_blank"><b>Ghost Proxifier (Open Source)</b></a> — CLI-only tool, MIT licensed, ideal for DIY and custom development
 </p>
 
----
-
 ## Supported Apps
 
 <table>
@@ -58,8 +56,6 @@
 
 > Theoretically supports all Windows applications that use Winsock. The list above represents tested and verified applications — more are being validated continuously.
 
----
-
 ## What Problem Does It Solve?
 
 ### Apps That Ignore the System Proxy
@@ -75,8 +71,6 @@ Ghost Proxifier **installs no virtual adapter, touches no routing table**. It on
 ### Child Processes Run Naked
 
 You drop a launcher into the proxy, it spawns ten child windows — and those children's traffic goes straight to real IPs, rendering the proxy useless. The Pro edition automatically tracks the process tree. Drop it once, and the entire process family is covered.
-
----
 
 ## How It Works
 
@@ -192,8 +186,6 @@ Chrome → sendto(8.8.8.8:53)   → Standard DNS → handled by Local DNS Proxy 
 
 QUIC (HTTP/3) runs over UDP 443 and likewise bypasses the proxy. Ghost Proxifier blocks UDP 443 traffic on all paths — `sendto`/`WSASendTo` and `recvfrom`/`WSARecvFrom` — returning `WSAENETUNREACH` to trigger the browser's TCP fallback (HTTP/2 or HTTP/1.1), which then goes through the HTTP CONNECT tunnel.
 
----
-
 ## Features
 
 ### Automatic Process Tree Tracking
@@ -210,15 +202,11 @@ Glassmorphism UI + dark mode. Real-time traffic charts, process-level network to
 
 Built-in Local DNS routes all DNS queries through the encrypted tunnel, eliminating ISP poisoning. Simultaneously blocks DoH direct connections from browsers like Chrome, forcing all DNS through the local proxy to ensure upstream GeoIP/GeoSite routing rules receive genuine IP addresses.
 
----
-
 ## Usage
 
 Operate through the Pro graphical interface: drag and drop a target process to auto-inject. The engine automatically identifies and injects into the process and all its children. The main window provides a process list, proxy status, traffic statistics, and more in real time.
 
 All configuration — upstream proxy nodes, DNS servers, injection rules — is done within the GUI. No manual config file editing required.
-
----
 
 ## Screenshots
 
@@ -229,8 +217,6 @@ All configuration — upstream proxy nodes, DNS servers, injection rules — is 
 <img src="safe_dns.png" width="880" alt="Safe DNS" />
 
 <img src="upstream.png" width="880" alt="Upstream Settings" />
-
----
 
 ## FAQ
 
@@ -246,14 +232,10 @@ The Pro edition offers a modern graphical UI, process rule management, traffic v
 
 [Submit an Issue](https://github.com/liliBestCoder/ghost-proxifier-pro/issues). Pro users receive priority response.
 
----
-
 **Community**
 
 - Telegram Channel: [@ghostproxifier](https://t.me/ghostproxifier)
 - Telegram Group: [Ghost Proxifier](https://t.me/+SCVIJJFocWAxN2Y9)
-
----
 
 <p align="center">
   Developed by <b>GhostTeam</b>.

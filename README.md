@@ -37,8 +37,6 @@
   🔧 <a href="https://github.com/liliBestCoder/ghost-proxifier" target="_blank"><b>Ghost Proxifier (开源版)</b></a> — 纯命令行工具，MIT 开源，适合 DIY 和二次开发
 </p>
 
----
-
 ## 已支持应用
 
 <table>
@@ -58,8 +56,6 @@
 
 > 理论上支持所有使用 Winsock 的 Windows 应用。以上为测试验证过的应用列表，更多应用持续验证中。
 
----
-
 ## 解决了什么问题？
 
 ### 应用不走系统代理
@@ -75,8 +71,6 @@ Ghost Proxifier **不装虚拟网卡，不改路由表**。只代理你选中的
 ### 子进程裸奔
 
 你拖入了启动器，它 spawn 出十个子窗口——那些子窗口的流量直接走真实 IP，代理形同虚设。Pro 版自动追踪进程树，一次拖入，整个进程家族全部接管。
-
----
 
 ## 原理
 
@@ -191,8 +185,6 @@ Chrome → sendto(8.8.8.8:53)   → 标准 DNS → 被 Local DNS Proxy 接管 �
 
 QUIC（HTTP/3）基于 UDP 443，同样会绕过代理。Ghost Proxifier 在 `sendto`/`WSASendTo` 和 `recvfrom`/`WSARecvFrom` 全路径阻断 UDP 443 流量，返回 `WSAENETUNREACH`，触发浏览器 TCP fallback（HTTP/2 或 HTTP/1.1），从而走 HTTP CONNECT 隧道。
 
----
-
 ## 特性
 
 ### 进程树自动追踪
@@ -209,15 +201,11 @@ QUIC（HTTP/3）基于 UDP 443，同样会绕过代理。Ghost Proxifier 在 `se
 
 内置 Local DNS，DNS 查询走加密隧道，杜绝 ISP 投毒。同时阻断 Chrome 等浏览器的 DoH 直连，强制所有 DNS 走本地代理，确保上游的 GeoIP/GeoSite 分流规则拿到的是真实 IP。
 
----
-
 ## 使用
 
 通过 Pro 版图形界面操作：拖入目标进程即可自动注入，引擎会自动识别并注入该进程及其所有子进程。主界面提供进程列表、代理状态、流量统计等实时信息。
 
 上游代理节点、DNS 服务器、注入规则等所有配置均在图形界面中完成，无需手动编辑配置文件。
-
----
 
 ## 运行截图
 
@@ -228,8 +216,6 @@ QUIC（HTTP/3）基于 UDP 443，同样会绕过代理。Ghost Proxifier 在 `se
 <img src="safe_dns.png" width="880" alt="Safe DNS" />
 
 <img src="upstream.png" width="880" alt="Upstream Settings" />
-
----
 
 ## FAQ
 
@@ -245,14 +231,10 @@ Pro 版提供现代化图形 UI、进程规则管理、流量可视化面板、�
 
 [提交 Issue](https://github.com/liliBestCoder/ghost-proxifier-pro/issues)，Pro 版用户优先响应。
 
----
-
 **社群**
 
 - Telegram 频道: [@ghostproxifier](https://t.me/ghostproxifier)
 - Telegram 群组: [Ghost Proxifier](https://t.me/+SCVIJJFocWAxN2Y9)
-
----
 
 <p align="center">
   Developed by <b>GhostTeam</b>.
