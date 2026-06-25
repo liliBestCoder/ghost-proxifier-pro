@@ -24,9 +24,9 @@
   ·
   <a href="#使用">使用</a>
   ·
-  <a href="#下载">下载</a>
-  ·
   <a href="#hook-接口列表">Hook 接口列表</a>
+  ·
+  <a href="#运行截图">运行截图</a>
   ·
   <a href="#faq">FAQ</a>
 </p>
@@ -203,19 +203,13 @@ QUIC（HTTP/3）基于 UDP 443，同样会绕过代理。Ghost Proxifier 在 `se
 
 内置 Watchdog 实时检测 Hook 状态，网络波动导致代理断开时自动重连。
 
-<img src="process.png" width="680" alt="Process Management" />
-
 ### 流量可视化
 
 玻璃拟态 UI + 暗黑模式。实时流量图表、进程级网络拓扑、状态指示灯（绿/黄/红）。每 2 秒刷新，流畅不抖动。
 
-<img src="flow.png" width="680" alt="Traffic Flow" />
-
 ### DNS 防污染 + DoH 阻断
 
 内置 Local DNS，DNS 查询走加密隧道，杜绝 ISP 投毒。同时阻断 Chrome 等浏览器的 DoH 直连，强制所有 DNS 走本地代理，确保上游的 GeoIP/GeoSite 分流规则拿到的是真实 IP。
-
-<img src="safe_dns.png" width="680" alt="Safe DNS" />
 
 ---
 
@@ -240,16 +234,6 @@ QUIC（HTTP/3）基于 UDP 443，同样会绕过代理。Ghost Proxifier 在 `se
 
 ---
 
-## 下载
-
-👉 **[Ghost Proxifier Pro Installer (MSI)](https://github.com/liliBestCoder/ghost-proxifier-pro/releases)**
-
-双击安装，自动配置。桌面快捷方式、开始菜单、控制面板卸载——该有的都有。支持静默安装（`msiexec /i /qn`），企业批量部署无压力。
-
-<img src="upstream.png" width="680" alt="Upstream Settings" />
-
----
-
 ## Hook 接口列表
 
 | 接口 | 用途 |
@@ -265,6 +249,18 @@ QUIC（HTTP/3）基于 UDP 443，同样会绕过代理。Ghost Proxifier 在 `se
 | `WSAIoctl` | ConnectEx 关联 Hook（fallback） |
 | DoH 阻断 | 已知 DoH 服务器 IP 返回拒绝，强制回退标准 DNS |
 | QUIC 阻断 | UDP 443 send/sendto/recv 全路径阻断，返回 `WSAENETUNREACH` 触发 TCP fallback |
+
+---
+
+## 运行截图
+
+<img src="process.png" width="680" alt="Process Management" />
+
+<img src="flow.png" width="680" alt="Traffic Flow" />
+
+<img src="safe_dns.png" width="680" alt="Safe DNS" />
+
+<img src="upstream.png" width="680" alt="Upstream Settings" />
 
 ---
 

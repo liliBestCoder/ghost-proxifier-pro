@@ -24,9 +24,9 @@
   ·
   <a href="#usage">Usage</a>
   ·
-  <a href="#download">Download</a>
-  ·
   <a href="#hooked-functions">Hooked Functions</a>
+  ·
+  <a href="#screenshots">Screenshots</a>
   ·
   <a href="#faq">FAQ</a>
 </p>
@@ -204,19 +204,13 @@ Drop in one main process and the engine automatically identifies and injects int
 
 Built-in Watchdog continuously monitors hook status and automatically reconnects if the proxy disconnects due to network fluctuations.
 
-<img src="process.png" width="680" alt="Process Management" />
-
 ### Traffic Visualization
 
 Glassmorphism UI + dark mode. Real-time traffic charts, process-level network topology, status indicators (green / yellow / red). Refreshes every 2 seconds, smooth with no jitter.
 
-<img src="flow.png" width="680" alt="Traffic Flow" />
-
 ### DNS Anti-Poisoning + DoH Blocking
 
 Built-in Local DNS routes all DNS queries through the encrypted tunnel, eliminating ISP poisoning. Simultaneously blocks DoH direct connections from browsers like Chrome, forcing all DNS through the local proxy to ensure upstream GeoIP/GeoSite routing rules receive genuine IP addresses.
-
-<img src="safe_dns.png" width="680" alt="Safe DNS" />
 
 ---
 
@@ -241,16 +235,6 @@ All configuration — upstream proxy nodes, DNS servers, injection rules — is 
 
 ---
 
-## Download
-
-👉 **[Ghost Proxifier Pro Installer (MSI)](https://github.com/liliBestCoder/ghost-proxifier-pro/releases)**
-
-Double-click to install, auto-configured. Desktop shortcut, Start Menu entry, Control Panel uninstall — everything you'd expect. Supports silent installation (`msiexec /i /qn`) for enterprise bulk deployment.
-
-<img src="upstream.png" width="680" alt="Upstream Settings" />
-
----
-
 ## Hooked Functions
 
 | Function | Purpose |
@@ -266,6 +250,18 @@ Double-click to install, auto-configured. Desktop shortcut, Start Menu entry, Co
 | `WSAIoctl` | ConnectEx deferred hook (fallback) |
 | DoH Blocking | Return connection refused for known DoH server IPs, forcing standard DNS fallback |
 | QUIC Blocking | UDP 443 send/sendto/recv full-path blocking, return `WSAENETUNREACH` to trigger TCP fallback |
+
+---
+
+## Screenshots
+
+<img src="process.png" width="680" alt="Process Management" />
+
+<img src="flow.png" width="680" alt="Traffic Flow" />
+
+<img src="safe_dns.png" width="680" alt="Safe DNS" />
+
+<img src="upstream.png" width="680" alt="Upstream Settings" />
 
 ---
 
