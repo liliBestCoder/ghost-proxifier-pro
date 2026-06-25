@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.ghostproxifier.com/sitemap.xml
+Sitemap: https://ghostproxifier.com/sitemap.xml
