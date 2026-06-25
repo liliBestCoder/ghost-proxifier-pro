@@ -1,10 +1,45 @@
-# Ghost Proxifier Pro
+<!-- LOGO -->
+<p align="center">
+  <img src="logo.png" alt="Logo" width="64">
+</p>
 
-🌐 **[ghostproxifier.com](https://ghostproxifier.com)**
+<h1 align="center">Ghost Proxifier Pro</h1>
 
-**进程级透明代理引擎 — 不装虚拟网卡，不改路由表，DLL 注入到目标进程内部，在 Winsock 层面接管所有网络流量，代理节点对应用完全不可见。**
+<p align="center">
+  <a href="README-EN.md">🇬🇧 English</a>
+  &nbsp;·
+  <a href="https://github.com/liliBestCoder/ghost-proxifier-pro/releases" target="_blank">Download</a>
+</p>
 
-和 TUN/TAP 方案不同，Ghost Proxifier 不碰系统网络配置。VPN、内网、代理可以同时在线，互不干扰。拖入一个窗口，Chrome 的 Network Service、GPU 进程、Utility 进程自动全部覆盖。毫秒级注入，极低内存占用。
+<p align="center">
+  <a href="#已支持应用">已支持应用</a>
+  ·
+  <a href="#解决了什么问题">解决了什么问题</a>
+  ·
+  <a href="#技术原理">技术原理</a>
+  ·
+  <a href="#pro-版专属">Pro 版专属</a>
+  ·
+  <a href="#使用">使用</a>
+  ·
+  <a href="#下载">下载</a>
+  ·
+  <a href="#hook-接口列表">Hook 接口列表</a>
+  ·
+  <a href="#faq">FAQ</a>
+</p>
+
+<p align="center">
+  进程级透明代理引擎 — 通过 DLL 注入 Hook Winsock API，将目标进程的所有网络流量透明转发到 HTTP 代理。无需修改路由表，无需安装虚拟网卡，代理节点对应用完全不可见。
+</p>
+
+<p align="center">
+  🌐 <a href="https://ghostproxifier.com" target="_blank"><b>ghostproxifier.com</b></a> — 现代化 UI、进程规则管理、流量面板等高级功能
+</p>
+
+<p align="center">
+  🔧 <a href="https://github.com/liliBestCoder/ghost-proxifier" target="_blank"><b>Ghost Proxifier (开源版)</b></a> — 纯命令行工具，MIT 开源，适合 DIY 和二次开发
+</p>
 
 ---
 
@@ -33,32 +68,134 @@
 
 ## 解决了什么问题？
 
-三个最常见的痛点：
+### 应用不走系统代理
 
-- **应用不走系统代理。** Chrome 还算听话，但 Telegram、Antigravity、各种游戏启动器——它们根本不理 Windows 的代理设置。Ghost Proxifier 直接进入进程内部，在 Winsock 层面接管网络请求，强制走你指定的代理。
+Chrome 还算听话，但 Telegram、Antigravity、各种游戏启动器——它们根本不理 Windows 的代理设置。Ghost Proxifier 直接进入进程内部，在 Winsock 层面接管网络请求，强制走你指定的代理。**流量不会泄露。**
 
-- **VPN 和代理不能同时开。** 公司 VPN 连着内网，Clash 想翻墙——路由表打架，总有一个断。Ghost Proxifier 只代理你选中的进程，其它流量纹丝不动。VPN 和代理和平共处。
+### VPN 和代理不能同时开
 
-- **子进程裸奔。** 你拖入了启动器，它 spawn 出十个子窗口——那些子窗口的流量直接走真实 IP，代理形同虚设。Pro 版自动追踪进程树，一次拖入，整个进程家族全部接管。
+公司 VPN 连着内网，Clash 想翻墙——路由表打架，总有一个断。TUN 模式下虚拟网卡与 VPN 网卡频繁切换，内核态/用户态切换带来额外延迟。
+
+Ghost Proxifier **不装虚拟网卡，不改路由表**。只代理你选中的进程，其它流量纹丝不动。VPN、内网、代理可以同时在线，互不干扰。
+
+### 子进程裸奔
+
+你拖入了启动器，它 spawn 出十个子窗口——那些子窗口的流量直接走真实 IP，代理形同虚设。Pro 版自动追踪进程树，一次拖入，整个进程家族全部接管。
 
 ---
 
-## 怎么做到的？
-
-不装 TUN/TAP 虚拟网卡——那会被风控系统检测。不走 WFP 内核驱动——那需要 EV 证书签名。我们的路径是 **用户态 API Hook**：
+## 技术原理
 
 ```
-目标进程发起网络请求
-    │
-    ▼
-connect("google.com:443")
-    │
-    └── [MinHook 拦截] → 重定向到代理 → HTTP CONNECT 隧道 → 落地节点
+                           Ghost Proxifier Pro 架构
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         目标进程 (e.g. Chrome)                               │
+│                                                                             │
+│  ┌──────────┐   ┌──────────┐   ┌──────────┐   ┌─────────────────────────┐  │
+│  │ DNS 查询  │   │ TCP 连接  │   │ 数据发送  │   │ 8.8.8.8:53             │  │
+│  │          │   │          │   │          │   │                         │  │
+│  │ getaddrinfo│   │ connect()│   │ send() / │   │ sendto(53)             │  │
+│  │GetAddrInfoW│   │ConnectEx()│  │WSASend() │   │WSASendTo()             │  │
+│  └────┬─────┘   └────┬─────┘   └────┬─────┘   └────┬──────────────────┘  │
+│       │              │              │              │                       │
+│       └──────┬───────┘              │              │                       │
+│              │                      │              │                       │
+│         ┌────┴─────┐           ┌────┴─────┐   ┌────┴─────┐                 │
+│         │  HOOK    │           │  HOOK    │   │  HOOK    │                 │
+│         └────┬─────┘           └────┬─────┘   └────┬─────┘                 │
+│              │                      │              │                       │
+│         ┌────┴─────┐           ┌────┴─────┐   ┌────┴─────┐                 │
+│         │ Local DNS │           │ 重定向到代理 │   │ Lazy Handshake        │
+│         │ Proxy     │           │ 保存目标到  │   │ 1. 检查 PendingMap    │
+│         │ UDP → TCP │           │ PendingMap │   │ 2. HTTP CONNECT       │
+│         │ 转发到     │           │           │   │ 3. 发送原始数据        │
+│         │ 8.8.8.8:53│           │           │   │                       │
+│         └────────────┘           └──────────┘   └─────────────────────────┘
+│                                                                             │
+│                    ghost_core.dll (注入到目标进程)                            │
+└─────────────────────────────────────────────────────────────────────────────┘
+                   │                       │
+                   │   127.0.0.1:2080      │
+                   │                       │
+            ┌──────┴───────┐      ┌────────┴────────┐
+            │ 上游 HTTP     │      │  DNS 解析结果   │
+            │  CONNECT 代理  │      │                 │
+            │ (V2Ray/Clash/ │      │   IP → 域名     │
+            │  NekoBox/...) │      │                 │
+            └──────────────┘      └─────────────────┘
 ```
 
-基于 MinHook 深度拦截 Winsock API（`connect`、`send`、`WSASend` 等 25+ 个函数），配合 **Lazy Handshake（延迟握手）** 机制——`connect()` 阶段非阻塞返回，首次 `send()` 才完成代理握手。Chrome 的非阻塞 IO 完全无感知，不会触发卡死检测。
+不装 TUN/TAP 虚拟网卡——那会被风控系统检测。不走 WFP 内核驱动——那需要 EV 证书签名。我们的路径是 **用户态 API Hook**，基于 MinHook 深度拦截 Winsock API 25+ 个函数。C++17 编写，极低内存占用，毫秒级注入完成。
 
-C++17 编写，极低内存占用，毫秒级注入完成。
+### 1. HTTP CONNECT 代理协议
+
+Ghost Proxifier 使用标准 **HTTP CONNECT** 方法与上游代理建立隧道：
+
+```http
+# 解析到域名时
+CONNECT www.google.com:443 HTTP/1.1\r\nHost: www.google.com:443\r\n\r\n
+
+# 解析不到域名时 (fallback)
+CONNECT 142.251.45.10:443 HTTP/1.1\r\nHost: 142.251.45.10:443\r\n\r\n
+```
+
+代理返回 `HTTP/1.1 200 Connection Established\r\n\r\n` 后，隧道建立，开始双向数据转发。
+
+`connect()` 拿到的目标是 **IP 地址**而非域名。Ghost Proxifier 通过 DNS 阶段建立的 **IP → 域名** 映射表，优先使用域名发起 CONNECT，让上游代理能做域名级路由分流。解析不到域名时 fallback 到 IP，此时上游可借助 GeoIP 规则调度。因此 **Local DNS 防污染** 至关重要。
+
+### 2. 延迟握手（Lazy Handshake）
+
+Chrome 等浏览器使用非阻塞 IO + 完成端口。如果在 `connect()` 阶段同步等待代理握手，会触发浏览器的卡死检测。
+
+Ghost Proxifier 的解决方案：
+
+| 阶段 | 操作 | 阻塞？ |
+|------|------|--------|
+| `connect()` | 重定向到代理地址，保存目标到 PendingMap | ❌ 非阻塞 |
+| 等待连接 | 应用事件循环正常运行 | ❌ |
+| `send()` 首次调用 | 从 PendingMap 取出目标，完成 HTTP CONNECT | ✅ 短暂 (< 5ms) |
+| 后续 `send()` | 直接转发 | ❌ |
+
+`connect()` 立即返回成功，应用以为连接已建立。真正的代理握手推迟到首次 `send()` 时完成，对应用完全透明。
+
+### 3. 内置 Local DNS
+
+系统 DNS 存在两个核心问题：
+- **DNS 泄露** — ISP 可看到你的所有 DNS 查询
+- **DNS 污染** — GFW 投毒返回虚假 IP，导致连接被重置
+
+Ghost Proxifier 的 DNS 流程：
+
+```
+应用 DNS 查询 (UDP)
+    ↓ Hook 拦截
+Local DNS Proxy (127.0.0.1:随机端口)
+    ↓ UDP → TCP 转换
+通过代理隧道 CONNECT 到 8.8.8.8:53
+    ↓ TCP DNS 查询
+Google DNS 返回真实结果
+    ↓ 记录 IP → 域名 映射（供 connect 阶段使用）
+```
+
+DNS 查询走加密代理隧道，杜绝 ISP 偷窥和 GFW 投毒。返回的 IP→域名映射表配合上游 GeoIP/GeoSite 分流规则，确保流量走最优路线。
+
+### 4. DoH 阻断
+
+Chrome 等浏览器默认启用 DNS-over-HTTPS（DoH），通过 HTTPS 直连 `8.8.8.8:443`、`1.1.1.1:443` 等 DoH 服务器，绕过了 Local DNS Proxy。
+
+Ghost Proxifier 识别已知 DoH 服务器 IP，在 `connect()` 阶段直接返回 `WSAECONNREFUSED`，强制浏览器回退到标准 DNS：
+
+```
+Chrome → connect(8.8.8.8:443)  → DoH 请求
+              ↓ Hook 识别为 DoH 服务器
+          返回 WSAECONNREFUSED
+              ↓ Chrome 回退
+Chrome → sendto(8.8.8.8:53)   → 标准 DNS → 被 Local DNS Proxy 接管 ✅
+```
+
+### 5. QUIC 阻断
+
+QUIC（HTTP/3）基于 UDP 443，同样会绕过代理。Ghost Proxifier 在 `sendto`/`WSASendTo` 和 `recvfrom`/`WSARecvFrom` 全路径阻断 UDP 443 流量，返回 `WSAENETUNREACH`，触发浏览器 TCP fallback（HTTP/2 或 HTTP/1.1），从而走 HTTP CONNECT 隧道。
 
 ---
 
@@ -86,13 +223,52 @@ C++17 编写，极低内存占用，毫秒级注入完成。
 
 ---
 
+## 使用
+
+### 基本用法
+
+通过 Pro 版图形界面操作：拖入目标进程即可自动注入，引擎会自动识别并注入该进程及其所有子进程。主界面提供进程列表、代理状态、流量统计等实时信息。
+
+上游代理节点、DNS 服务器、注入规则等所有配置均在图形界面中完成，无需手动编辑配置文件。
+
+### 日志示例
+
+```
+[14:08:09] [Init] Hooks installed successfully (PID: 3188)
+[14:08:19] [DNS-Proxy] GetAddrInfoW: play.googleapis.com -> [216.239.32.223] (1 IPs)
+[14:08:19] [hook] ConnectEx: 216.239.32.223:443 | play.googleapis.com
+[14:08:19] [Proxy] Handshake OK: 216.239.32.223:443 | play.googleapis.com
+[14:10:06] [DNS] Query: www.googleapis.com. -> A: [142.250.72.234, 142.251.45.10]
+[14:10:06] [DNS] Query: www.googleapis.com. -> AAAA: [2607:f8b0:4004:800::200e]
+```
+
+---
+
 ## 下载
 
 👉 **[Ghost Proxifier Pro Installer (MSI)](https://github.com/liliBestCoder/ghost-proxifier-pro/releases)**
 
-双击安装，自动配置。桌面快捷方式、开始菜单、控制面板卸载——该有的都有。支持静默安装（`msiexec /i /qn`），B 端批量部署无压力。
+双击安装，自动配置。桌面快捷方式、开始菜单、控制面板卸载——该有的都有。支持静默安装（`msiexec /i /qn`），企业批量部署无压力。
 
 <img src="upstream.png" width="680" alt="Upstream Settings" />
+
+---
+
+## Hook 接口列表
+
+| 接口 | 用途 |
+|------|------|
+| `connect` / `WSAConnect` / `ConnectEx` | TCP 连接重定向到代理；ConnectEx 支持同步/异步回调 Hook |
+| `send` / `WSASend` | 首次发送前完成 HTTP CONNECT 握手；已建立代理隧道直接转发 |
+| `recv` / `WSARecv` | 拦截非代理 socket 接收，强制应用通过代理重连 |
+| `sendto` / `WSASendTo` | DNS UDP 53 → Local DNS Proxy；QUIC UDP 443 全路径阻断 |
+| `recvfrom` / `WSARecvFrom` | DNS 应答拦截、IP-域名映射、DNS 源地址欺骗 |
+| `getaddrinfo` / `GetAddrInfoW` / `gethostbyname` | DNS 解析走代理 DNS-over-TCP |
+| `GetAddrInfoExW` / `DnsQuery_W` / `DnsQuery_A` / `DnsQueryEx` | 异步 DNS API 拦截（Windows 8+ / Chromium / Cygwin） |
+| `closesocket` | 清理 PendingMap 和代理完成状态 |
+| `WSAIoctl` | ConnectEx 关联 Hook（fallback） |
+| DoH 阻断 | 已知 DoH 服务器 IP 返回拒绝，强制回退标准 DNS |
+| QUIC 阻断 | UDP 443 send/sendto/recv 全路径阻断，返回 `WSAENETUNREACH` 触发 TCP fallback |
 
 ---
 
@@ -101,6 +277,10 @@ C++17 编写，极低内存占用，毫秒级注入完成。
 **Pro 版收费吗？**
 
 是的，Pro 版为付费授权软件。具体费用见软件内激活说明，或直接联系开发者。
+
+**和开源版有什么区别？**
+
+Pro 版提供现代化图形 UI、进程规则管理、流量可视化面板、进程树自动追踪、Watchdog 自动重连、MSI 安装包等高级功能。开源版为纯命令行工具。
 
 **如何反馈问题？**
 
@@ -115,4 +295,6 @@ C++17 编写，极低内存占用，毫秒级注入完成。
 
 ---
 
-Developed by **GhostTeam**.
+<p align="center">
+  Developed by <b>GhostTeam</b>.
+</p>
