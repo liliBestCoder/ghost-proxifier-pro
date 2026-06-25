@@ -24,8 +24,6 @@
   ·
   <a href="#使用">使用</a>
   ·
-  <a href="#hook-接口列表">Hook 接口列表</a>
-  ·
   <a href="#运行截图">运行截图</a>
   ·
   <a href="#faq">FAQ</a>
@@ -218,25 +216,6 @@ QUIC（HTTP/3）基于 UDP 443，同样会绕过代理。Ghost Proxifier 在 `se
 通过 Pro 版图形界面操作：拖入目标进程即可自动注入，引擎会自动识别并注入该进程及其所有子进程。主界面提供进程列表、代理状态、流量统计等实时信息。
 
 上游代理节点、DNS 服务器、注入规则等所有配置均在图形界面中完成，无需手动编辑配置文件。
-
-
----
-
-## Hook 接口列表
-
-| 接口 | 用途 |
-|------|------|
-| `connect` / `WSAConnect` / `ConnectEx` | TCP 连接重定向到代理；ConnectEx 支持同步/异步回调 Hook |
-| `send` / `WSASend` | 首次发送前完成 HTTP CONNECT 握手；已建立代理隧道直接转发 |
-| `recv` / `WSARecv` | 拦截非代理 socket 接收，强制应用通过代理重连 |
-| `sendto` / `WSASendTo` | DNS UDP 53 → Local DNS Proxy；QUIC UDP 443 全路径阻断 |
-| `recvfrom` / `WSARecvFrom` | DNS 应答拦截、IP-域名映射、DNS 源地址欺骗 |
-| `getaddrinfo` / `GetAddrInfoW` / `gethostbyname` | DNS 解析走代理 DNS-over-TCP |
-| `GetAddrInfoExW` / `DnsQuery_W` / `DnsQuery_A` / `DnsQueryEx` | 异步 DNS API 拦截（Windows 8+ / Chromium / Cygwin） |
-| `closesocket` | 清理 PendingMap 和代理完成状态 |
-| `WSAIoctl` | ConnectEx 关联 Hook（fallback） |
-| DoH 阻断 | 已知 DoH 服务器 IP 返回拒绝，强制回退标准 DNS |
-| QUIC 阻断 | UDP 443 send/sendto/recv 全路径阻断，返回 `WSAENETUNREACH` 触发 TCP fallback |
 
 ---
 

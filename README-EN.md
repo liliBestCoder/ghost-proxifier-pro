@@ -24,8 +24,6 @@
   ·
   <a href="#usage">Usage</a>
   ·
-  <a href="#hooked-functions">Hooked Functions</a>
-  ·
   <a href="#screenshots">Screenshots</a>
   ·
   <a href="#faq">FAQ</a>
@@ -219,25 +217,6 @@ Built-in Local DNS routes all DNS queries through the encrypted tunnel, eliminat
 Operate through the Pro graphical interface: drag and drop a target process to auto-inject. The engine automatically identifies and injects into the process and all its children. The main window provides a process list, proxy status, traffic statistics, and more in real time.
 
 All configuration — upstream proxy nodes, DNS servers, injection rules — is done within the GUI. No manual config file editing required.
-
-
----
-
-## Hooked Functions
-
-| Function | Purpose |
-|----------|---------|
-| `connect` / `WSAConnect` / `ConnectEx` | TCP connection redirection to proxy; ConnectEx supports both sync and async callback hooks |
-| `send` / `WSASend` | Complete HTTP CONNECT handshake before first send; direct forwarding for established proxy tunnels |
-| `recv` / `WSARecv` | Intercept non-proxy socket receives, force application to reconnect through proxy |
-| `sendto` / `WSASendTo` | DNS UDP 53 → Local DNS Proxy; QUIC UDP 443 full-path blocking |
-| `recvfrom` / `WSARecvFrom` | DNS response interception, IP-to-hostname mapping, DNS source address spoofing |
-| `getaddrinfo` / `GetAddrInfoW` / `gethostbyname` | DNS resolution via proxy DNS-over-TCP |
-| `GetAddrInfoExW` / `DnsQuery_W` / `DnsQuery_A` / `DnsQueryEx` | Async DNS API interception (Windows 8+ / Chromium / Cygwin) |
-| `closesocket` | Cleanup PendingMap and proxy completion state |
-| `WSAIoctl` | ConnectEx deferred hook (fallback) |
-| DoH Blocking | Return connection refused for known DoH server IPs, forcing standard DNS fallback |
-| QUIC Blocking | UDP 443 send/sendto/recv full-path blocking, return `WSAENETUNREACH` to trigger TCP fallback |
 
 ---
 
