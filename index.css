@@ -330,19 +330,20 @@ section {
 /* Pricing */
 .free-tier-info {
     text-align: center;
-    max-width: 700px;
-    margin: 0 auto 30px;
-    padding: 16px 24px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid var(--glass-border);
-    border-radius: 14px;
-    font-size: 0.95rem;
-    line-height: 1.7;
+    max-width: 750px;
+    margin: 0 auto 40px;
+    padding: 20px 32px;
+    background: linear-gradient(135deg, rgba(108, 92, 231, 0.08), rgba(255, 107, 157, 0.06));
+    border: 1px solid rgba(108, 92, 231, 0.25);
+    border-radius: 16px;
+    font-size: 1.05rem;
+    line-height: 1.8;
     color: var(--text-dim);
+    box-shadow: 0 0 30px rgba(108, 92, 231, 0.06);
 }
 
 .free-tier-info strong {
-    color: var(--text-main);
+    color: var(--secondary);
 }
 
 .pricing-grid {
