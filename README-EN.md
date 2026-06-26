@@ -242,7 +242,3 @@ The Pro edition offers a modern graphical UI, process rule management, traffic v
 
 - Telegram Channel: [@ghostproxifier](https://t.me/ghostproxifier)
 - Telegram Group: [Ghost Proxifier](https://t.me/+SCVIJJFocWAxN2Y9)
-
-<p align="center">
-  Developed by <b>GhostTeam</b>.
-</p>

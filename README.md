@@ -241,7 +241,3 @@ Pro 版提供现代化图形 UI、进程规则管理、流量可视化面板、�
 
 - Telegram 频道: [@ghostproxifier](https://t.me/ghostproxifier)
 - Telegram 群组: [Ghost Proxifier](https://t.me/+SCVIJJFocWAxN2Y9)
-
-<p align="center">
-  Developed by <b>GhostTeam</b>.
-</p>
