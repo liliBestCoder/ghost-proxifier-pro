@@ -208,7 +208,7 @@ Built-in Local DNS routes all DNS queries through the encrypted tunnel, eliminat
 
 ## Usage
 
-Operate through the Pro graphical interface: drag and drop a target process to auto-inject. The engine automatically identifies and injects into the process and all its children. The main window provides a process list, proxy status, traffic statistics, and more in real time.
+Operate through the Pro graphical interface: drag and drop or manually select a target process shortcut or exe to auto-inject. The engine automatically identifies and injects into the process and all its children. The main window provides a process list, proxy status, traffic statistics, and more in real time.
 
 All configuration — upstream proxy nodes, DNS servers, injection rules — is done within the GUI. No manual config file editing required.
 
@@ -226,7 +226,9 @@ All configuration — upstream proxy nodes, DNS servers, injection rules — is 
 
 **Is the Pro edition paid?**
 
-Yes, Ghost Proxifier Pro is a paid, licensed product. See the in-app activation dialog for pricing details, or contact the developer directly.
+Yes, Ghost Proxifier Pro is a paid, licensed product. Non-Pro users cannot drag and drop shortcuts or exe programs for direct injection — they may only use the manual selection dialog to choose a program's shortcut or exe, with a limit of 3 applications. Each injection session is capped at 2 hours, after which a restart is required to continue. Pro paid users have no such restrictions: drag and drop as many applications as you want with no per-session time limit. For Pro pricing, please refer to the official website or consult the developer through the community group.
+
+Both Pro and non-Pro users have full access to automatic process tree injection tracking, traffic visualization, DNS anti-poisoning, and other features.
 
 **How is this different from the open-source edition?**
 
