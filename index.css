@@ -328,6 +328,23 @@ section {
 }
 
 /* Pricing */
+.free-tier-info {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 30px;
+    padding: 16px 24px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-dim);
+}
+
+.free-tier-info strong {
+    color: var(--text-main);
+}
+
 .pricing-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
