@@ -37,60 +37,77 @@
             width: 100%;
             height: 100%;
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            /* 科技蓝渐变背景与微弱发光边框 */
+            background: linear-gradient(135deg, rgba(88, 166, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border: 1px solid rgba(88, 166, 255, 0.25);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             padding: 16px;
             position: relative;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             color: var(--TEXT-MAIN);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), inset 0 0 10px rgba(88, 166, 255, 0.05);
+            /* 添加蓝色呼吸光效 */
+            animation: border-glow 3s infinite alternate ease-in-out;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Hover Glow and Border Effect matching mock-up */
+        /* 蓝色呼吸光效动画 */
+        @keyframes border-glow {
+            0% {
+                border-color: rgba(88, 166, 255, 0.2);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 4px rgba(88, 166, 255, 0.05);
+            }
+            100% {
+                border-color: rgba(88, 166, 255, 0.4);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 10px rgba(88, 166, 255, 0.2);
+            }
+        }
+
+        /* 悬停增强发光效果 */
         .ad-card:hover {
             transform: translateY(-2px);
             border-color: var(--ACCENT-BLUE);
-            box-shadow: 0 8px 24px rgba(88, 166, 255, 0.15), 0 0 15px rgba(88, 166, 255, 0.1);
-            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 8px 24px rgba(88, 166, 255, 0.25), 0 0 15px rgba(88, 166, 255, 0.15);
+            background: linear-gradient(135deg, rgba(88, 166, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%);
+            animation: none; /* 悬停时停止呼吸动画 */
         }
 
-        /* Top-Right Sponsored Badge */
+        /* 更加突出的赞助商徽章 */
         .sponsored-badge {
             position: absolute;
             top: 12px;
             right: 12px;
             font-size: 10px;
-            color: var(--TEXT-MUTED);
-            background: rgba(255, 255, 255, 0.08);
+            color: var(--ACCENT-BLUE);
+            background: rgba(88, 166, 255, 0.12);
             padding: 2px 8px;
             border-radius: 4px;
-            font-weight: 500;
+            font-weight: bold;
             letter-spacing: 0.5px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(88, 166, 255, 0.2);
             transition: all 0.3s;
         }
 
         .ad-card:hover .sponsored-badge {
-            color: var(--ACCENT-BLUE);
-            border-color: rgba(88, 166, 255, 0.2);
-            background: rgba(88, 166, 255, 0.05);
+            background: var(--ACCENT-BLUE);
+            color: #0d1117;
+            border-color: var(--ACCENT-BLUE);
         }
 
-        /* Heading Style */
+        /* 标题样式 */
         .ad-title {
-            font-size: 22px;
+            font-size: 21px;
             font-weight: 800;
             color: #ffffff;
             margin-top: 16px;
             margin-bottom: auto;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
             line-height: 1.3;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
-        /* Bottom Row Details */
+        /* 底部明细 */
         .ad-footer {
             display: flex;
             align-items: center;
@@ -102,42 +119,46 @@
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(88, 166, 255, 0.1);
+            border: 1px solid rgba(88, 166, 255, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--TEXT-MAIN);
+            color: var(--ACCENT-BLUE);
             font-size: 14px;
             flex-shrink: 0;
             transition: all 0.3s;
         }
 
         .ad-card:hover .ad-icon-wrapper {
-            background: rgba(88, 166, 255, 0.15);
-            color: var(--ACCENT-BLUE);
+            background: var(--ACCENT-BLUE);
+            color: #0d1117;
             border-color: var(--ACCENT-BLUE);
-            transform: scale(1.05);
+            transform: scale(1.05) rotate(15deg);
         }
 
         .ad-desc {
             font-size: 11px;
             color: var(--TEXT-MUTED);
             line-height: 1.4;
-            font-weight: 500;
+            font-weight: 600;
+        }
+        
+        .ad-card:hover .ad-desc {
+            color: #ffffff;
         }
     </style>
 </head>
 <body>
-    <!-- Affiliate URL -->
+    <!-- 推广链接 -->
     <a href="https://bandwagonhost.com/aff.php?aff=83283" target="_blank" class="ad-card">
-        <span class="sponsored-badge">Sponsored</span>
-        <h2 class="ad-title">VPS<br>Hosting<br>Sale</h2>
+        <span class="sponsored-badge">赞助商</span>
+        <h2 class="ad-title">搬瓦工 VPS<br>限时特惠</h2>
         <div class="ad-footer">
             <div class="ad-icon-wrapper">
                 <i class="fas fa-server"></i>
             </div>
-            <p class="ad-desc">Get 50% Off<br>Premium Servers</p>
+            <p class="ad-desc">尊享优质服务器<br>5 折特惠通道</p>
         </div>
     </a>
 </body>
