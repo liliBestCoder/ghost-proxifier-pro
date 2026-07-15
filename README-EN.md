@@ -224,11 +224,9 @@ All configuration — upstream proxy nodes, DNS servers, injection rules — is 
 
 ## FAQ
 
-**Is the Pro edition paid?**
+**Is Ghost Proxifier paid?**
 
-Yes, Ghost Proxifier Pro is a paid, licensed product. Non-Pro users cannot drag and drop shortcuts or exe programs for direct injection — they may only use the manual selection dialog to choose a program's shortcut or exe, with a limit of 3 applications. Each injection session is capped at 2 hours, after which a restart is required to continue. Pro paid users have no such restrictions: drag and drop as many applications as you want with no per-session time limit. For Pro pricing, please refer to the official website or consult the developer through the community group.
-
-Both Pro and non-Pro users have full access to automatic process tree injection tracking, traffic visualization, DNS anti-poisoning, and other features.
+No. Ghost Proxifier is now completely free and has open-sourced all Pro features. All users can enjoy unlimited drag-and-drop injection, unlimited concurrent applications, and no per-session runtime limits. There are no longer any process or time restrictions.
 
 **How is this different from the open-source edition?**
 
