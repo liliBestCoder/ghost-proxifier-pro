@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +20,8 @@
             padding: 0;
         }
 
-        html, body {
+        html,
+        body {
             background: transparent;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             overflow: hidden;
@@ -53,7 +55,7 @@
             cursor: pointer;
             color: var(--TEXT-MAIN);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            
+
             /* 默认隐藏，配合淡入淡出动画 */
             opacity: 0;
             visibility: hidden;
@@ -68,6 +70,7 @@
                 border-color: rgba(88, 166, 255, 0.2);
                 box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 4px rgba(88, 166, 255, 0.05);
             }
+
             100% {
                 border-color: rgba(88, 166, 255, 0.4);
                 box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 10px rgba(88, 166, 255, 0.2);
@@ -162,7 +165,7 @@
             line-height: 1.4;
             font-weight: 600;
         }
-        
+
         .ad-card:hover .ad-desc {
             color: #ffffff;
         }
@@ -187,30 +190,72 @@
 
         .dot.active {
             background: var(--ACCENT-BLUE);
-            width: 14px; /* 横向拉伸效果 */
+            width: 14px;
+            /* 横向拉伸效果 */
             border-radius: 3px;
+        }
+
+        /* 广告容器布局 */
+        .ad-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            padding-bottom: 2px;
+        }
+
+        .ad-header-title {
+            font-size: 11px;
+            color: var(--TEXT-MUTED);
+            margin-bottom: 8px;
+            padding-left: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            user-select: none;
+        }
+
+        .ad-header-title::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--TEXT-MUTED);
+            opacity: 0.6;
+        }
+
+        .ad-slider {
+            position: relative;
+            width: 100%;
+            flex: 1;
         }
     </style>
 </head>
+
 <body>
 
-    <div class="ad-slider">
-        <!-- 广告位 1 (搬瓦工) -->
-        <a href="https://bandwagonhost.com/aff.php?aff=83283" target="_blank" class="ad-card active">
-            <span class="sponsored-badge">赞助商</span>
-            <h2 class="ad-title">搬瓦工 VPS<br>限时特惠</h2>
-            <div class="ad-footer">
-                <div class="ad-icon-wrapper">
-                    <i class="fas fa-server"></i>
+    <div class="ad-container">
+        <div class="ad-header-title">我是一个广告</div>
+        <div class="ad-slider">
+            <!-- 广告位 1 (搬瓦工) -->
+            <a href="https://bandwagonhost.com/aff.php?aff=83283" target="_blank" class="ad-card active">
+                <span class="sponsored-badge">赞助商</span>
+                <h2 class="ad-title">搬瓦工 VPS<br>限时特惠</h2>
+                <div class="ad-footer">
+                    <div class="ad-icon-wrapper">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <p class="ad-desc">尊享优质服务器<br>5 折特惠通道</p>
                 </div>
-                <p class="ad-desc">尊享优质服务器<br>5 折特惠通道</p>
+            </a>
+            <!-- 指示器 -->
+            <div class="slider-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
             </div>
-        </a>
-        
-        <!-- 指示器 -->
-        <div class="slider-dots">
-            <span class="dot active"></span>
-            <span class="dot"></span>
         </div>
     </div>
 
@@ -222,9 +267,9 @@
         function showSlide(index) {
             slides[currentSlide].classList.remove('active');
             dots[currentSlide].classList.remove('active');
-            
+
             currentSlide = index;
-            
+
             slides[currentSlide].classList.add('active');
             dots[currentSlide].classList.add('active');
         }
@@ -238,4 +283,5 @@
         setInterval(nextSlide, 5000);
     </script>
 </body>
+
 </html>
