@@ -286,14 +286,12 @@
         // 默认每隔 5 秒切换一次广告
         setInterval(nextSlide, 5000);
 
-        // 拦截点击事件以通过外部浏览器打开链接
+        // 拦截点击事件，向父级窗口发送消息以便通过外部默认浏览器打开链接
         document.addEventListener('click', function(e) {
             const anchor = e.target.closest('a');
             if (anchor && anchor.href) {
-                if (window.chrome && window.chrome.webview && window.chrome.webview.postMessage) {
-                    e.preventDefault();
-                    window.chrome.webview.postMessage("openLink:" + anchor.href);
-                }
+                e.preventDefault();
+                window.parent.postMessage({ type: 'openLink', url: anchor.href }, '*');
             }
         });
     </script>
