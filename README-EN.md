@@ -234,7 +234,7 @@ The Pro edition offers a modern graphical UI, process rule management, traffic v
 
 **How do I report an issue?**
 
-[Submit an Issue](https://github.com/liliBestCoder/ghost-proxifier-pro/issues). Pro users receive priority response.
+If you encounter any issues during installation or usage, please feel free to [Submit an Issue](https://github.com/liliBestCoder/ghost-proxifier-pro/issues). We will address and fix it as soon as possible.
 
 **Community**
 

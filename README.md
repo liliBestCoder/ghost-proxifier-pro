@@ -233,7 +233,7 @@ Pro 版提供现代化图形 UI、进程规则管理、流量可视化面板、�
 
 **如何反馈问题？**
 
-[提交 Issue](https://github.com/liliBestCoder/ghost-proxifier-pro/issues)，Pro 版用户优先响应。
+如果您在安装或使用过程中遇到任何问题，欢迎直接 [提交 Issue](https://github.com/liliBestCoder/ghost-proxifier-pro/issues)，我们会尽快进行解答与修复。
 
 **社群**
 
