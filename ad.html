@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghost Proxifier Sponsored Ad</title>
+    <!-- FontAwesome for the server icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --ACCENT-BLUE: #58a6ff;
+            --TEXT-MAIN: #c9d1d9;
+            --TEXT-MUTED: #8b949e;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            background: transparent;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ad-card {
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 16px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--TEXT-MAIN);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Hover Glow and Border Effect matching mock-up */
+        .ad-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--ACCENT-BLUE);
+            box-shadow: 0 8px 24px rgba(88, 166, 255, 0.15), 0 0 15px rgba(88, 166, 255, 0.1);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        /* Top-Right Sponsored Badge */
+        .sponsored-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 10px;
+            color: var(--TEXT-MUTED);
+            background: rgba(255, 255, 255, 0.08);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        .ad-card:hover .sponsored-badge {
+            color: var(--ACCENT-BLUE);
+            border-color: rgba(88, 166, 255, 0.2);
+            background: rgba(88, 166, 255, 0.05);
+        }
+
+        /* Heading Style */
+        .ad-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-top: 16px;
+            margin-bottom: auto;
+            letter-spacing: 0.5px;
+            line-height: 1.3;
+        }
+
+        /* Bottom Row Details */
+        .ad-footer {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .ad-icon-wrapper {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--TEXT-MAIN);
+            font-size: 14px;
+            flex-shrink: 0;
+            transition: all 0.3s;
+        }
+
+        .ad-card:hover .ad-icon-wrapper {
+            background: rgba(88, 166, 255, 0.15);
+            color: var(--ACCENT-BLUE);
+            border-color: var(--ACCENT-BLUE);
+            transform: scale(1.05);
+        }
+
+        .ad-desc {
+            font-size: 11px;
+            color: var(--TEXT-MUTED);
+            line-height: 1.4;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <!-- Affiliate URL -->
+    <a href="https://bandwagonhost.com/aff.php?aff=83283" target="_blank" class="ad-card">
+        <span class="sponsored-badge">Sponsored</span>
+        <h2 class="ad-title">VPS<br>Hosting<br>Sale</h2>
+        <div class="ad-footer">
+            <div class="ad-icon-wrapper">
+                <i class="fas fa-server"></i>
+            </div>
+            <p class="ad-desc">Get 50% Off<br>Premium Servers</p>
+        </div>
+    </a>
+</body>
+</html>
