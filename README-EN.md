@@ -226,7 +226,7 @@ All configuration — upstream proxy nodes, DNS servers, injection rules — is 
 
 **Is Ghost Proxifier paid?**
 
-No. Ghost Proxifier is now completely free and has open-sourced all Pro features. All users can enjoy unlimited drag-and-drop injection, unlimited concurrent applications, and no per-session runtime limits. There are no longer any process or time restrictions.
+No. Ghost Proxifier is now completely free and has unlocked all Pro features. All users can enjoy unlimited drag-and-drop injection, unlimited concurrent applications, and no per-session runtime limits. There are no longer any process or time restrictions.
 
 **How is this different from the open-source edition?**
 
@@ -235,6 +235,18 @@ The Pro edition offers a modern graphical UI, process rule management, traffic v
 **How do I report an issue?**
 
 If you encounter any issues during installation or usage, please feel free to [Submit an Issue](https://github.com/liliBestCoder/ghost-proxifier-pro/issues). We will address and fix it as soon as possible.
+
+## Enterprise Partnership & Customization
+
+If your enterprise requires centralized control and auditing in scenarios such as cross-border e-commerce, game proxying, secure office networks, or compliance auditing, we offer **Enterprise Edition partnership and custom development**:
+
+* **Global Config Distribution**: Centrally distribute upstream proxy nodes, routing policies, and target rules. Zero-config for employees with silent updates.
+* **Access Monitoring & Auditing**: Fine-grained tracking of network activity, centralized logging, and deep behavioral analysis of external traffic.
+* **Dynamic Access Blocking**: Real-time blocking based on business rules, DoH detection, DNS responses, or specific domain signatures.
+* **Custom Drivers & Protocols**: Support for advanced traffic hijacking of non-Winsock applications, kernel-level tunnel solutions, and custom transport protocols.
+
+Welcome to contact us for commercial support and customized enterprise plans:
+* **Telegram**: [@ghostproxifier](https://t.me/ghostproxifier)
 
 **Community**
 
