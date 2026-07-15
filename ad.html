@@ -207,24 +207,25 @@
         .ad-header-title {
             font-size: 11px;
             color: var(--TEXT-MUTED);
-            margin-bottom: 8px;
-            padding-left: 4px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            margin-bottom: 10px;
+            padding-left: 2px;
             display: flex;
             align-items: center;
             gap: 6px;
             user-select: none;
+            font-weight: 500;
         }
 
-        .ad-header-title::before {
-            content: '';
-            display: inline-block;
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: var(--TEXT-MUTED);
-            opacity: 0.6;
+        .ad-badge {
+            font-size: 8px;
+            font-weight: 700;
+            padding: 1px 4px;
+            border-radius: 3px;
+            background: rgba(88, 166, 255, 0.12);
+            color: var(--ACCENT-BLUE);
+            border: 1px solid rgba(88, 166, 255, 0.25);
+            line-height: 1.1;
+            text-transform: uppercase;
         }
 
         .ad-slider {
@@ -238,7 +239,10 @@
 <body>
 
     <div class="ad-container">
-        <div class="ad-header-title">我是一个广告</div>
+        <div class="ad-header-title">
+            <span class="ad-badge">AD</span>
+            <span>我是一个广告</span>
+        </div>
         <div class="ad-slider">
             <!-- 广告位 1 (搬瓦工) -->
             <a href="https://bandwagonhost.com/aff.php?aff=83283" target="_blank" class="ad-card active">
