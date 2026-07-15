@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ghost Proxifier Sponsored Ad</title>
-    <!-- FontAwesome for the server icon -->
+    <title>Ghost Proxifier Sponsored Ads</title>
+    <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -25,34 +25,44 @@
             overflow: hidden;
             width: 100%;
             height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
+        /* 轮播外容器 */
+        .ad-slider {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 单个广告卡片样式 */
         .ad-card {
+            position: absolute;
+            top: 0;
+            left: 0;
             display: flex;
             flex-direction: column;
             text-decoration: none;
             width: 100%;
             height: 100%;
             border-radius: 12px;
-            /* 科技蓝渐变背景与微弱发光边框 */
             background: linear-gradient(135deg, rgba(88, 166, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
             border: 1px solid rgba(88, 166, 255, 0.25);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             padding: 16px;
-            position: relative;
             cursor: pointer;
             color: var(--TEXT-MAIN);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), inset 0 0 10px rgba(88, 166, 255, 0.05);
-            /* 添加蓝色呼吸光效 */
-            animation: border-glow 3s infinite alternate ease-in-out;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            
+            /* 默认隐藏，配合淡入淡出动画 */
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.95);
+            transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out, visibility 0.6s;
+            pointer-events: none;
         }
 
-        /* 蓝色呼吸光效动画 */
+        /* 呼吸发光动画 */
         @keyframes border-glow {
             0% {
                 border-color: rgba(88, 166, 255, 0.2);
@@ -64,16 +74,25 @@
             }
         }
 
-        /* 悬停增强发光效果 */
+        /* 激活（显示）的广告卡片 */
+        .ad-card.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+            pointer-events: auto;
+            animation: border-glow 3s infinite alternate ease-in-out;
+        }
+
+        /* 悬停发光 */
         .ad-card:hover {
             transform: translateY(-2px);
             border-color: var(--ACCENT-BLUE);
             box-shadow: 0 8px 24px rgba(88, 166, 255, 0.25), 0 0 15px rgba(88, 166, 255, 0.15);
             background: linear-gradient(135deg, rgba(88, 166, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%);
-            animation: none; /* 悬停时停止呼吸动画 */
+            animation: none;
         }
 
-        /* 更加突出的赞助商徽章 */
+        /* 赞助商标签 */
         .sponsored-badge {
             position: absolute;
             top: 12px;
@@ -107,7 +126,7 @@
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
-        /* 底部明细 */
+        /* 底部信息 */
         .ad-footer {
             display: flex;
             align-items: center;
@@ -147,19 +166,88 @@
         .ad-card:hover .ad-desc {
             color: #ffffff;
         }
+
+        /* 底部指示器 (Dots) */
+        .slider-dots {
+            position: absolute;
+            bottom: 12px;
+            right: 16px;
+            display: flex;
+            gap: 6px;
+            z-index: 10;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dot.active {
+            background: var(--ACCENT-BLUE);
+            width: 14px; /* 横向拉伸效果 */
+            border-radius: 3px;
+        }
     </style>
 </head>
 <body>
-    <!-- 推广链接 -->
-    <a href="https://bandwagonhost.com/aff.php?aff=83283" target="_blank" class="ad-card">
-        <span class="sponsored-badge">赞助商</span>
-        <h2 class="ad-title">搬瓦工 VPS<br>限时特惠</h2>
-        <div class="ad-footer">
-            <div class="ad-icon-wrapper">
-                <i class="fas fa-server"></i>
+
+    <div class="ad-slider">
+        <!-- 广告位 1 (搬瓦工) -->
+        <a href="https://bandwagonhost.com/aff.php?aff=83283" target="_blank" class="ad-card active">
+            <span class="sponsored-badge">赞助商</span>
+            <h2 class="ad-title">搬瓦工 VPS<br>限时特惠</h2>
+            <div class="ad-footer">
+                <div class="ad-icon-wrapper">
+                    <i class="fas fa-server"></i>
+                </div>
+                <p class="ad-desc">尊享优质服务器<br>5 折特惠通道</p>
             </div>
-            <p class="ad-desc">尊享优质服务器<br>5 折特惠通道</p>
+        </a>
+
+        <!-- 广告位 2 (第二个推广链接占位) -->
+        <a href="https://bandwagonhost.com/aff.php?aff=83283" target="_blank" class="ad-card">
+            <span class="sponsored-badge">独家推荐</span>
+            <h2 class="ad-title">CN2 GIA<br>极速网络</h2>
+            <div class="ad-footer">
+                <div class="ad-icon-wrapper">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <p class="ad-desc">双程直连优化<br>低延迟稳定体验</p>
+            </div>
+        </a>
+        
+        <!-- 指示器 -->
+        <div class="slider-dots">
+            <span class="dot active"></span>
+            <span class="dot"></span>
         </div>
-    </a>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.ad-card');
+        const dots = document.querySelectorAll('.dot');
+
+        function showSlide(index) {
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+            
+            currentSlide = index;
+            
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            let nextIndex = (currentSlide + 1) % slides.length;
+            showSlide(nextIndex);
+        }
+
+        // 默认每隔 5 秒切换一次广告
+        setInterval(nextSlide, 5000);
+    </script>
 </body>
 </html>
