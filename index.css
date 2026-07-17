@@ -722,3 +722,21 @@ section {
         font-size: 0.85rem;
     }
 }
+
+/* Language Switcher Styling */
+.lang-switch {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s;
+}
+
+.lang-switch:hover {
+    border-color: var(--primary);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--primary) !important;
+}
