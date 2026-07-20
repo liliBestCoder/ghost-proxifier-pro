@@ -233,7 +233,7 @@ Pro 版提供现代化图形 UI、进程规则管理、流量可视化面板、�
 
 **如何反馈问题？**
 
-如果您在安装或使用过程中遇到任何问题，欢迎直接 [提交 Issue](https://github.com/liliBestCoder/ghost-proxifier-pro/issues)，我们会尽快进行解答与修复。
+如您在安装、使用过程中遇到任何问题，或有相关需求与建议，欢迎加入 QQ 群（**945138408**）或 Telegram 群组进行反馈，也可以直接 [提交 Issue](https://github.com/liliBestCoder/ghost-proxifier-pro/issues)，我们会尽快进行解答与优化。
 
 ## 企业合作与定制化需求
 
@@ -247,7 +247,9 @@ Pro 版提供现代化图形 UI、进程规则管理、流量可视化面板、�
 欢迎企业客户联系探讨合作，获取商业支持与专属定制方案：
 * **Telegram**: [@ghostproxifier](https://t.me/ghostproxifier)
 
-**社群**
+**社群与反馈**
 
-- Telegram 频道: [@ghostproxifier](https://t.me/ghostproxifier)
-- Telegram 群组: [Ghost Proxifier](https://t.me/+SCVIJJFocWAxN2Y9)
+如有任何安装问题、使用问题或需求建议，欢迎加入社群与我们交流反馈：
+- **QQ 群**: **945138408**
+- **Telegram 频道**: [@ghostproxifier](https://t.me/ghostproxifier)
+- **Telegram 群组**: [Ghost Proxifier](https://t.me/+SCVIJJFocWAxN2Y9)

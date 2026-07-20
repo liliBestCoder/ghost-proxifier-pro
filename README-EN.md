@@ -234,7 +234,7 @@ The Pro edition offers a modern graphical UI, process rule management, traffic v
 
 **How do I report an issue?**
 
-If you encounter any issues during installation or usage, please feel free to [Submit an Issue](https://github.com/liliBestCoder/ghost-proxifier-pro/issues). We will address and fix it as soon as possible.
+If you encounter any installation issues, usage questions, or feature requests, feel free to join our QQ group (**945138408**) or Telegram group for feedback, or [Submit an Issue](https://github.com/liliBestCoder/ghost-proxifier-pro/issues). We will address and fix it as soon as possible.
 
 ## Enterprise Partnership & Customization
 
@@ -248,7 +248,9 @@ If your enterprise requires centralized control and auditing in scenarios such a
 Welcome to contact us for commercial support and customized enterprise plans:
 * **Telegram**: [@ghostproxifier](https://t.me/ghostproxifier)
 
-**Community**
+**Community & Feedback**
 
-- Telegram Channel: [@ghostproxifier](https://t.me/ghostproxifier)
-- Telegram Group: [Ghost Proxifier](https://t.me/+SCVIJJFocWAxN2Y9)
+For any installation issues, usage questions, or feature requests, welcome to join our community:
+- **QQ Group**: **945138408**
+- **Telegram Channel**: [@ghostproxifier](https://t.me/ghostproxifier)
+- **Telegram Group**: [Ghost Proxifier](https://t.me/+SCVIJJFocWAxN2Y9)

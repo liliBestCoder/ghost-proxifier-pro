@@ -439,9 +439,24 @@ section {
     height: 24px;
 }
 
+.contact-info {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px 8px;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+}
+
 .contact-info a {
     color: var(--primary);
     text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
 }
 
 .copyright {
