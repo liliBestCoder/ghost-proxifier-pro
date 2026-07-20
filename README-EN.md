@@ -212,6 +212,10 @@ Operate through the Pro graphical interface: drag and drop or manually select a 
 
 All configuration — upstream proxy nodes, DNS servers, injection rules — is done within the GUI. No manual config file editing required.
 
+> [!WARNING]
+> **Important Usage Notice**:
+> Before dragging a shortcut (`.lnk`) or executable (`.exe`) file into Ghost Proxifier Pro, please ensure there are **no existing running instances** of the target process in the background. If an instance is already running, proxy injection will not succeed (the status indicator light will not illuminate). Please completely exit the target process before dragging it in to launch.
+
 ## Screenshots
 
 <img src="process.png" width="880" alt="Process Management" />
