@@ -1,10 +1,10 @@
 <!-- LOGO & CONTACT -->
 <p align="right">
-  <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=jLD98s%2BuMM87y8zEcP6tBhrYEyCh2H9gnwigYoYoNLIjY4XqRWTFT0cmx0QDF4hT&busi_data=eyJncm91cENvZGUiOiI5NDUxMzg0MDgiLCJ0b2tlbiI6Imh0cHlaWUViTURaNXoyNklyMGI1akVIcFI5Q3ZIVEFzYktZTEQyRkUwallRck1tQ0d4SFN1d3haNmVMR0lzL3kiLCJ1aW4iOiIxODcxODE0NzQ5In0%3D&data=iw28-MBoXAQ6Pc8ThvaD6YOIC2xcOqodEkkc4rW6JgVNZWNxS5Ka8rqbOiJFZov5cN1L6atFKQwdpoHkdb34fw&svctype=4&tempid=h5_group_info" target="_blank">QQ群: 945138408</a>
+  <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=jLD98s%2BuMM87y8zEcP6tBhrYEyCh2H9gnwigYoYoNLIjY4XqRWTFT0cmx0QDF4hT&busi_data=eyJncm91cENvZGUiOiI5NDUxMzg0MDgiLCJ0b2tlbiI6Imh0cHlaWUViTURaNXoyNklyMGI1akVIcFI5Q3ZIVEFzYktZTEQyRkUwallRck1tQ0d4SFN1d3haNmVMR0lzL3kiLCJ1aW4iOiIxODcxODE0NzQ5In0%3D&data=iw28-MBoXAQ6Pc8ThvaD6YOIC2xcOqodEkkc4rW6JgVNZWNxS5Ka8rqbOiJFZov5cN1L6atFKQwdpoHkdb34fw&svctype=4&tempid=h5_group_info" target="_blank">QQ群</a>
   &nbsp;·&nbsp;
-  <a href="https://t.me/ghostproxifier" target="_blank">Telegram 频道</a>
+  <a href="https://t.me/ghostproxifier" target="_blank">TG频道</a>
   &nbsp;·&nbsp;
-  <a href="https://t.me/+SCVIJJFocWAxN2Y9" target="_blank">Telegram 群组</a>
+  <a href="https://t.me/+SCVIJJFocWAxN2Y9" target="_blank">TG群组</a>
 </p>
 
 <p align="center">
@@ -51,24 +51,24 @@
 
 ## 已支持应用
 
-<table>
+<table width="100%">
   <tr>
-    <td align="center"><img src="icons/chrome.exe.png" width="40" alt="Chrome"><br><sub>Chrome</sub></td>
-    <td align="center"><img src="icons/msedge.exe.png" width="40" alt="MS Edge"><br><sub>MS Edge</sub></td>
-    <td align="center"><img src="icons/claude.exe.png" width="40" alt="Claude Code"><br><sub>Claude Code</sub></td>
-    <td align="center"><img src="icons/Codex.png" width="40" alt="Codex"><br><sub>Codex</sub></td>
-    <td align="center"><img src="icons/antigravity.exe.png" width="40" alt="Antigravity"><br><sub>Antigravity</sub></td>
-    <td align="center"><img src="icons/node.png" width="40" alt="Node.js"><br><sub>Node.js</sub></td>
-    <td align="center"><img src="icons/python.exe.png" width="40" alt="Python"><br><sub>Python</sub></td>
+    <td align="center" width="14.28%"><img src="icons/chrome.exe.png" width="40" alt="Chrome"><br><sub>Chrome</sub></td>
+    <td align="center" width="14.28%"><img src="icons/msedge.exe.png" width="40" alt="MS Edge"><br><sub>MS Edge</sub></td>
+    <td align="center" width="14.28%"><img src="icons/claude.exe.png" width="40" alt="Claude Code"><br><sub>Claude Code</sub></td>
+    <td align="center" width="14.28%"><img src="icons/Codex.png" width="40" alt="Codex"><br><sub>Codex</sub></td>
+    <td align="center" width="14.28%"><img src="icons/antigravity.exe.png" width="40" alt="Antigravity"><br><sub>Antigravity</sub></td>
+    <td align="center" width="14.28%"><img src="icons/node.png" width="40" alt="Node.js"><br><sub>Node.js</sub></td>
+    <td align="center" width="14.28%"><img src="icons/python.exe.png" width="40" alt="Python"><br><sub>Python</sub></td>
   </tr>
   <tr>
-    <td align="center"><img src="icons/ssh.png" width="40" alt="SSH"><br><sub>SSH</sub></td>
-    <td align="center"><img src="icons/finalshell.exe.png" width="40" alt="FinalShell"><br><sub>FinalShell</sub></td>
-    <td align="center"><img src="icons/xshell.exe.png" width="40" alt="Xshell"><br><sub>Xshell</sub></td>
-    <td align="center"><img src="icons/mysqlworkbench.exe.png" width="40" alt="MySQL Workbench"><br><sub>MySQL Workbench</sub></td>
-    <td align="center"><img src="icons/cmd.exe.png" width="40" alt="CMD"><br><sub>CMD</sub></td>
-    <td align="center"><img src="icons/powershell.exe.png" width="40" alt="PowerShell"><br><sub>PowerShell</sub></td>
-    <td></td>
+    <td align="center" width="14.28%"><img src="icons/ssh.png" width="40" alt="SSH"><br><sub>SSH</sub></td>
+    <td align="center" width="14.28%"><img src="icons/finalshell.exe.png" width="40" alt="FinalShell"><br><sub>FinalShell</sub></td>
+    <td align="center" width="14.28%"><img src="icons/xshell.exe.png" width="40" alt="Xshell"><br><sub>Xshell</sub></td>
+    <td align="center" width="14.28%"><img src="icons/mysqlworkbench.exe.png" width="40" alt="MySQL Workbench"><br><sub>MySQL Workbench</sub></td>
+    <td align="center" width="14.28%"><img src="icons/cmd.exe.png" width="40" alt="CMD"><br><sub>CMD</sub></td>
+    <td align="center" width="14.28%"><img src="icons/powershell.exe.png" width="40" alt="PowerShell"><br><sub>PowerShell</sub></td>
+    <td align="center" width="14.28%"><sub>更多支持中...</sub></td>
   </tr>
 </table>
 
