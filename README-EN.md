@@ -236,11 +236,12 @@ Built-in Local DNS routes all DNS queries through the encrypted tunnel, eliminat
 
 | Technical Dimension | Ghost Proxifier Pro | Proxifier | ProxyBridge | Antigravity-Proxy |
 | :--- | :---: | :---: | :---: | :---: |
-| **Core Architecture** | Winsock API Hook (DLL Injection) | WFP Kernel Driver / Winsock | Local Proxy Bridge / Forwarder | DLL Injection / API Hook |
-| **Kernel Driver Required** | No (Pure User-mode) | Yes (Requires WFP Driver) | No | No (Pure User-mode) |
-| **User Interface** | Modern Windows GUI (Drag & Drop) | Classic Desktop GUI | Command Line (CLI) / Config | Basic GUI / CLI |
-| **Process Tree Tracking** | ✅ Auto-injects child processes | ✅ Rule-based process matching | ❌ Relies on system/env proxy | ⚠️ Manual target injection |
-| **DoH / QUIC Blocking** | ✅ Built-in active blocking | ❌ Requires manual firewall rules | ❌ None | ❌ None |
+| **Core Architecture** | Winsock API Hook (DLL Injection) | WFP Kernel Driver / Winsock | WinDivert Packet Filter Driver | DLL Injection / API Hook |
+| **Kernel Driver Required** | ❌ No Driver Needed (User-mode) | ⚠️ Requires WFP Driver | ⚠️ Requires WinDivert Driver | ❌ No Driver Needed (User-mode) |
+| **App Support Scope** | ✅ General Multi-App Manager (20+ Apps) | ✅ General App Rules | ✅ General App Rules | ⚠️ Specialized for Antigravity |
+| **UI & Usability** | ✅ Modern Windows GUI (Drag & Drop) | Classic Desktop GUI | Desktop GUI / CLI | Basic CLI / Simple UI |
+| **Process Tree Tracking** | ✅ Auto-injects all child processes | ✅ Rule-based process matching | ⚠️ Process-name filtering | ❌ Target process only |
+| **DoH / QUIC Blocking** | ✅ Built-in active blocking (Force TCP) | ❌ Manual firewall rules needed | ❌ No built-in blocking | ❌ No built-in blocking |
 
 ## Usage
 
