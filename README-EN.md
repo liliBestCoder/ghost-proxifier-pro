@@ -76,11 +76,11 @@
 
 ## Primary Use Cases
 
-* **🤖 AI Programming / Vibe Coding Acceleration**: Proxies Codex, Claude Code, Antigravity, and Cursor to solve API timeouts and drops.
-* **🌐 Cross-Border Multi-Account Anti-Association**: Assigns independent proxy IPs per process for physical isolation of e-commerce & social media accounts.
-* **💼 Concurrent VPN & Proxy Coexistence**: Eliminates routing conflicts with corporate VPNs by proxying only designated applications.
-* **🛠️ Transparent Proxy for Dev & CLI Tools**: Intercepts CMD, PowerShell, FinalShell, Xshell, and MySQL Workbench that ignore system proxies.
-* **🎮 Game Launchers & Dedicated App Proxying**: Assigns dedicated proxy nodes to specific games or software, avoiding global proxy latency.
+* AI Programming / Vibe Coding Acceleration: Proxies Codex, Claude Code, Antigravity, and Cursor to solve API timeouts and drops.
+* Cross-Border Multi-Account Anti-Association: Assigns independent proxy IPs per process for physical isolation of e-commerce & social media accounts.
+* Concurrent VPN & Proxy Coexistence: Eliminates routing conflicts with corporate VPNs by proxying only designated applications.
+* Transparent Proxy for Dev & CLI Tools: Intercepts CMD, PowerShell, FinalShell, Xshell, and MySQL Workbench that ignore system proxies.
+* Game Launchers & Dedicated App Proxying: Assigns dedicated proxy nodes to specific games or software, avoiding global proxy latency.
 
 ## What Problem Does It Solve?
 
