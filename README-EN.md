@@ -241,7 +241,7 @@ Built-in Local DNS routes all DNS queries through the encrypted tunnel, eliminat
 | **Network & DNS Leak Prevention** | ✅ **Zero Leak** (Built-in Local DNS + Active DoH/QUIC blocking) | ⚠️ Risk of UDP / DoH leaks (Requires extra firewall rules) | ⚠️ Risk of DNS / DoH leaks | ❌ Cannot block DoH / QUIC (Causes traffic leaks) |
 | **Kernel Driver Required** | ❌ No Driver Needed (Pure User-mode API Hook) | ⚠️ Requires WFP Kernel Driver | ⚠️ Requires WinDivert Driver | ❌ No Driver Needed (Pure User-mode) |
 | **App Support Scope** | ✅ General Multi-App Manager | ✅ General App Rules | ✅ General App Rules | ⚠️ Specialized for Antigravity only |
-| **TCP / UDP Protocol Support** | ⚠️ TCP Proxy Only (Smart UDP intercept/TCP conversion to prevent leaks) | ✅ Supports TCP & SOCKS5 UDP Associate | ✅ Supports TCP & UDP Packet Redirection | ⚠️ TCP Proxy Only (UDP direct leak risk) |
+| **TCP / UDP Protocol Support** | ⚠️ TCP Proxy Only (DoH/QUIC Blocking + DNS over TCP) | ✅ Supports TCP & SOCKS5 UDP Associate | ✅ Supports TCP & UDP Packet Redirection | ⚠️ TCP Proxy Only (UDP direct leak risk) |
 
 ## Usage
 
