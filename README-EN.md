@@ -240,7 +240,7 @@ Built-in Local DNS routes all DNS queries through the encrypted tunnel, eliminat
 | **Process Tree Tracking** | ✅ Dynamic auto-injection of all child processes | ⚠️ Rule-based process matching only | ⚠️ Rule-based process matching only | ❌ Target executable only |
 | **Network & DNS Leak Prevention** | ✅ **Zero Leak** (Built-in Local DNS + Active DoH/QUIC blocking) | ⚠️ Risk of UDP / DoH leaks (Requires extra firewall rules) | ⚠️ Risk of DNS / DoH leaks | ❌ Cannot block DoH / QUIC (Causes traffic leaks) |
 | **Kernel Driver Required** | ❌ No Driver Needed (Pure User-mode API Hook) | ⚠️ Requires WFP Kernel Driver | ⚠️ Requires WinDivert Driver | ❌ No Driver Needed (Pure User-mode) |
-| **App Support Scope** | ✅ General Multi-App Manager | ✅ General App Rules | ✅ General App Rules | ⚠️ Specialized for Antigravity only |
+| **App Support Scope** | ✅ General Multi-App | ✅ General Multi-App | ✅ General Multi-App | ⚠️ Specialized for Antigravity only |
 | **TCP / UDP Protocol Support** | ⚠️ TCP Proxy Only (DoH/QUIC Blocking + DNS over TCP) | ⚠️ TCP Proxy Only (UDP direct leak risk) | ✅ Supports TCP & UDP Packet Redirection | ⚠️ TCP Proxy Only (UDP direct leak risk) |
 
 ## Usage
