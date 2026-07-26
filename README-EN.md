@@ -34,8 +34,6 @@
   ·
   <a href="#features">Features</a>
   ·
-  <a href="#comparison-with-similar-tools">Comparison</a>
-  ·
   <a href="#usage">Usage</a>
   ·
   <a href="#screenshots">Screenshots</a>
@@ -231,19 +229,6 @@ Glassmorphism UI + dark mode. Real-time traffic charts, process-level network to
 ### DNS Anti-Poisoning + DoH Blocking
 
 Built-in Local DNS routes all DNS queries through the encrypted tunnel, eliminating ISP poisoning. Simultaneously blocks DoH direct connections from browsers like Chrome, forcing all DNS through the local proxy to ensure upstream GeoIP/GeoSite routing rules receive genuine IP addresses.
-
-## Comparison with Similar Tools
-
-| Feature | Ghost Proxifier Pro | Proxifier | ProxyBridge | Antigravity-Proxy |
-| :--- | :---: | :---: | :---: | :---: |
-| **Transparent Proxy Method** | Winsock API Hook | WFP / Hook | DLL Hook | TUN/TAP Virtual Adapter |
-| **No Driver / Virtual Adapter Needed** | ✅ | ❌ (Requires Driver) | ✅ | ❌ (Requires TUN Adapter) |
-| **Anti-Risk Control / Stealth** | ✅ (User-mode, Zero Driver Signature) | ⚠️ (Kernel Driver easily flagged) | ✅ | ❌ (TAP Adapter easily detected) |
-| **Process-Level IP/Node Isolation** | ✅ | ✅ | ⚠️ (Basic) | ❌ (Global/Routing Table) |
-| **Built-in Anti-Pollution Local DNS** | ✅ (Auto IP ↔ Domain Mapping) | ⚠️ (Basic Remote DNS) | ❌ | ❌ |
-| **Lazy Handshake** | ✅ (Prevents AI Tool Hangs) | ❌ | ❌ | ❌ |
-| **Modern Windows GUI** | ✅ (Native Windows UI) | ⚠️ (Legacy UI) | ❌ (CLI Only) | ⚠️ (Basic GUI) |
-| **Resource Usage / Memory** | ⚡ < 10MB RAM | 15MB ~ 30MB | < 10MB | 30MB ~ 80MB |
 
 ## Usage
 
