@@ -60,12 +60,15 @@
     <td align="center"><img src="icons/antigravity.exe.png" width="40" alt="Antigravity"><br><sub>Antigravity</sub></td>
     <td align="center"><img src="icons/node.png" width="40" alt="Node.js"><br><sub>Node.js</sub></td>
     <td align="center"><img src="icons/python.exe.png" width="40" alt="Python"><br><sub>Python</sub></td>
+  </tr>
+  <tr>
     <td align="center"><img src="icons/ssh.png" width="40" alt="SSH"><br><sub>SSH</sub></td>
     <td align="center"><img src="icons/finalshell.exe.png" width="40" alt="FinalShell"><br><sub>FinalShell</sub></td>
     <td align="center"><img src="icons/xshell.exe.png" width="40" alt="Xshell"><br><sub>Xshell</sub></td>
     <td align="center"><img src="icons/mysqlworkbench.exe.png" width="40" alt="MySQL Workbench"><br><sub>MySQL Workbench</sub></td>
     <td align="center"><img src="icons/cmd.exe.png" width="40" alt="CMD"><br><sub>CMD</sub></td>
     <td align="center"><img src="icons/powershell.exe.png" width="40" alt="PowerShell"><br><sub>PowerShell</sub></td>
+    <td></td>
   </tr>
 </table>
 
