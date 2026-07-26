@@ -34,6 +34,8 @@
   ·
   <a href="#特性">特性</a>
   ·
+  <a href="#与同类工具对比">与同类工具对比</a>
+  ·
   <a href="#使用">使用</a>
   ·
   <a href="#运行截图">运行截图</a>
@@ -228,6 +230,19 @@ QUIC（HTTP/3）基于 UDP 443，同样会绕过代理。Ghost Proxifier 在 `se
 ### DNS 防污染 + DoH 阻断
 
 内置 Local DNS，DNS 查询走加密隧道，杜绝 ISP 投毒。同时阻断 Chrome 等浏览器的 DoH 直连，强制所有 DNS 走本地代理，确保上游的 GeoIP/GeoSite 分流规则拿到的是真实 IP。
+
+## 与同类工具对比
+
+| 功能特性 | Ghost Proxifier Pro | Proxifier | ProxyBridge | Antigravity-Proxy |
+| :--- | :---: | :---: | :---: | :---: |
+| **透明代理原理** | Winsock API Hook | WFP / Hook | DLL Hook | TUN/TAP 虚拟网卡 |
+| **无需虚拟网卡 / 驱动** | ✅ | ❌ (需驱动) | ✅ | ❌ (需 TUN 网卡) |
+| **防风控 / 游戏检测** | ✅ (纯用户态无特征) | ⚠️ (内核驱动易被检测) | ✅ | ❌ (TAP 网卡特征明显) |
+| **进程级独立节点分流** | ✅ | ✅ | ⚠️ (仅基础分流) | ❌ (全局/路由表) |
+| **内置 DNS 防污染映射** | ✅ (IP ↔ 域名自动还原) | ⚠️ (仅基础远程解析) | ❌ | ❌ |
+| **延迟握手 (Lazy Handshake)**| ✅ (防止 AI 工具卡死) | ❌ | ❌ | ❌ |
+| **现代图形界面 (GUI)** | ✅ (原生 Windows 界面) | ⚠️ (经典旧版 UI) | ❌ (纯命令行) | ⚠️ (基础 GUI) |
+| **资源占用 / 内存** | ⚡ < 10MB | 15MB ~ 30MB | < 10MB | 30MB ~ 80MB |
 
 ## 使用
 
