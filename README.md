@@ -235,6 +235,7 @@ QUIC（HTTP/3）基于 UDP 443，同样会绕过代理。Ghost Proxifier 在 `se
 
 | 核心维度 | Ghost Proxifier Pro | Proxifier | ProxyBridge | Antigravity-Proxy |
 | :--- | :---: | :---: | :---: | :---: |
+| **TCP / UDP 协议支持** | ✅ TCP 完全代理 + UDP 智能拦截/转 TCP (防泄漏) | ✅ 支持 TCP & SOCKS5 UDP Associate | ✅ 支持 TCP & UDP 包重定向 | ⚠️ 仅支持 TCP 代理 (UDP 直连泄露) |
 | **易用性与维护** | ✅ 现代 GUI (拖拽即用，软件更新无需重新配置) | ⚠️ 经典旧版 GUI (需繁琐配置规则) | ⚠️ GUI / CLI (需配置规则与驱动) | ❌ 需手动拷贝 DLL 到指定目录 (软件更新后失效需重新配置) |
 | **进程树自动追踪** | ✅ 动态自动接管并注入所有子进程 | ⚠️ 仅能基于规则/进程名匹配 | ⚠️ 仅能基于规则/进程名匹配 | ❌ 仅支持覆盖单个目标文件 |
 | **网络与 DNS 防泄露** | ✅ **零泄露** (内置 Local DNS + DoH/QUIC 主动阻断) | ⚠️ 存在 UDP / DoH 泄露风险 (需额外配置防火墙) | ⚠️ 存在 DNS / DoH 泄露风险 | ❌ 无法拦截 DoH / QUIC 导致流量泄露 |

@@ -236,6 +236,7 @@ Built-in Local DNS routes all DNS queries through the encrypted tunnel, eliminat
 
 | Technical Dimension | Ghost Proxifier Pro | Proxifier | ProxyBridge | Antigravity-Proxy |
 | :--- | :---: | :---: | :---: | :---: |
+| **TCP / UDP Protocol Support** | ✅ Full TCP Proxy + Smart UDP Intercept/TCP Conversion | ✅ Supports TCP & SOCKS5 UDP Associate | ✅ Supports TCP & UDP Packet Redirection | ⚠️ TCP Proxy Only (UDP Traffic Leaks Direct) |
 | **Usability & Maintenance** | ✅ Modern GUI (Drag-and-drop, zero reconfig on app updates) | ⚠️ Legacy UI (Complex manual rule setup required) | ⚠️ GUI / CLI (Rule setup & driver install needed) | ❌ Manual DLL file copy to app directory (Breaks on app updates) |
 | **Process Tree Tracking** | ✅ Dynamic auto-injection of all child processes | ⚠️ Rule-based process matching only | ⚠️ Rule-based process matching only | ❌ Target executable only |
 | **Network & DNS Leak Prevention** | ✅ **Zero Leak** (Built-in Local DNS + Active DoH/QUIC blocking) | ⚠️ Risk of UDP / DoH leaks (Requires extra firewall rules) | ⚠️ Risk of DNS / DoH leaks | ❌ Cannot block DoH / QUIC (Causes traffic leaks) |
