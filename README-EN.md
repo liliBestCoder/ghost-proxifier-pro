@@ -34,6 +34,8 @@
   ·
   <a href="#features">Features</a>
   ·
+  <a href="#comparison-with-similar-tools">Comparison</a>
+  ·
   <a href="#usage">Usage</a>
   ·
   <a href="#screenshots">Screenshots</a>
@@ -229,6 +231,17 @@ Glassmorphism UI + dark mode. Real-time traffic charts, process-level network to
 ### DNS Anti-Poisoning + DoH Blocking
 
 Built-in Local DNS routes all DNS queries through the encrypted tunnel, eliminating ISP poisoning. Simultaneously blocks DoH direct connections from browsers like Chrome, forcing all DNS through the local proxy to ensure upstream GeoIP/GeoSite routing rules receive genuine IP addresses.
+
+## Comparison with Similar Tools
+
+| Technical Dimension | Ghost Proxifier Pro | Proxifier | ProxyBridge | Antigravity-Proxy |
+| :--- | :---: | :---: | :---: | :---: |
+| **Core Architecture** | Winsock API Hook (User-mode) | WFP Kernel Driver / Winsock | DLL Injection | TUN/TAP Adapter / Local Proxy |
+| **Kernel Driver Required** | No (Pure User-mode) | Yes (Requires WFP Driver) | No | Yes (Requires Wintun Adapter) |
+| **User Interface** | Modern Windows GUI (Drag & Drop) | Classic Desktop GUI | Command Line (CLI) | Basic GUI / Web UI |
+| **Process Tree Tracking** | ✅ Auto-injects child processes | ✅ Rule-based process matching | ⚠️ Manual / Single-process | ❌ System / Routing table based |
+| **DoH / QUIC Blocking** | ✅ Built-in active blocking | ❌ Requires manual firewall rules | ❌ None | ❌ None |
+| **Software Model** | Standalone Desktop Pro Client | Commercial Paid Software | Lightweight Tool | Open-source / Community Proxy |
 
 ## Usage
 
