@@ -146,7 +146,7 @@ Ghost Proxifier **不装虚拟网卡，不改路由表**。只代理你选中的
 
 Ghost Proxifier 使用标准 **HTTP CONNECT** 方法与上游代理建立隧道：
 
-```http
+```text
 # 解析到域名时
 CONNECT www.google.com:443 HTTP/1.1\r\nHost: www.google.com:443\r\n\r\n
 

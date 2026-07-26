@@ -147,11 +147,11 @@ No TUN/TAP virtual adapter — that gets flagged by anti-detection systems. No W
 
 Ghost Proxifier uses the standard **HTTP CONNECT** method to establish a tunnel through the upstream proxy:
 
-```http
-# When the hostname is resolved
+```text
+# When domain is resolved
 CONNECT www.google.com:443 HTTP/1.1\r\nHost: www.google.com:443\r\n\r\n
 
-# Fallback when the hostname cannot be resolved
+# When domain resolution fails (fallback)
 CONNECT 142.251.45.10:443 HTTP/1.1\r\nHost: 142.251.45.10:443\r\n\r\n
 ```
 
