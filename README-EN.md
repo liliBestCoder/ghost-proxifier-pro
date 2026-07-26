@@ -236,12 +236,11 @@ Built-in Local DNS routes all DNS queries through the encrypted tunnel, eliminat
 
 | Technical Dimension | Ghost Proxifier Pro | Proxifier | ProxyBridge | Antigravity-Proxy |
 | :--- | :---: | :---: | :---: | :---: |
-| **Core Architecture** | Winsock API Hook (DLL Injection) | WFP Kernel Driver / Winsock | WinDivert Packet Filter Driver | DLL Injection / API Hook |
-| **Kernel Driver Required** | ❌ No Driver Needed (User-mode) | ⚠️ Requires WFP Driver | ⚠️ Requires WinDivert Driver | ❌ No Driver Needed (User-mode) |
-| **App Support Scope** | ✅ General Multi-App Manager (20+ Apps) | ✅ General App Rules | ✅ General App Rules | ⚠️ Specialized for Antigravity |
-| **UI & Usability** | ✅ Modern Windows GUI (Drag & Drop) | Classic Desktop GUI | Desktop GUI / CLI | Basic CLI / Simple UI |
-| **Process Tree Tracking** | ✅ Auto-injects all child processes | ✅ Rule-based process matching | ⚠️ Process-name filtering | ❌ Target process only |
-| **DoH / QUIC Blocking** | ✅ Built-in active blocking (Force TCP) | ❌ Manual firewall rules needed | ❌ No built-in blocking | ❌ No built-in blocking |
+| **Usability & Maintenance** | ✅ Modern GUI (Drag-and-drop, zero reconfig on app updates) | ⚠️ Legacy UI (Complex manual rule setup required) | ⚠️ GUI / CLI (Rule setup & driver install needed) | ❌ Manual DLL file copy to app directory (Breaks on app updates) |
+| **Process Tree Tracking** | ✅ Dynamic auto-injection of all child processes | ⚠️ Rule-based process matching only | ⚠️ Rule-based process matching only | ❌ Target executable only |
+| **Network & DNS Leak Prevention** | ✅ **Zero Leak** (Built-in Local DNS + Active DoH/QUIC blocking) | ⚠️ Risk of UDP / DoH leaks (Requires extra firewall rules) | ⚠️ Risk of DNS / DoH leaks | ❌ Cannot block DoH / QUIC (Causes traffic leaks) |
+| **Kernel Driver Required** | ❌ No Driver Needed (Pure User-mode API Hook) | ⚠️ Requires WFP Kernel Driver | ⚠️ Requires WinDivert Driver | ❌ No Driver Needed (Pure User-mode) |
+| **App Support Scope** | ✅ General Multi-App Manager (20+ Apps) | ✅ General App Rules | ✅ General App Rules | ⚠️ Specialized for Antigravity only |
 
 ## Usage
 
