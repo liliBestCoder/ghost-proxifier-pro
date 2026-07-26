@@ -240,7 +240,7 @@ QUIC（HTTP/3）基于 UDP 443，同样会绕过代理。Ghost Proxifier 在 `se
 | **网络与 DNS 防泄露** | ✅ **零泄露** (内置 Local DNS + DoH/QUIC 主动阻断) | ⚠️ 存在 UDP / DoH 泄露风险 (需额外配置防火墙) | ⚠️ 存在 DNS / DoH 泄露风险 | ❌ 无法拦截 DoH / QUIC 导致流量泄露 |
 | **内核驱动要求** | ❌ 无需驱动 (纯用户态 API Hook) | ⚠️ 需安装 WFP 系统驱动 | ⚠️ 需安装 WinDivert 驱动 | ❌ 无需驱动 (纯用户态) |
 | **适用软件范围** | ✅ 通用多应用 | ✅ 通用多应用匹配 | ✅ 通用应用分流 | ⚠️ 仅专为 Antigravity 针对性开发 |
-| **TCP / UDP 协议支持** | ⚠️ 仅支持 TCP 代理 (DoH/QUIC 阻断 + DNS over TCP) | ✅ 支持 TCP & SOCKS5 UDP Associate | ✅ 支持 TCP & UDP 包重定向 | ⚠️ 仅支持 TCP 代理 (UDP 存在泄露风险) |
+| **TCP / UDP 协议支持** | ⚠️ 仅支持 TCP 代理 (DoH/QUIC 阻断 + DNS over TCP) | ⚠️ 仅支持 TCP 代理 (UDP 存在泄露风险) | ✅ 支持 TCP & UDP 包重定向 | ⚠️ 仅支持 TCP 代理 (UDP 存在泄露风险) |
 
 ## 使用
 
