@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <rect width="128" height="128" rx="28" fill="#18181B"/>
+  <path d="M 28 40 L 52 56 L 28 72" fill="none" stroke="#22C55E" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="60" y1="72" x2="84" y2="72" stroke="#22C55E" stroke-width="8" stroke-linecap="round"/>
+  <text x="64" y="104" font-family="system-ui, -apple-system, Arial, sans-serif" font-weight="800" font-size="22" fill="#E4E4E7" text-anchor="middle" letter-spacing="2">SSH</text>
+</svg>

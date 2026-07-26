@@ -1,4 +1,12 @@
-<!-- LOGO -->
+<!-- LOGO & CONTACT -->
+<p align="right">
+  <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=jLD98s%2BuMM87y8zEcP6tBhrYEyCh2H9gnwigYoYoNLIjY4XqRWTFT0cmx0QDF4hT&busi_data=eyJncm91cENvZGUiOiI5NDUxMzg0MDgiLCJ0b2tlbiI6Imh0cHlaWUViTURaNXoyNklyMGI1akVIcFI5Q3ZIVEFzYktZTEQyRkUwallRck1tQ0d4SFN1d3haNmVMR0lzL3kiLCJ1aW4iOiIxODcxODE0NzQ5In0%3D&data=iw28-MBoXAQ6Pc8ThvaD6YOIC2xcOqodEkkc4rW6JgVNZWNxS5Ka8rqbOiJFZov5cN1L6atFKQwdpoHkdb34fw&svctype=4&tempid=h5_group_info" target="_blank">QQ群: 945138408</a>
+  &nbsp;·&nbsp;
+  <a href="https://t.me/ghostproxifier" target="_blank">Telegram 频道</a>
+  &nbsp;·&nbsp;
+  <a href="https://t.me/+SCVIJJFocWAxN2Y9" target="_blank">Telegram 群组</a>
+</p>
+
 <p align="center">
   <img src="app_icon.ico" alt="Logo" width="64">
 </p>
@@ -15,6 +23,8 @@
 
 <p align="center">
   <a href="#已支持应用">已支持应用</a>
+  ·
+  <a href="#主要应用场景">主要应用场景</a>
   ·
   <a href="#解决了什么问题">解决了什么问题</a>
   ·
@@ -46,10 +56,13 @@
     <td align="center"><img src="icons/chrome.exe.png" width="40" alt="Chrome"><br><sub>Chrome</sub></td>
     <td align="center"><img src="icons/msedge.exe.png" width="40" alt="MS Edge"><br><sub>MS Edge</sub></td>
     <td align="center"><img src="icons/claude.exe.png" width="40" alt="Claude Code"><br><sub>Claude Code</sub></td>
-    <td align="center"><img src="icons/Codex.exe.png" width="40" alt="Codex"><br><sub>Codex</sub></td>
+    <td align="center"><img src="icons/Codex.png" width="40" alt="Codex"><br><sub>Codex</sub></td>
+    <td align="center"><img src="icons/antigravity.exe.png" width="40" alt="Antigravity"><br><sub>Antigravity</sub></td>
+    <td align="center"><img src="icons/node.png" width="40" alt="Node.js"><br><sub>Node.js</sub></td>
+    <td align="center"><img src="icons/python.exe.png" width="40" alt="Python"><br><sub>Python</sub></td>
+    <td align="center"><img src="icons/ssh.png" width="40" alt="SSH"><br><sub>SSH</sub></td>
     <td align="center"><img src="icons/finalshell.exe.png" width="40" alt="FinalShell"><br><sub>FinalShell</sub></td>
     <td align="center"><img src="icons/xshell.exe.png" width="40" alt="Xshell"><br><sub>Xshell</sub></td>
-    <td align="center"><img src="icons/antigravity.exe.png" width="40" alt="Antigravity"><br><sub>Antigravity</sub></td>
     <td align="center"><img src="icons/mysqlworkbench.exe.png" width="40" alt="MySQL Workbench"><br><sub>MySQL Workbench</sub></td>
     <td align="center"><img src="icons/cmd.exe.png" width="40" alt="CMD"><br><sub>CMD</sub></td>
     <td align="center"><img src="icons/powershell.exe.png" width="40" alt="PowerShell"><br><sub>PowerShell</sub></td>
@@ -57,6 +70,14 @@
 </table>
 
 > 理论上支持所有使用 Winsock 的 Windows 应用。以上为测试验证过的应用列表，更多应用持续验证中。
+
+## 主要应用场景
+
+* **🤖 AI 编程 / Vibe Coding 加速**：接管 Codex、Claude Code、Antigravity、Cursor 等 AI 工具流量，解决 API 超时与连接重置。
+* **🌐 出海业务多账号防关联**：按进程分配独立 IP/代理节点，实现跨境电商与海外社媒多账号物理隔离防封。
+* **💼 VPN 与代理并行办公**：解决企业 VPN 连内网与代理翻墙的路由表冲突，按需代理指定应用，互不干扰。
+* **🛠️ 命令行与开发工具代理**：透明接管 CMD、PowerShell、FinalShell、Xshell、MySQL Workbench 等不走系统代理的软件。
+* **🎮 游戏客户端与软件独占加速**：支持为指定游戏客户端或独立软件分配专属代理节点，避免全局代理带来的高延迟与流量浪费。
 
 ## 解决了什么问题？
 
@@ -236,23 +257,13 @@ Pro 版提供现代化图形 UI、进程规则管理、流量可视化面板、�
 
 **如何反馈问题？**
 
-如您在安装、使用过程中遇到任何问题，或有相关需求与建议，欢迎加入 QQ 群（**945138408**）或 Telegram 群组进行反馈，也可以直接 [提交 Issue](https://github.com/liliBestCoder/ghost-proxifier-pro/issues)，我们会尽快进行解答与优化。
+如您在安装或使用过程中遇到任何问题，欢迎 [提交 Issue](https://github.com/liliBestCoder/ghost-proxifier-pro/issues) 或通过官方社群联系我们。
 
-## 企业合作与定制化需求
+## 企业合作与社群联系
 
-如果您的企业在出海运营、跨境电商、游戏代理、研发办公或合规审计等场景下，需要更强大的集中管理功能，我们可提供**企业版商业合作与定制**：
+如果您的企业在出海运营、跨境电商、游戏代理、研发办公或合规审计等场景下，需要更强大的集中管理功能（如全局配置下发、访问审计与监控、动态访问阻断、专有驱动与协议定制），欢迎联系探讨合作：
 
-* **全局配置下发**：支持企业集中下发代理节点、路由黑白名单与劫持配置，员工无需手动配置，实现多终端统一管理与静默分发。
-* **访问审计与监控**：提供细粒度的网络访问统计、日志集中收集，并支持对违规外网访问进行深度行为分析。
-* **动态访问阻断**：支持根据业务规则、DoH 检测、DNS 响应或特定域名特征，进行企业内网访问的实时拦截与动态阻断。
-* **专有驱动与协议定制**：针对非 Winsock 应用提供底层驱动级强劫持方案，支持对接企业内部私有安全加密传输协议及内核级隧道优化。
-
-欢迎企业客户联系探讨合作，获取商业支持与专属定制方案：
-* **Telegram**: [@ghostproxifier](https://t.me/ghostproxifier)
-
-**社群与反馈**
-
-如有任何安装问题、使用问题或需求建议，欢迎加入社群与我们交流反馈：
-- **QQ 群**: **945138408**
-- **Telegram 频道**: [@ghostproxifier](https://t.me/ghostproxifier)
-- **Telegram 群组**: [Ghost Proxifier](https://t.me/+SCVIJJFocWAxN2Y9)
+- **QQ 交流群**：[**945138408**](https://qun.qq.com/universal-share/share?ac=1&authKey=jLD98s%2BuMM87y8zEcP6tBhrYEyCh2H9gnwigYoYoNLIjY4XqRWTFT0cmx0QDF4hT&busi_data=eyJncm91cENvZGUiOiI5NDUxMzg0MDgiLCJ0b2tlbiI6Imh0cHlaWUViTURaNXoyNklyMGI1akVIcFI5Q3ZIVEFzYktZTEQyRkUwallRck1tQ0d4SFN1d3haNmVMR0lzL3kiLCJ1aW4iOiIxODcxODE0NzQ5In0%3D&data=iw28-MBoXAQ6Pc8ThvaD6YOIC2xcOqodEkkc4rW6JgVNZWNxS5Ka8rqbOiJFZov5cN1L6atFKQwdpoHkdb34fw&svctype=4&tempid=h5_group_info)
+- **Telegram 频道**：[@ghostproxifier](https://t.me/ghostproxifier)
+- **Telegram 群组**：[Ghost Proxifier](https://t.me/+SCVIJJFocWAxN2Y9)
+- **GitHub Issue**：[提交 Bug 或建议](https://github.com/liliBestCoder/ghost-proxifier-pro/issues)

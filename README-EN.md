@@ -1,4 +1,12 @@
-<!-- LOGO -->
+<!-- LOGO & CONTACT -->
+<p align="right">
+  <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=jLD98s%2BuMM87y8zEcP6tBhrYEyCh2H9gnwigYoYoNLIjY4XqRWTFT0cmx0QDF4hT&busi_data=eyJncm91cENvZGUiOiI5NDUxMzg0MDgiLCJ0b2tlbiI6Imh0cHlaWUViTURaNXoyNklyMGI1akVIcFI5Q3ZIVEFzYktZTEQyRkUwallRck1tQ0d4SFN1d3haNmVMR0lzL3kiLCJ1aW4iOiIxODcxODE0NzQ5In0%3D&data=iw28-MBoXAQ6Pc8ThvaD6YOIC2xcOqodEkkc4rW6JgVNZWNxS5Ka8rqbOiJFZov5cN1L6atFKQwdpoHkdb34fw&svctype=4&tempid=h5_group_info" target="_blank">QQ Group: 945138408</a>
+  &nbsp;·&nbsp;
+  <a href="https://t.me/ghostproxifier" target="_blank">Telegram Channel</a>
+  &nbsp;·&nbsp;
+  <a href="https://t.me/+SCVIJJFocWAxN2Y9" target="_blank">Telegram Group</a>
+</p>
+
 <p align="center">
   <img src="app_icon.ico" alt="Logo" width="64">
 </p>
@@ -15,6 +23,8 @@
 
 <p align="center">
   <a href="#supported-apps">Supported Apps</a>
+  ·
+  <a href="#primary-use-cases">Primary Use Cases</a>
   ·
   <a href="#what-problem-does-it-solve">What Problem Does It Solve</a>
   ·
@@ -46,10 +56,13 @@
     <td align="center"><img src="icons/chrome.exe.png" width="40" alt="Chrome"><br><sub>Chrome</sub></td>
     <td align="center"><img src="icons/msedge.exe.png" width="40" alt="MS Edge"><br><sub>MS Edge</sub></td>
     <td align="center"><img src="icons/claude.exe.png" width="40" alt="Claude Code"><br><sub>Claude Code</sub></td>
-    <td align="center"><img src="icons/Codex.exe.png" width="40" alt="Codex"><br><sub>Codex</sub></td>
+    <td align="center"><img src="icons/Codex.png" width="40" alt="Codex"><br><sub>Codex</sub></td>
+    <td align="center"><img src="icons/antigravity.exe.png" width="40" alt="Antigravity"><br><sub>Antigravity</sub></td>
+    <td align="center"><img src="icons/node.png" width="40" alt="Node.js"><br><sub>Node.js</sub></td>
+    <td align="center"><img src="icons/python.exe.png" width="40" alt="Python"><br><sub>Python</sub></td>
+    <td align="center"><img src="icons/ssh.png" width="40" alt="SSH"><br><sub>SSH</sub></td>
     <td align="center"><img src="icons/finalshell.exe.png" width="40" alt="FinalShell"><br><sub>FinalShell</sub></td>
     <td align="center"><img src="icons/xshell.exe.png" width="40" alt="Xshell"><br><sub>Xshell</sub></td>
-    <td align="center"><img src="icons/antigravity.exe.png" width="40" alt="Antigravity"><br><sub>Antigravity</sub></td>
     <td align="center"><img src="icons/mysqlworkbench.exe.png" width="40" alt="MySQL Workbench"><br><sub>MySQL Workbench</sub></td>
     <td align="center"><img src="icons/cmd.exe.png" width="40" alt="CMD"><br><sub>CMD</sub></td>
     <td align="center"><img src="icons/powershell.exe.png" width="40" alt="PowerShell"><br><sub>PowerShell</sub></td>
@@ -57,6 +70,14 @@
 </table>
 
 > Theoretically supports all Windows applications that use Winsock. The list above represents tested and verified applications — more are being validated continuously.
+
+## Primary Use Cases
+
+* **🤖 AI Programming / Vibe Coding Acceleration**: Proxies Codex, Claude Code, Antigravity, and Cursor to solve API timeouts and drops.
+* **🌐 Cross-Border Multi-Account Anti-Association**: Assigns independent proxy IPs per process for physical isolation of e-commerce & social media accounts.
+* **💼 Concurrent VPN & Proxy Coexistence**: Eliminates routing conflicts with corporate VPNs by proxying only designated applications.
+* **🛠️ Transparent Proxy for Dev & CLI Tools**: Intercepts CMD, PowerShell, FinalShell, Xshell, and MySQL Workbench that ignore system proxies.
+* **🎮 Game Launchers & Dedicated App Proxying**: Assigns dedicated proxy nodes to specific games or software, avoiding global proxy latency.
 
 ## What Problem Does It Solve?
 
@@ -237,23 +258,13 @@ The Pro edition offers a modern graphical UI, process rule management, traffic v
 
 **How do I report an issue?**
 
-If you encounter any installation issues, usage questions, or feature requests, feel free to join our QQ group (**945138408**) or Telegram group for feedback, or [Submit an Issue](https://github.com/liliBestCoder/ghost-proxifier-pro/issues). We will address and fix it as soon as possible.
+If you encounter any issues during installation or usage, feel free to [Submit an Issue](https://github.com/liliBestCoder/ghost-proxifier-pro/issues) or reach out via our community channels.
 
-## Enterprise Partnership & Customization
+## Enterprise Partnership & Community
 
-If your enterprise requires centralized control and auditing in scenarios such as cross-border e-commerce, game proxying, secure office networks, or compliance auditing, we offer **Enterprise Edition partnership and custom development**:
+If your enterprise requires centralized management features (e.g., global config distribution, access auditing, dynamic blocking, custom driver/protocol integration), feel free to contact us:
 
-* **Global Config Distribution**: Centrally distribute upstream proxy nodes, routing policies, and target rules. Zero-config for employees with silent updates.
-* **Access Monitoring & Auditing**: Fine-grained tracking of network activity, centralized logging, and deep behavioral analysis of external traffic.
-* **Dynamic Access Blocking**: Real-time blocking based on business rules, DoH detection, DNS responses, or specific domain signatures.
-* **Custom Drivers & Protocols**: Support for advanced traffic hijacking of non-Winsock applications, kernel-level tunnel solutions, and custom transport protocols.
-
-Welcome to contact us for commercial support and customized enterprise plans:
-* **Telegram**: [@ghostproxifier](https://t.me/ghostproxifier)
-
-**Community & Feedback**
-
-For any installation issues, usage questions, or feature requests, welcome to join our community:
-- **QQ Group**: **945138408**
+- **QQ Group**: [**945138408**](https://qun.qq.com/universal-share/share?ac=1&authKey=jLD98s%2BuMM87y8zEcP6tBhrYEyCh2H9gnwigYoYoNLIjY4XqRWTFT0cmx0QDF4hT&busi_data=eyJncm91cENvZGUiOiI5NDUxMzg0MDgiLCJ0b2tlbiI6Imh0cHlaWUViTURaNXoyNklyMGI1akVIcFI5Q3ZIVEFzYktZTEQyRkUwallRck1tQ0d4SFN1d3haNmVMR0lzL3kiLCJ1aW4iOiIxODcxODE0NzQ5In0%3D&data=iw28-MBoXAQ6Pc8ThvaD6YOIC2xcOqodEkkc4rW6JgVNZWNxS5Ka8rqbOiJFZov5cN1L6atFKQwdpoHkdb34fw&svctype=4&tempid=h5_group_info)
 - **Telegram Channel**: [@ghostproxifier](https://t.me/ghostproxifier)
 - **Telegram Group**: [Ghost Proxifier](https://t.me/+SCVIJJFocWAxN2Y9)
+- **GitHub Issues**: [Report Bugs or Suggestions](https://github.com/liliBestCoder/ghost-proxifier-pro/issues)
