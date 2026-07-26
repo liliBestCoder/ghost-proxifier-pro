@@ -236,12 +236,11 @@ Built-in Local DNS routes all DNS queries through the encrypted tunnel, eliminat
 
 | Technical Dimension | Ghost Proxifier Pro | Proxifier | ProxyBridge | Antigravity-Proxy |
 | :--- | :---: | :---: | :---: | :---: |
-| **Core Architecture** | Winsock API Hook (User-mode) | WFP Kernel Driver / Winsock | DLL Injection | TUN/TAP Adapter / Local Proxy |
-| **Kernel Driver Required** | No (Pure User-mode) | Yes (Requires WFP Driver) | No | Yes (Requires Wintun Adapter) |
-| **User Interface** | Modern Windows GUI (Drag & Drop) | Classic Desktop GUI | Command Line (CLI) | Basic GUI / Web UI |
-| **Process Tree Tracking** | ✅ Auto-injects child processes | ✅ Rule-based process matching | ⚠️ Manual / Single-process | ❌ System / Routing table based |
+| **Core Architecture** | Winsock API Hook (DLL Injection) | WFP Kernel Driver / Winsock | Local Proxy Bridge / Forwarder | DLL Injection / API Hook |
+| **Kernel Driver Required** | No (Pure User-mode) | Yes (Requires WFP Driver) | No | No (Pure User-mode) |
+| **User Interface** | Modern Windows GUI (Drag & Drop) | Classic Desktop GUI | Command Line (CLI) / Config | Basic GUI / CLI |
+| **Process Tree Tracking** | ✅ Auto-injects child processes | ✅ Rule-based process matching | ❌ Relies on system/env proxy | ⚠️ Manual target injection |
 | **DoH / QUIC Blocking** | ✅ Built-in active blocking | ❌ Requires manual firewall rules | ❌ None | ❌ None |
-| **Software Model** | Standalone Desktop Pro Client | Commercial Paid Software | Lightweight Tool | Open-source / Community Proxy |
 
 ## Usage
 
