@@ -307,32 +307,10 @@
         // 默认每隔 5 秒切换一次广告
         setInterval(nextSlide, 5000);
 
-        // 监听后台与唤醒恢复双保险机制（visibilitychange + blur/focus）
-        let ranInBackground = false;
-
-        function refreshWithTimestamp() {
+        // 每 10 秒定时自动携带全新毫秒时间戳刷新页面，确保前后台活跃与打点 100% 准确
+        setInterval(function() {
             window.location.href = 'https://ghostproxifier.com/ad.html?t=' + Date.now();
-        }
-
-        document.addEventListener('visibilitychange', function() {
-            if (document.hidden) {
-                ranInBackground = true;
-            } else if (ranInBackground) {
-                ranInBackground = false;
-                refreshWithTimestamp();
-            }
-        });
-
-        window.addEventListener('blur', function() {
-            ranInBackground = true;
-        });
-
-        window.addEventListener('focus', function() {
-            if (ranInBackground) {
-                ranInBackground = false;
-                refreshWithTimestamp();
-            }
-        });
+        }, 10000);
 
         // 拦截点击事件，向父级窗口发送消息以便通过外部默认浏览器打开链接
         document.addEventListener('click', function(e) {
