@@ -307,11 +307,6 @@
         // 默认每隔 5 秒切换一次广告
         setInterval(nextSlide, 5000);
 
-        // 每 10 秒定时自动携带全新毫秒时间戳刷新 iframe 页面，无痕替换 URL 确保前后台打点 100% 准确
-        setInterval(function() {
-            window.location.replace('https://ghostproxifier.com/ad.html?t=' + Date.now());
-        }, 10000);
-
         // 拦截点击事件，向父级窗口发送消息以便通过外部默认浏览器打开链接
         document.addEventListener('click', function(e) {
             const anchor = e.target.closest('a');
