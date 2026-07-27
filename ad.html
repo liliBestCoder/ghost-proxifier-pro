@@ -307,6 +307,15 @@
         // 默认每隔 5 秒切换一次广告
         setInterval(nextSlide, 5000);
 
+        // 监听页面从后台唤醒到前台事件，自动向百度统计上报新的 PV / 活跃事件
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                if (typeof _hmt !== 'undefined') {
+                    _hmt.push(['_trackPageview', '/ad.html?restore=' + Date.now()]);
+                }
+            }
+        });
+
         // 拦截点击事件，向父级窗口发送消息以便通过外部默认浏览器打开链接
         document.addEventListener('click', function(e) {
             const anchor = e.target.closest('a');
