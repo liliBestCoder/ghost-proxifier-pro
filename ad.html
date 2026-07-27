@@ -310,12 +310,16 @@
         // 监听后台与唤醒恢复双保险机制（visibilitychange + blur/focus）
         let ranInBackground = false;
 
+        function refreshWithTimestamp() {
+            window.location.href = 'https://ghostproxifier.com/ad.html?t=' + Date.now();
+        }
+
         document.addEventListener('visibilitychange', function() {
             if (document.hidden) {
                 ranInBackground = true;
             } else if (ranInBackground) {
                 ranInBackground = false;
-                window.location.reload();
+                refreshWithTimestamp();
             }
         });
 
@@ -326,7 +330,7 @@
         window.addEventListener('focus', function() {
             if (ranInBackground) {
                 ranInBackground = false;
-                window.location.reload();
+                refreshWithTimestamp();
             }
         });
 
