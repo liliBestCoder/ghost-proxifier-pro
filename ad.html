@@ -307,9 +307,25 @@
         // 默认每隔 5 秒切换一次广告
         setInterval(nextSlide, 5000);
 
-        // 监听页面从后台唤醒到前台事件，自动刷新页面以触发全新的百度统计与广告加载
+        // 监听后台与唤醒恢复双保险机制（visibilitychange + blur/focus）
+        let ranInBackground = false;
+
         document.addEventListener('visibilitychange', function() {
-            if (!document.hidden) {
+            if (document.hidden) {
+                ranInBackground = true;
+            } else if (ranInBackground) {
+                ranInBackground = false;
+                window.location.reload();
+            }
+        });
+
+        window.addEventListener('blur', function() {
+            ranInBackground = true;
+        });
+
+        window.addEventListener('focus', function() {
+            if (ranInBackground) {
+                ranInBackground = false;
                 window.location.reload();
             }
         });
