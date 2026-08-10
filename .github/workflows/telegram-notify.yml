@@ -11,7 +11,7 @@ jobs:
       - name: Send Telegram Message
         uses: appleboy/telegram-action@master
         with:
-          to: ${{ secrets.TELEGRAM_TO }}
+          to: "@ghostproxifier"
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: markdown
           message: |
