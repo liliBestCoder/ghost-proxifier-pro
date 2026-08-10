@@ -73,6 +73,7 @@
     <td align="center"><img src="icons/bluestacks_x.png" width="40" alt="BlueStacks X"><br><sub>BlueStacks X</sub></td>
     <td align="center"><img src="icons/cmd.exe.png" width="40" alt="CMD"><br><sub>CMD</sub></td>
     <td align="center"><img src="icons/powershell.exe.png" width="40" alt="PowerShell"><br><sub>PowerShell</sub></td>
+    <td align="center"><img src="icons/cf.exe.png" width="40" alt="CrossFire (CF)"><br><sub>CrossFire (CF)</sub></td>
     <td align="center"><sub>...</sub></td>
   </tr>
 </table>
