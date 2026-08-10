@@ -2,7 +2,8 @@ name: Release Telegram Notification
 
 on:
   release:
-    types: [published]
+    types: [published, edited]
+  workflow_dispatch:
 
 jobs:
   telegram-notify:
@@ -15,10 +16,10 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: markdown
           message: |
-            🚀 *Ghost Proxifier ${{ github.event.release.tag_name }} 发布！*
+            🚀 *Ghost Proxifier ${{ github.event.release.tag_name || 'v1.1.3' }} 发布！*
 
             📋 *更新说明：*
-            ${{ github.event.release.body }}
+            ${{ github.event.release.body || '1. 新增卡片组功能，支持拖拽将多个应用归类至同一个卡片组，并提供一键批量启动与批量停止管理。\n2. 最小化到托盘功能，支持关闭窗口时常驻后台运行，并优化了 Win+D 快捷键下主界面的恢复体验。\n3. 新增联机运行与脱机运行切换功能，方便一键暂停或恢复全局代理拦截。\n4. 深度兼容 Firefox 浏览器，解决 Gecko 内核及相关进程在独立沙盒下的网络代理拦截问题。\n5. 兼容 Packaged Win32 应用，自动处理 ACL 访问权限隔离，确保微软应用商店（Microsoft Store）安装的 Claude、Codex 等程序均可正常代理联网。\n6. 深度兼容原生 UWP 应用，采用专用挂起注入架构（ghost_launcher_uwp），全面解决沙盒 AppContainer 程序的 Winsock 流量重定向。' }}
 
             📥 *官方下载：*
-            [查看 Release 页面 & 下载安装包](${{ github.event.release.html_url }})
+            [查看 Release 页面 & 下载安装包](${{ github.event.release.html_url || 'https://github.com/liliBestCoder/ghost-proxifier-pro/releases/tag/1.1.3' }})
