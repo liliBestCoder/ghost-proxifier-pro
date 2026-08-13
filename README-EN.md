@@ -181,9 +181,13 @@ No TUN/TAP virtual adapter or WFP kernel driver is required. Ghost Proxifier use
 
 ### Support the Project
 
-If Ghost Proxifier is useful to you, you can support the project via WeChat. Donations will help us obtain a Microsoft code-signing certificate and reduce these security warnings:
+If Ghost Proxifier is useful to you, you can support the project via WeChat or PayPal. Your support helps fund ongoing development, maintenance, and operation of the software:
 
-<p align="center"><img src="weixin-pay.jpg" alt="WeChat donation QR code" width="240"></p>
+<p align="center">
+  <img src="weixin-pay.jpg" alt="WeChat donation QR code" width="240">
+  &nbsp;&nbsp;&nbsp;
+  <img src="palpay-pay.jpg" alt="PayPal donation QR code" width="240">
+</p>
 
 ## Screenshots
 

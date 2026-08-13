@@ -180,9 +180,13 @@
 
 ### 支持项目
 
-如果 Ghost Proxifier 对你有帮助，也欢迎通过微信支持项目，帮助我们尽早完成正规的微软代码签名，减少安装和使用时的安全提示：
+如果 Ghost Proxifier 对你有帮助，欢迎通过微信或 PayPal 支持项目。你的支持将用于软件的持续更新、维护和日常运营：
 
-<p align="center"><img src="weixin-pay.jpg" alt="微信支付捐助二维码" width="240"></p>
+<p align="center">
+  <img src="weixin-pay.jpg" alt="微信支付捐助二维码" width="240">
+  &nbsp;&nbsp;&nbsp;
+  <img src="palpay-pay.jpg" alt="PayPal 捐助二维码" width="240">
+</p>
 
 ## 运行截图
 
