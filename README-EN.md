@@ -29,7 +29,7 @@
 
 <p align="center">
   <a href="https://www.bilibili.com/video/BV1TkTP61Eyb/" target="_blank">
-    <img src="bilibili-cover.png" alt="Watch the Ghost Proxifier video tutorial" width="880">
+    <img src="bilibili-cover.png" alt="Watch the Ghost Proxifier video tutorial" width="640">
   </a>
 </p>
 
@@ -72,12 +72,41 @@
 
 > In theory, all Windows applications using Winsock are supported. The list above contains tested and verified applications.
 
+## Architecture Overview
+
+```text
+Target process (Chrome / Codex / any Winsock application)
+        │
+        ▼
+  ghost_core.dll
+  Winsock API Hook
+        │
+        ├── DNS query → Local DNS Proxy → Proxy tunnel → DNS server
+        ├── connect() → Redirect to local proxy → Save original target
+        └── send() → Lazy Handshake → HTTP CONNECT
+                                      │
+                                      ▼
+                         127.0.0.1:2080 → Upstream HTTP proxy
+```
+
+No virtual network adapter or routing-table changes are required. Ghost Proxifier only takes over selected processes and their child processes.
+
 ## Use Cases
 
 - Proxy AI coding tools such as Codex, Claude Code, and Antigravity.
 - Use multiple VPN or proxy clients together while routing only selected applications to reduce virtual-adapter and routing conflicts.
 - Proxy command-line tools, developer tools, and game clients that ignore system proxy settings.
 - Assign different proxy nodes to different applications or accounts for network-level IP isolation.
+
+## Comparison
+
+| Feature | Ghost Proxifier Pro | Proxifier | ProxyBridge | Antigravity-Proxy |
+| :--- | :---: | :---: | :---: | :---: |
+| GUI and drag-and-drop | ✅ | ⚠️ Rules required | ⚠️ Rules required | ❌ |
+| Automatic child-process tracking | ✅ | ⚠️ Rule matching | ⚠️ Rule matching | ❌ |
+| Virtual adapter/driver required | ❌ | ⚠️ WFP driver | ⚠️ WinDivert driver | ❌ |
+| Application scope | ✅ General multi-app | ✅ General multi-app | ✅ General multi-app | ⚠️ Mainly single-app |
+| DNS / DoH / QUIC handling | ✅ Built in | ⚠️ Extra configuration | ⚠️ Extra configuration | ❌ |
 
 ## Quick Start
 

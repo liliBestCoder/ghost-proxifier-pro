@@ -29,7 +29,7 @@
 
 <p align="center">
   <a href="https://www.bilibili.com/video/BV1TkTP61Eyb/" target="_blank">
-    <img src="bilibili-cover.png" alt="观看 Ghost Proxifier 使用介绍视频" width="880">
+    <img src="bilibili-cover.png" alt="观看 Ghost Proxifier 使用介绍视频" width="640">
   </a>
 </p>
 
@@ -72,12 +72,41 @@
 
 > 理论上支持所有使用 Winsock 的 Windows 应用，以上为已测试和验证过的应用。
 
+## 架构概览
+
+```text
+目标进程（Chrome / Codex / 任意 Winsock 应用）
+        │
+        ▼
+  ghost_core.dll
+  Winsock API Hook
+        │
+        ├── DNS 查询 → Local DNS Proxy → 代理隧道 → DNS 服务器
+        ├── connect() → 重定向到本地代理 → 保存原始目标
+        └── send() → Lazy Handshake → HTTP CONNECT
+                                      │
+                                      ▼
+                         127.0.0.1:2080 → 上游 HTTP 代理
+```
+
+不安装虚拟网卡、不修改系统路由表，Ghost Proxifier 只接管用户选中的进程及其子进程。
+
 ## 适用场景
 
 - AI 编程工具代理，例如 Codex、Claude Code、Antigravity 等。
 - 多个 VPN/代理软件混用时，只代理指定应用，减少虚拟网卡和路由规则之间的冲突。
 - 为不遵循系统代理的命令行工具、开发工具和游戏客户端配置独立代理。
 - 为不同应用或账号分配不同代理节点，实现网络 IP 层面的隔离。
+
+## 与同类工具对比
+
+| 特性 | Ghost Proxifier Pro | Proxifier | ProxyBridge | Antigravity-Proxy |
+| :--- | :---: | :---: | :---: | :---: |
+| 图形界面与拖拽操作 | ✅ | ⚠️ 需配置规则 | ⚠️ 需配置规则 | ❌ |
+| 子进程自动追踪 | ✅ | ⚠️ 规则匹配 | ⚠️ 规则匹配 | ❌ |
+| 是否需要虚拟网卡/驱动 | ❌ | ⚠️ WFP 驱动 | ⚠️ WinDivert 驱动 | ❌ |
+| 适用范围 | ✅ 通用多应用 | ✅ 通用多应用 | ✅ 通用多应用 | ⚠️ 主要面向单一应用 |
+| DNS / DoH / QUIC 处理 | ✅ 内置处理 | ⚠️ 需额外配置 | ⚠️ 需额外配置 | ❌ |
 
 ## 快速使用
 
