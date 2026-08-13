@@ -30,8 +30,6 @@
   &nbsp;·&nbsp;
   <a href="#与同类工具对比">工具对比</a>
   &nbsp;·&nbsp;
-  <a href="#快速使用">快速使用</a>
-  &nbsp;·&nbsp;
   <a href="#运行截图">截图</a>
   &nbsp;·&nbsp;
   <a href="#faq">FAQ</a>
@@ -162,12 +160,6 @@
 | 是否需要虚拟网卡/驱动 | ❌ | ⚠️ WFP 驱动 | ⚠️ WinDivert 驱动 | ❌ |
 | 适用范围 | ✅ 通用多应用 | ✅ 通用多应用 | ✅ 通用多应用 | ⚠️ 主要面向单一应用 |
 | DNS / DoH / QUIC 处理 | ✅ 内置处理 | ⚠️ 需额外配置 | ⚠️ 需额外配置 | ❌ |
-
-## 快速使用
-
-1. 从 [Releases](https://github.com/liliBestCoder/ghost-proxifier-pro/releases) 下载并启动 Ghost Proxifier Pro。
-2. 在界面中配置上游 HTTP 代理和 DNS 设置。
-3. 将目标程序的快捷方式或 `.exe` 文件拖入窗口，启动代理进程。
 
 ## 运行截图
 

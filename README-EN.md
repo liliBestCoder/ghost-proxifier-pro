@@ -30,8 +30,6 @@
   &nbsp;·&nbsp;
   <a href="#comparison">Comparison</a>
   &nbsp;·&nbsp;
-  <a href="#quick-start">Quick Start</a>
-  &nbsp;·&nbsp;
   <a href="#screenshots">Screenshots</a>
   &nbsp;·&nbsp;
   <a href="#faq">FAQ</a>
@@ -163,12 +161,6 @@ No TUN/TAP virtual adapter or WFP kernel driver is required. Ghost Proxifier use
 | Virtual adapter/driver required | ❌ | ⚠️ WFP driver | ⚠️ WinDivert driver | ❌ |
 | Application scope | ✅ General multi-app | ✅ General multi-app | ✅ General multi-app | ⚠️ Mainly single-app |
 | DNS / DoH / QUIC handling | ✅ Built in | ⚠️ Extra configuration | ⚠️ Extra configuration | ❌ |
-
-## Quick Start
-
-1. Download and launch Ghost Proxifier Pro from [Releases](https://github.com/liliBestCoder/ghost-proxifier-pro/releases).
-2. Configure the upstream HTTP proxy and DNS settings.
-3. Drop the target shortcut or `.exe` file into the window and start the proxied process.
 
 ## Screenshots
 
