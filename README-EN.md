@@ -55,7 +55,7 @@
   </a>
 </p>
 
-<p align="center"><font color="#d93025"><b>⚠️ Important</b></font></p>
+### ⚠️ Important
 <blockquote>
 <p><font color="#d93025"><b>Make sure the target application and its child processes are fully closed before injection.</b></font><br>Injection may fail if an existing instance is already running in the background. Fully exit the application before dropping its shortcut or <code>.exe</code> file into the window.</p>
 <p><font color="#d93025"><b>About Windows security warnings:</b></font><br>The project does not yet have a Microsoft code-signing certificate. When downloading the installer through Microsoft Edge, some antivirus software may report a false positive and Windows SmartScreen may block the download or launch.</p>

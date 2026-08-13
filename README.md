@@ -55,7 +55,7 @@
   </a>
 </p>
 
-<p align="center"><font color="#d93025"><b>⚠️ 使用注意</b></font></p>
+### ⚠️ 使用注意
 <blockquote>
 <p><font color="#d93025"><b>注入前请确保目标程序及其子进程已经完全退出。</b></font><br>若程序已经在后台运行，注入可能不会生效。请先完全退出程序，再将快捷方式或 <code>.exe</code> 文件拖入窗口。</p>
 <p><font color="#d93025"><b>关于 Windows 安全提示：</b></font><br>目前项目尚未购买微软代码签名证书，因此使用 Microsoft Edge 下载安装包时，部分杀毒软件可能会误报，Windows SmartScreen 也可能弹出拦截提示。</p>
