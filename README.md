@@ -27,6 +27,12 @@
   🔧 <a href="https://github.com/liliBestCoder/ghost-proxifier" target="_blank"><b>Ghost Proxifier 开源版</b></a> — 纯命令行工具，MIT 开源
 </p>
 
+<p align="center">
+  <a href="https://www.bilibili.com/video/BV1TkTP61Eyb/" target="_blank">
+    <img src="bilibili-cover.png" alt="观看 Ghost Proxifier 使用介绍视频" width="880">
+  </a>
+</p>
+
 ## 核心特性
 
 - **拖拽即用**：拖入快捷方式或 `.exe` 文件，自动注入目标进程。
@@ -69,7 +75,7 @@
 ## 适用场景
 
 - AI 编程工具代理，例如 Codex、Claude Code、Antigravity 等。
-- VPN 与代理同时使用，只代理指定应用，避免路由冲突。
+- 多个 VPN/代理软件混用时，只代理指定应用，减少虚拟网卡和路由规则之间的冲突。
 - 为不遵循系统代理的命令行工具、开发工具和游戏客户端配置独立代理。
 - 为不同应用或账号分配不同代理节点，实现网络 IP 层面的隔离。
 
@@ -82,10 +88,6 @@
 ### 使用注意
 
 拖入目标程序前，请确保该程序及其子进程已经完全退出。若程序已在后台运行，注入可能不会生效。
-
-## 使用视频
-
-[观看 B 站使用介绍视频](https://www.bilibili.com/video/BV1TkTP61Eyb/)
 
 ## 运行截图
 

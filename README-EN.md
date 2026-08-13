@@ -27,6 +27,12 @@
   🔧 <a href="https://github.com/liliBestCoder/ghost-proxifier" target="_blank"><b>Ghost Proxifier Open Source</b></a> — CLI-only, MIT licensed
 </p>
 
+<p align="center">
+  <a href="https://www.bilibili.com/video/BV1TkTP61Eyb/" target="_blank">
+    <img src="bilibili-cover.png" alt="Watch the Ghost Proxifier video tutorial" width="880">
+  </a>
+</p>
+
 ## Core Features
 
 - **Drag and drop**: Drop a shortcut or `.exe` file to inject the target process.
@@ -69,7 +75,7 @@
 ## Use Cases
 
 - Proxy AI coding tools such as Codex, Claude Code, and Antigravity.
-- Use a VPN and proxy at the same time while routing only selected applications.
+- Use multiple VPN or proxy clients together while routing only selected applications to reduce virtual-adapter and routing conflicts.
 - Proxy command-line tools, developer tools, and game clients that ignore system proxy settings.
 - Assign different proxy nodes to different applications or accounts for network-level IP isolation.
 
@@ -82,10 +88,6 @@
 ### Important
 
 Make sure the target application and its child processes are fully closed before dropping it into the window. Injection may fail if an existing instance is already running in the background.
-
-## Video Tutorial
-
-[Watch the Bilibili video tutorial](https://www.bilibili.com/video/BV1TkTP61Eyb/)
 
 ## Screenshots
 
