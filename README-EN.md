@@ -20,11 +20,33 @@
 </p>
 
 <p align="center">
+  <a href="#core-features">Core Features</a>
+  &nbsp;·&nbsp;
+  <a href="#supported-apps">Supported Apps</a>
+  &nbsp;·&nbsp;
+  <a href="#architecture-overview">Architecture</a>
+  &nbsp;·&nbsp;
+  <a href="#use-cases">Use Cases</a>
+  &nbsp;·&nbsp;
+  <a href="#comparison">Comparison</a>
+  &nbsp;·&nbsp;
+  <a href="#quick-start">Quick Start</a>
+  &nbsp;·&nbsp;
+  <a href="#screenshots">Screenshots</a>
+  &nbsp;·&nbsp;
+  <a href="#faq">FAQ</a>
+</p>
+
+<p align="center">
   A process-level transparent proxy for Windows. It injects a DLL and hooks the Winsock API to route traffic from selected applications and their child processes through an HTTP proxy — without changing routing tables or installing a virtual network adapter.
 </p>
 
 <p align="center">
   🔧 <a href="https://github.com/liliBestCoder/ghost-proxifier" target="_blank"><b>Ghost Proxifier Open Source</b></a> — CLI-only, MIT licensed
+</p>
+
+<p align="center">
+  <b>🎬 Video Tutorial: Ghost Proxifier Basic Usage and Proxy Configuration</b>
 </p>
 
 <p align="center">
@@ -75,21 +97,46 @@
 ## Architecture Overview
 
 ```text
-Target process (Chrome / Codex / any Winsock application)
-        │
-        ▼
-  ghost_core.dll
-  Winsock API Hook
-        │
-        ├── DNS query → Local DNS Proxy → Proxy tunnel → DNS server
-        ├── connect() → Redirect to local proxy → Save original target
-        └── send() → Lazy Handshake → HTTP CONNECT
-                                      │
-                                      ▼
-                         127.0.0.1:2080 → Upstream HTTP proxy
+                        Ghost Proxifier Pro Architecture
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                        Target Process (e.g. Chrome)                         │
+│                                                                             │
+│  ┌──────────┐   ┌──────────┐   ┌──────────┐   ┌─────────────────────────┐  │
+│  │ DNS Query │   │ TCP Connect│  │ Data Send │   │ 8.8.8.8:53             │  │
+│  │          │   │          │   │          │   │                         │  │
+│  │ getaddrinfo│   │ connect()│   │ send() / │   │ sendto(53)             │  │
+│  │GetAddrInfoW│   │ConnectEx()│  │WSASend() │   │WSASendTo()             │  │
+│  └────┬─────┘   └────┬─────┘   └────┬─────┘   └────┬──────────────────┘  │
+│       │              │              │              │                       │
+│       └──────┬───────┘              │              │                       │
+│              │                      │              │                       │
+│         ┌────┴─────┐           ┌────┴─────┐   ┌────┴─────┐                 │
+│         │  HOOK    │           │  HOOK    │   │  HOOK    │                 │
+│         └────┬─────┘           └────┬─────┘   └────┬─────┘                 │
+│              │                      │              │                       │
+│         ┌────┴─────┐           ┌────┴─────┐   ┌────┴─────┐                 │
+│         │ Local DNS │           │ Redirect to  │   │ Lazy Handshake       │
+│         │ Proxy     │           │ Proxy, Save  │   │ 1. Check PendingMap  │
+│         │ UDP → TCP │           │ to PendingMap│   │ 2. HTTP CONNECT      │
+│         │ Forward to│           │              │   │ 3. Send original data│
+│         │ 8.8.8.8:53│           │              │   │                      │
+│         └────────────┘           └──────────┘   └─────────────────────────┘
+│                                                                             │
+│                   ghost_core.dll (injected into target process)              │
+└─────────────────────────────────────────────────────────────────────────────┘
+                   │                       │
+                   │   127.0.0.1:2080      │
+                   │                       │
+            ┌──────┴───────┐      ┌────────┴────────┐
+            │  Upstream     │      │  DNS Results    │
+            │  HTTP CONNECT │      │                 │
+            │  Proxy        │      │  IP → Hostname  │
+            │ (V2Ray/Clash/ │      │                 │
+            │  NekoBox/...) │      │                 │
+            └──────────────┘      └─────────────────┘
 ```
 
-No virtual network adapter or routing-table changes are required. Ghost Proxifier only takes over selected processes and their child processes.
+No TUN/TAP virtual adapter or WFP kernel driver is required. Ghost Proxifier uses user-mode API Hooking based on MinHook to intercept Winsock functions and take over only selected processes and their child processes.
 
 ## Use Cases
 

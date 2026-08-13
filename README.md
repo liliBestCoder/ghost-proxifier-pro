@@ -20,11 +20,33 @@
 </p>
 
 <p align="center">
+  <a href="#核心特性">核心特性</a>
+  &nbsp;·&nbsp;
+  <a href="#已支持应用">支持应用</a>
+  &nbsp;·&nbsp;
+  <a href="#架构概览">架构</a>
+  &nbsp;·&nbsp;
+  <a href="#适用场景">适用场景</a>
+  &nbsp;·&nbsp;
+  <a href="#与同类工具对比">工具对比</a>
+  &nbsp;·&nbsp;
+  <a href="#快速使用">快速使用</a>
+  &nbsp;·&nbsp;
+  <a href="#运行截图">截图</a>
+  &nbsp;·&nbsp;
+  <a href="#faq">FAQ</a>
+</p>
+
+<p align="center">
   Windows 进程级透明代理工具：通过 DLL 注入和 Winsock API Hook，让指定应用及其子进程的网络流量自动转发到 HTTP 代理，无需修改路由表或安装虚拟网卡。
 </p>
 
 <p align="center">
   🔧 <a href="https://github.com/liliBestCoder/ghost-proxifier" target="_blank"><b>Ghost Proxifier 开源版</b></a> — 纯命令行工具，MIT 开源
+</p>
+
+<p align="center">
+  <b>🎬 使用视频：Ghost Proxifier 基础使用与代理配置演示</b>
 </p>
 
 <p align="center">
@@ -75,21 +97,45 @@
 ## 架构概览
 
 ```text
-目标进程（Chrome / Codex / 任意 Winsock 应用）
-        │
-        ▼
-  ghost_core.dll
-  Winsock API Hook
-        │
-        ├── DNS 查询 → Local DNS Proxy → 代理隧道 → DNS 服务器
-        ├── connect() → 重定向到本地代理 → 保存原始目标
-        └── send() → Lazy Handshake → HTTP CONNECT
-                                      │
-                                      ▼
-                         127.0.0.1:2080 → 上游 HTTP 代理
+                           Ghost Proxifier Pro 架构
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         目标进程 (e.g. Chrome)                               │
+│                                                                             │
+│  ┌──────────┐   ┌──────────┐   ┌──────────┐   ┌─────────────────────────┐  │
+│  │ DNS 查询  │   │ TCP 连接  │   │ 数据发送  │   │ 8.8.8.8:53             │  │
+│  │          │   │          │   │          │   │                         │  │
+│  │ getaddrinfo│   │ connect()│   │ send() / │   │ sendto(53)             │  │
+│  │GetAddrInfoW│   │ConnectEx()│  │WSASend() │   │WSASendTo()             │  │
+│  └────┬─────┘   └────┬─────┘   └────┬─────┘   └────┬──────────────────┘  │
+│       │              │              │              │                       │
+│       └──────┬───────┘              │              │                       │
+│              │                      │              │                       │
+│         ┌────┴─────┐           ┌────┴─────┐   ┌────┴─────┐                 │
+│         │  HOOK    │           │  HOOK    │   │  HOOK    │                 │
+│         └────┬─────┘           └────┬─────┘   └────┬─────┘                 │
+│              │                      │              │                       │
+│         ┌────┴─────┐           ┌────┴─────┐   ┌────┴─────┐                 │
+│         │ Local DNS │           │ 重定向到代理 │   │ Lazy Handshake        │
+│         │ Proxy     │           │ 保存目标到  │   │ 1. 检查 PendingMap    │
+│         │ UDP → TCP │           │ PendingMap │   │ 2. HTTP CONNECT       │
+│         │ 转发到     │           │           │   │ 3. 发送原始数据        │
+│         │ 8.8.8.8:53│           │           │   │                       │
+│         └────────────┘           └──────────┘   └─────────────────────────┘
+│                                                                             │
+│                    ghost_core.dll (注入到目标进程)                            │
+└─────────────────────────────────────────────────────────────────────────────┘
+                   │                       │
+                   │   127.0.0.1:2080      │
+                   │                       │
+            ┌──────┴───────┐      ┌────────┴────────┐
+            │ 上游 HTTP     │      │  DNS 解析结果   │
+            │  CONNECT 代理  │      │                 │
+            │ (V2Ray/Clash/ │      │   IP → 域名     │
+            │  NekoBox/...) │      │                 │
+            └──────────────┘      └─────────────────┘
 ```
 
-不安装虚拟网卡、不修改系统路由表，Ghost Proxifier 只接管用户选中的进程及其子进程。
+不装 TUN/TAP 虚拟网卡，不走 WFP 内核驱动。Ghost Proxifier 使用基于 MinHook 的用户态 API Hook，拦截 Winsock 函数，只接管用户选中的进程及其子进程。
 
 ## 适用场景
 
