@@ -57,11 +57,11 @@
 
 ### ⚠️ Important
 <blockquote>
-<p><font color="#d93025"><b>Make sure the target application and its child processes are fully closed before injection.</b></font><br>Injection may fail if an existing instance is already running in the background. Fully exit the application before dropping its shortcut or <code>.exe</code> file into the window.</p>
 <p><font color="#d93025"><b>About Windows security warnings:</b></font><br>The project does not yet have a Microsoft code-signing certificate. When downloading the installer through Microsoft Edge, some antivirus software may report a false positive and Windows SmartScreen may block the download or launch.</p>
 <p>If Edge blocks the download, open <code>Settings → Privacy, search, and services → Security</code> and temporarily disable “Block potentially unwanted apps and downloads”. Re-enable this setting after downloading the installer.</p>
 <p>If SmartScreen still blocks the installer, click <code>More info → Run anyway</code> in the blue warning dialog.</p>
 <p>Only do this after confirming that the installer came from the official project Releases page and verifying its source.</p>
+<p><font color="#d93025"><b>Make sure the target application and its child processes are fully closed before injection.</b></font><br>Injection may fail if an existing instance is already running in the background. Fully exit the application before dropping its shortcut or <code>.exe</code> file into the window.</p>
 </blockquote>
 
 ## Use Cases
@@ -196,9 +196,12 @@ Please use [GitHub Issues](https://github.com/liliBestCoder/ghost-proxifier-pro/
 
 ## Community
 
+If your enterprise requires centralized management features for overseas operations, cross-border e-commerce, game proxying, development, or compliance auditing—such as global configuration distribution, access auditing and monitoring, dynamic access blocking, or custom driver and protocol integration—feel free to contact us to discuss cooperation.
+
 - [QQ Group 945138408](https://qun.qq.com/universal-share/share?ac=1&authKey=jLD98s%2BuMM87y8zEcP6tBhrYEyCh2H9gnwigYoYoNLIjY4XqRWTFT0cmx0QDF4hT&busi_data=eyJncm91cENvZGUiOiI5NDUxMzg0MDgiLCJ0b2tlbiI6Imh0cHlaWUViTURaNXoyNklyMGI1akVIcFI5Q3ZIVEFzYktZTEQyRkUwallRck1tQ0d4SFN1d3haNmVMR0lzL3kiLCJ1aW4iOiIxODcxODE0NzQ5In0%3D&data=iw28-MBoXAQ6Pc8ThvaD6YOIC2xcOqodEkkc4rW6JgVNZWNxS5Ka8rqbOiJFZov5cN1L6atFKQwdpoHkdb34fw&svctype=4&tempid=h5_group_info)
 - [Telegram Channel @ghostproxifier](https://t.me/ghostproxifier)
 - [Telegram Group](https://t.me/+SCVIJJFocWAxN2Y9)
+- [GitHub Issues: Report Bugs or Suggestions](https://github.com/liliBestCoder/ghost-proxifier-pro/issues)
 
 ## Support the Project
 
