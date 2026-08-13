@@ -192,7 +192,6 @@ Pro 版提供图形界面、进程规则管理、流量监控、子进程自动�
 - [QQ 交流群 945138408](https://qun.qq.com/universal-share/share?ac=1&authKey=jLD98s%2BuMM87y8zEcP6tBhrYEyCh2H9gnwigYoYoNLIjY4XqRWTFT0cmx0QDF4hT&busi_data=eyJncm91cENvZGUiOiI5NDUxMzg0MDgiLCJ0b2tlbiI6Imh0cHlaWUViTURaNXoyNklyMGI1akVIcFI5Q3ZIVEFzYktZTEQyRkUwallRck1tQ0d4SFN1d3haNmVMR0lzL3kiLCJ1aW4iOiIxODcxODE0NzQ5In0%3D&data=iw28-MBoXAQ6Pc8ThvaD6YOIC2xcOqodEkkc4rW6JgVNZWNxS5Ka8rqbOiJFZov5cN1L6atFKQwdpoHkdb34fw&svctype=4&tempid=h5_group_info)
 - [Telegram 频道 @ghostproxifier](https://t.me/ghostproxifier)
 - [Telegram 群组](https://t.me/+SCVIJJFocWAxN2Y9)
-- [GitHub Issue：提交 Bug 或建议](https://github.com/liliBestCoder/ghost-proxifier-pro/issues)
 
 ## 支持项目
 
