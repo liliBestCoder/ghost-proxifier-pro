@@ -24,6 +24,8 @@
   &nbsp;·&nbsp;
   <a href="#supported-apps">Supported Apps</a>
   &nbsp;·&nbsp;
+  <a href="#quick-start">Quick Start</a>
+  &nbsp;·&nbsp;
   <a href="#architecture-overview">Architecture</a>
   &nbsp;·&nbsp;
   <a href="#use-cases">Use Cases</a>
@@ -107,6 +109,12 @@
 </table>
 
 > In theory, all Windows applications using Winsock are supported. The list above contains tested and verified applications.
+
+## Quick Start
+
+1. Download and launch Ghost Proxifier Pro from [Releases](https://github.com/liliBestCoder/ghost-proxifier-pro/releases).
+2. Configure the upstream HTTP proxy and DNS settings.
+3. Drop the target shortcut or `.exe` file into the window and start the proxied process.
 
 ## Architecture Overview
 

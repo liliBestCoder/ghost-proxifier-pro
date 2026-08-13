@@ -24,6 +24,8 @@
   &nbsp;·&nbsp;
   <a href="#已支持应用">支持应用</a>
   &nbsp;·&nbsp;
+  <a href="#快速使用">快速使用</a>
+  &nbsp;·&nbsp;
   <a href="#架构概览">架构</a>
   &nbsp;·&nbsp;
   <a href="#适用场景">适用场景</a>
@@ -107,6 +109,12 @@
 </table>
 
 > 理论上支持所有使用 Winsock 的 Windows 应用，以上为已测试和验证过的应用。
+
+## 快速使用
+
+1. 从 [Releases](https://github.com/liliBestCoder/ghost-proxifier-pro/releases) 下载并启动 Ghost Proxifier Pro。
+2. 在界面中配置上游 HTTP 代理和 DNS 设置。
+3. 将目标程序的快捷方式或 `.exe` 文件拖入窗口，启动代理进程。
 
 ## 架构概览
 
