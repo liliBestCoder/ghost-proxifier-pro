@@ -50,8 +50,22 @@
 </p>
 
 <p align="center">
-  <font color="#d93025"><b>⚠️ Important: Please read the security note below before using the app.</b></font>
+  <font color="#d93025"><b>⚠️ Important</b></font>
 </p>
+
+<blockquote>
+<p><font color="#d93025"><b>Make sure the target application and its child processes are fully closed before injection.</b></font><br>
+Injection may fail if an existing instance is already running in the background. Fully exit the application before dropping its shortcut or <code>.exe</code> file into the window.</p>
+
+<p><font color="#d93025"><b>About Windows security warnings:</b></font><br>
+The project does not yet have a Microsoft code-signing certificate. When downloading the installer through Microsoft Edge, some antivirus software may report a false positive and Windows SmartScreen may block the download or launch.</p>
+
+<p>If Edge blocks the download, open <code>Settings → Privacy, search, and services → Security</code> and temporarily disable “Block potentially unwanted apps and downloads”. Re-enable this setting after downloading the installer.</p>
+
+<p>If SmartScreen still blocks the installer, click <code>More info → Run anyway</code> in the blue warning dialog.</p>
+
+<p>Only do this after confirming that the installer came from the official project Releases page and verifying its source.</p>
+</blockquote>
 
 <p align="center">
   <a href="https://www.bilibili.com/video/BV1TkTP61Eyb/" target="_blank">
@@ -164,22 +178,6 @@ No TUN/TAP virtual adapter or WFP kernel driver is required. Ghost Proxifier use
 1. Download and launch Ghost Proxifier Pro from [Releases](https://github.com/liliBestCoder/ghost-proxifier-pro/releases).
 2. Configure the upstream HTTP proxy and DNS settings.
 3. Drop the target shortcut or `.exe` file into the window and start the proxied process.
-
-### Important
-
-<blockquote>
-<p><font color="#d93025"><b>⚠️ Make sure the target application and its child processes are fully closed before injection.</b></font><br>
-Injection may fail if an existing instance is already running in the background. Fully exit the application before dropping its shortcut or <code>.exe</code> file into the window.</p>
-
-<p><font color="#d93025"><b>⚠️ About Windows security warnings:</b></font><br>
-The project does not yet have a Microsoft code-signing certificate. When downloading the installer through Microsoft Edge, some antivirus software may report a false positive and Windows SmartScreen may block the download or launch.</p>
-
-<p>If Edge blocks the download, open <code>Settings → Privacy, search, and services → Security</code> and temporarily disable “Block potentially unwanted apps and downloads”. Re-enable this setting after downloading the installer.</p>
-
-<p>If SmartScreen still blocks the installer, click <code>More info → Run anyway</code> in the blue warning dialog.</p>
-
-<p>Only do this after confirming that the installer came from the official project Releases page and verifying its source.</p>
-</blockquote>
 
 ### Support the Project
 
