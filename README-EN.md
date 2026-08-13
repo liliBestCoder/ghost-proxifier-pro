@@ -46,7 +46,7 @@
 </p>
 
 <p align="center">
-  <b>🎬 Video Tutorial: Ghost Proxifier Basic Usage and Proxy Configuration</b>
+  <b>🎬 Video Tutorial: Ghost Proxifier Basic Usage</b>
 </p>
 
 <p align="center">
@@ -54,6 +54,13 @@
     <img src="bilibili-cover.png" alt="Watch the Ghost Proxifier video tutorial" width="640">
   </a>
 </p>
+
+## Use Cases
+
+- Proxy AI coding tools such as Codex, Claude Code, and Antigravity.
+- Use multiple VPN or proxy clients together while routing only selected applications to reduce virtual-adapter and routing conflicts.
+- Proxy command-line tools, developer tools, and game clients that ignore system proxy settings.
+- Assign different proxy nodes to different applications or accounts for network-level IP isolation.
 
 ## Core Features
 
@@ -137,13 +144,6 @@
 ```
 
 No TUN/TAP virtual adapter or WFP kernel driver is required. Ghost Proxifier uses user-mode API Hooking based on MinHook to intercept Winsock functions and take over only selected processes and their child processes.
-
-## Use Cases
-
-- Proxy AI coding tools such as Codex, Claude Code, and Antigravity.
-- Use multiple VPN or proxy clients together while routing only selected applications to reduce virtual-adapter and routing conflicts.
-- Proxy command-line tools, developer tools, and game clients that ignore system proxy settings.
-- Assign different proxy nodes to different applications or accounts for network-level IP isolation.
 
 ## Comparison
 

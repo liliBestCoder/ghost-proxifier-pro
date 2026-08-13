@@ -46,7 +46,7 @@
 </p>
 
 <p align="center">
-  <b>🎬 使用视频：Ghost Proxifier 基础使用与代理配置演示</b>
+  <b>🎬 使用视频：Ghost Proxifier 基础使用演示</b>
 </p>
 
 <p align="center">
@@ -54,6 +54,13 @@
     <img src="bilibili-cover.png" alt="观看 Ghost Proxifier 使用介绍视频" width="640">
   </a>
 </p>
+
+## 适用场景
+
+- AI 编程工具代理，例如 Codex、Claude Code、Antigravity 等。
+- 多个 VPN/代理软件混用时，只代理指定应用，减少虚拟网卡和路由规则之间的冲突。
+- 为不遵循系统代理的命令行工具、开发工具和游戏客户端配置独立代理。
+- 为不同应用或账号分配不同代理节点，实现网络 IP 层面的隔离。
 
 ## 核心特性
 
@@ -136,13 +143,6 @@
 ```
 
 不装 TUN/TAP 虚拟网卡，不走 WFP 内核驱动。Ghost Proxifier 使用基于 MinHook 的用户态 API Hook，拦截 Winsock 函数，只接管用户选中的进程及其子进程。
-
-## 适用场景
-
-- AI 编程工具代理，例如 Codex、Claude Code、Antigravity 等。
-- 多个 VPN/代理软件混用时，只代理指定应用，减少虚拟网卡和路由规则之间的冲突。
-- 为不遵循系统代理的命令行工具、开发工具和游戏客户端配置独立代理。
-- 为不同应用或账号分配不同代理节点，实现网络 IP 层面的隔离。
 
 ## 与同类工具对比
 
