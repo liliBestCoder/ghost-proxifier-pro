@@ -50,6 +50,10 @@
 </p>
 
 <p align="center">
+  <font color="#d93025"><b>⚠️ 使用注意：首次使用前，请先阅读下方的安全提示。</b></font>
+</p>
+
+<p align="center">
   <a href="https://www.bilibili.com/video/BV1TkTP61Eyb/" target="_blank">
     <img src="bilibili-cover.png" alt="观看 Ghost Proxifier 使用介绍视频" width="640">
   </a>
@@ -162,7 +166,25 @@
 
 ### 使用注意
 
-拖入目标程序前，请确保该程序及其子进程已经完全退出。若程序已在后台运行，注入可能不会生效。
+<blockquote>
+<p><font color="#d93025"><b>⚠️ 注入前请确保目标程序及其子进程已经完全退出。</b></font><br>
+若程序已经在后台运行，注入可能不会生效。请先完全退出程序，再将快捷方式或 <code>.exe</code> 文件拖入窗口。</p>
+
+<p><font color="#d93025"><b>⚠️ 关于 Windows 安全提示：</b></font><br>
+目前项目尚未购买微软代码签名证书，因此使用 Microsoft Edge 下载安装包时，部分杀毒软件可能会误报，Windows SmartScreen 也可能弹出拦截提示。</p>
+
+<p>如果 Edge 阻止下载，可在 Edge 中进入：<code>设置 → 隐私、搜索和服务 → 安全性</code>，暂时关闭“防止有害网站和下载”，完成安装包下载后建议立即恢复该设置。</p>
+
+<p>如果运行安装包时仍被 SmartScreen 拦截，在蓝色提示窗口中点击：<code>更多信息 → 仍要运行</code>。</p>
+
+<p>请仅在确认安装包来自本项目官方 Releases 页面，并核对文件来源后再进行上述操作。</p>
+</blockquote>
+
+### 支持项目
+
+如果 Ghost Proxifier 对你有帮助，也欢迎通过微信支持项目，帮助我们尽早完成正规的微软代码签名，减少安装和使用时的安全提示：
+
+<p align="center"><img src="weixin-pay.jpg" alt="微信支付捐助二维码" width="240"></p>
 
 ## 运行截图
 
