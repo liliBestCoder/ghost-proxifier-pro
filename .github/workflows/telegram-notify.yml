@@ -4,6 +4,9 @@ on:
   release:
     types: [published, edited]
   workflow_dispatch:
+  push:
+    branches:
+      - master
 
 jobs:
   telegram-notify:
