@@ -9,6 +9,28 @@ jobs:
   telegram-notify:
     runs-on: ubuntu-latest
     steps:
+      - name: Fetch Latest Release Data
+        id: release_info
+        run: |
+          if [ -n "${{ github.event.release.tag_name }}" ]; then
+            echo "tag_name=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
+            echo "html_url=${{ github.event.release.html_url }}" >> $GITHUB_OUTPUT
+            body="${{ github.event.release.body }}"
+            echo "body<<EOF" >> $GITHUB_OUTPUT
+            echo "$body" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          else
+            rel=$(curl -s https://api.github.com/repos/liliBestCoder/ghost-proxifier-pro/releases/latest)
+            tag=$(echo "$rel" | jq -r '.tag_name')
+            url=$(echo "$rel" | jq -r '.html_url')
+            body=$(echo "$rel" | jq -r '.body')
+            echo "tag_name=$tag" >> $GITHUB_OUTPUT
+            echo "html_url=$url" >> $GITHUB_OUTPUT
+            echo "body<<EOF" >> $GITHUB_OUTPUT
+            echo "$body" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          fi
+
       - name: Send Telegram Message
         uses: appleboy/telegram-action@master
         with:
@@ -16,10 +38,10 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: html
           message: |
-            🚀 <b>Ghost Proxifier ${{ github.event.release.tag_name || 'v1.1.3' }} 发布！</b>
+            🚀 <b>Ghost Proxifier ${{ steps.release_info.outputs.tag_name }} 发布！</b>
 
             📋 <b>更新说明：</b>
-            ${{ github.event.release.body }}
+            ${{ steps.release_info.outputs.body }}
 
             📥 <b>官方下载：</b>
-            <a href="${{ github.event.release.html_url || 'https://github.com/liliBestCoder/ghost-proxifier-pro/releases/tag/1.1.3' }}">👉 查看 Release 页面与下载 MSI 安装包</a>
+            <a href="${{ steps.release_info.outputs.html_url }}">👉 查看 Release 页面与下载 MSI 安装包</a>
