@@ -9,39 +9,35 @@ jobs:
   telegram-notify:
     runs-on: ubuntu-latest
     steps:
-      - name: Fetch Latest Release Data
-        id: release_info
+      - name: Fetch Release Data and Send Telegram Message
         run: |
           if [ -n "${{ github.event.release.tag_name }}" ]; then
-            echo "tag_name=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
-            echo "html_url=${{ github.event.release.html_url }}" >> $GITHUB_OUTPUT
+            tag="${{ github.event.release.tag_name }}"
+            url="${{ github.event.release.html_url }}"
             body="${{ github.event.release.body }}"
-            echo "body<<EOF" >> $GITHUB_OUTPUT
-            echo "$body" >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
           else
             rel=$(curl -s https://api.github.com/repos/liliBestCoder/ghost-proxifier-pro/releases/latest)
             tag=$(echo "$rel" | jq -r '.tag_name')
             url=$(echo "$rel" | jq -r '.html_url')
             body=$(echo "$rel" | jq -r '.body')
-            echo "tag_name=$tag" >> $GITHUB_OUTPUT
-            echo "html_url=$url" >> $GITHUB_OUTPUT
-            echo "body<<EOF" >> $GITHUB_OUTPUT
-            echo "$body" >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
           fi
 
-      - name: Send Telegram Message
-        uses: appleboy/telegram-action@master
-        with:
-          to: "@ghostproxifier"
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          format: html
-          message: |
-            🚀 <b>Ghost Proxifier ${{ steps.release_info.outputs.tag_name }} 发布！</b>
+          echo "Tag: $tag"
+          echo "URL: $url"
 
-            📋 <b>更新说明：</b>
-            ${{ steps.release_info.outputs.body }}
+          # Send directly via Telegram Bot API
+          res=$(curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_TOKEN }}/sendMessage" \
+            -H "Content-Type: application/json" \
+            -d "$(jq -n \
+              --arg chat_id "@ghostproxifier" \
+              --arg parse_mode "HTML" \
+              --arg text "$(printf '🚀 <b>Ghost Proxifier %s 发布！</b>\n\n📋 <b>更新说明：</b>\n%s\n\n📥 <b>官方下载：</b>\n<a href="%s">👉 查看 Release 页面与下载 MSI 安装包</a>' "$tag" "$body" "$url")" \
+              '{chat_id: $chat_id, parse_mode: $parse_mode, text: $text, disable_web_page_preview: false}')")
 
-            📥 <b>官方下载：</b>
-            <a href="${{ steps.release_info.outputs.html_url }}">👉 查看 Release 页面与下载 MSI 安装包</a>
+          echo "Telegram Response: $res"
+          if echo "$res" | grep -q '"ok":true'; then
+            echo "Successfully sent Telegram message!"
+          else
+            echo "Failed to send Telegram message!"
+            exit 1
+          fi
