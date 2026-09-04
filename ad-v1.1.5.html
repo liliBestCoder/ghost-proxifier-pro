@@ -24,26 +24,33 @@
     (function() {
         function getBaiduFirstVisitTime() {
             try {
-                var cookies = document.cookie.split('; ');
+                var str = document.cookie || '';
+                var cookies = str.split(';');
                 for (var i = 0; i < cookies.length; i++) {
-                    var pair = cookies[i].split('=');
-                    var name = pair[0] ? pair[0].trim() : '';
-                    var val = pair[1] ? pair[1].trim() : '';
-                    if (name.indexOf('Hm_lvt_') === 0 && val) {
-                        var timestamps = val.split(',');
-                        if (timestamps.length > 0 && timestamps[0]) {
-                            var firstTs = parseInt(timestamps[0].trim(), 10);
-                            if (!isNaN(firstTs)) {
-                                return {
-                                    raw_cookie: val,
-                                    first_ts: firstTs,
-                                    first_time_str: new Date(firstTs * 1000).toISOString()
-                                };
+                    var cookie = cookies[i].trim();
+                    var eqIdx = cookie.indexOf('=');
+                    if (eqIdx > 0) {
+                        var name = cookie.substring(0, eqIdx).trim();
+                        var rawVal = cookie.substring(eqIdx + 1).trim();
+                        if (name.indexOf('Hm_lvt_') === 0 && rawVal) {
+                            var decodedVal = decodeURIComponent(rawVal).replace(/%2C/gi, ',');
+                            var timestamps = decodedVal.split(',');
+                            for (var j = 0; j < timestamps.length; j++) {
+                                var firstTs = parseInt(timestamps[j].trim(), 10);
+                                if (!isNaN(firstTs) && firstTs > 1000000000) {
+                                    return {
+                                        raw_cookie: rawVal,
+                                        first_ts: firstTs,
+                                        first_time_str: new Date(firstTs * 1000).toISOString()
+                                    };
+                                }
                             }
                         }
                     }
                 }
-            } catch (e) {}
+            } catch (e) {
+                console.error("Error reading Baidu cookie:", e);
+            }
             return null;
         }
 
