@@ -38,17 +38,57 @@
             return uid;
         }
 
+        function getBaiduFirstVisitTime() {
+            try {
+                var cookies = document.cookie.split('; ');
+                for (var i = 0; i < cookies.length; i++) {
+                    var pair = cookies[i].split('=');
+                    var name = pair[0] ? pair[0].trim() : '';
+                    var val = pair[1] ? pair[1].trim() : '';
+                    if (name.indexOf('Hm_lvt_') === 0 && val) {
+                        var timestamps = val.split(',');
+                        if (timestamps.length > 0 && timestamps[0]) {
+                            var firstTs = parseInt(timestamps[0].trim(), 10);
+                            if (!isNaN(firstTs)) {
+                                return {
+                                    raw_cookie: val,
+                                    first_ts: firstTs,
+                                    first_time_str: new Date(firstTs * 1000).toISOString()
+                                };
+                            }
+                        }
+                    }
+                }
+            } catch (e) {}
+            return null;
+        }
+
         var uid = getOrCreateTdUid();
 
         function reportToTalkingData(retries) {
             if (window.TDAPP) {
                 try {
-                    TDAPP.login({
+                    var bdInfo = getBaiduFirstVisitTime();
+                    var loginData = {
                         profileId: uid,
                         profileType: 0,
                         name: uid
-                    });
-                    TDAPP.onEvent("visitor_uid", uid, { uid: uid });
+                    };
+                    var eventParams = {
+                        uid: uid
+                    };
+
+                    if (bdInfo) {
+                        loginData.property1 = bdInfo.first_time_str;
+                        loginData.property2 = String(bdInfo.first_ts);
+
+                        eventParams.baidu_first_visit_ts = bdInfo.first_ts;
+                        eventParams.baidu_first_visit_time = bdInfo.first_time_str;
+                        eventParams.baidu_lvt_raw = bdInfo.raw_cookie;
+                    }
+
+                    TDAPP.login(loginData);
+                    TDAPP.onEvent("visitor_uid", uid, eventParams);
                 } catch (e) {
                     console.error("TalkingData report error:", e);
                 }
