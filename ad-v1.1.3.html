@@ -15,6 +15,53 @@
       s.parentNode.insertBefore(hm, s);
     })();
     </script>
+    <!-- TalkingData Analytics -->
+    <script src="https://jic.talkingdata.com/app/h5/v1?appid=5ABC0229723245269C199629ECF3D262&vn=v1.1.3&vc=1.1.3"></script>
+    <script>
+    (function() {
+        function getOrCreateTdUid() {
+            var storageKey = 'ghost_td_uid';
+            var uid = '';
+            try {
+                uid = localStorage.getItem(storageKey);
+            } catch (e) {}
+
+            if (!uid) {
+                var randStr = (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function')
+                    ? crypto.randomUUID()
+                    : (Date.now().toString(36) + '-' + Math.random().toString(36).substring(2, 10) + '-' + Math.random().toString(36).substring(2, 10));
+                uid = 'td-' + randStr;
+                try {
+                    localStorage.setItem(storageKey, uid);
+                } catch (e) {}
+            }
+            return uid;
+        }
+
+        var uid = getOrCreateTdUid();
+
+        function reportToTalkingData(retries) {
+            if (window.TDAPP) {
+                try {
+                    TDAPP.login({
+                        profileId: uid,
+                        profileType: 0,
+                        name: uid
+                    });
+                    TDAPP.onEvent("visitor_uid", uid, { uid: uid });
+                } catch (e) {
+                    console.error("TalkingData report error:", e);
+                }
+            } else if (retries > 0) {
+                setTimeout(function() {
+                    reportToTalkingData(retries - 1);
+                }, 100);
+            }
+        }
+
+        reportToTalkingData(30);
+    })();
+    </script>
     <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
