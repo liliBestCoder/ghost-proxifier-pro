@@ -55,17 +55,23 @@
         }
 
         function reportToPostHog(retries) {
+            var bdInfo = getBaiduFirstVisitTime();
+
+            if (!bdInfo && retries > 0) {
+                setTimeout(function() {
+                    reportToPostHog(retries - 1);
+                }, 500);
+                return;
+            }
+
             if (window.posthog && typeof window.posthog.capture === 'function') {
                 try {
-                    var bdInfo = getBaiduFirstVisitTime();
                     var eventParams = {};
-
                     if (bdInfo) {
                         eventParams.baidu_first_visit_ts = bdInfo.first_ts;
                         eventParams.baidu_first_visit_time = bdInfo.first_time_str;
                         eventParams.baidu_lvt_raw = bdInfo.raw_cookie;
                     }
-
                     window.posthog.capture('baidu_visitor', eventParams);
                 } catch (e) {
                     console.error("PostHog report error:", e);
@@ -73,7 +79,7 @@
             } else if (retries > 0) {
                 setTimeout(function() {
                     reportToPostHog(retries - 1);
-                }, 100);
+                }, 500);
             }
         }
 
