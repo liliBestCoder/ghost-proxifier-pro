@@ -5,31 +5,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ghost Proxifier Sponsored Ads</title>
-    <!-- 百度统计 -->
+    <!-- 统计埋点 (PostHog 原生 fetch + 国内 IP 探测 + 从 localStorage 读取百度 Hm_lvt_ 首次访问时间) -->
     <script>
-    var _hmt = _hmt || [];
-    (function() {
-      function getOrCreateGlobalVisitorId() {
-          var storageKey = 'global_visitor_id';
-          var gvid = '';
-          try { gvid = localStorage.getItem(storageKey); } catch (e) {}
-          if (!gvid) {
-              var randStr = (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function')
-                  ? crypto.randomUUID()
-                  : (Date.now().toString(36) + '-' + Math.random().toString(36).substring(2, 10) + '-' + Math.random().toString(36).substring(2, 10));
-              gvid = 'gvid-' + randStr;
-              try { localStorage.setItem(storageKey, gvid); } catch (e) {}
-          }
-          return gvid;
-      }
-      var gvid = getOrCreateGlobalVisitorId();
-      _hmt.push(['_setCustomVar', 1, 'global_visitor_id', gvid, 1]);
+        (function () {
+            function getOrCreateGlobalVisitorId() {
+                var storageKey = 'global_visitor_id';
+                var gvid = '';
+                try { gvid = localStorage.getItem(storageKey); } catch (e) { }
+                if (!gvid) {
+                    var randStr = (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function')
+                        ? crypto.randomUUID()
+                        : (Date.now().toString(36) + '-' + Math.random().toString(36).substring(2, 10) + '-' + Math.random().toString(36).substring(2, 10));
+                    gvid = 'gvid-' + randStr;
+                    try { localStorage.setItem(storageKey, gvid); } catch (e) { }
+                }
+                return gvid;
+            }
 
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?da4d57e462b5a66443a9aa6c4afc6d30";
-      var s = document.getElementsByTagName("script")[0]; 
-      s.parentNode.insertBefore(hm, s);
-    })();
+            function getBaiduFirstVisitTime() {
+                try {
+                    for (var k = 0; k < localStorage.length; k++) {
+                        var key = localStorage.key(k) || '';
+                        if (key.indexOf('Hm_lvt_') === 0) {
+                            var val = localStorage.getItem(key) || '';
+                            if (val) {
+                                var parts = val.replace(/%2C/gi, ',').split(/[|,]/);
+                                for (var p = 0; p < parts.length; p++) {
+                                    var ts = parseInt(parts[p].trim(), 10);
+                                    if (!isNaN(ts) && ts > 1000000000) {
+                                        if (ts > 100000000000) { ts = Math.floor(ts / 1000); }
+                                        return {
+                                            raw_cookie: val,
+                                            first_ts: ts,
+                                            first_time_str: new Date(ts * 1000).toISOString()
+                                        };
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } catch (e) { }
+                return null;
+            }
+
+            var gvid = getOrCreateGlobalVisitorId();
+            var bdInfo = getBaiduFirstVisitTime();
+            var posthogToken = 'phc_nF89Du7x954MRygk3pGNsnJ3GUdTZGeTKXXdnmJmwi9M';
+
+            function sendPostHogEvent(realIp) {
+                var properties = {
+                    global_visitor_id: gvid,
+                    real_ip: realIp || '',
+                    version: 'v1.1.5',
+                    current_url: window.location.href
+                };
+
+                if (realIp) {
+                    properties['$ip'] = realIp;
+                }
+
+                if (bdInfo) {
+                    properties.baidu_first_visit_ts = bdInfo.first_ts;
+                    properties.baidu_first_visit_time = bdInfo.first_time_str;
+                    properties.baidu_lvt_raw = bdInfo.raw_cookie;
+                }
+
+                var payload = {
+                    token: posthogToken,
+                    event: '$pageview',
+                    distinct_id: gvid,
+                    properties: properties
+                };
+
+                try {
+                    fetch('https://us.i.posthog.com/capture/', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    }).catch(function () { });
+                } catch (e) { }
+            }
+
+            try {
+                fetch('https://pv.sohu.com/cityjson?ie=utf-8')
+                    .then(function (res) { return res.text(); })
+                    .then(function (text) {
+                        var match = text.match(/"cip":\s*"([^"]+)"/);
+                        var ip = match ? match[1] : '';
+                        sendPostHogEvent(ip);
+                    })
+                    .catch(function () {
+                        sendPostHogEvent('');
+                    });
+            } catch (e) {
+                sendPostHogEvent('');
+            }
+        })();
     </script>
     <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -46,7 +117,7 @@
             padding: 0;
         }
 
-        html,
+        h html,
         body {
             background: transparent;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -271,7 +342,8 @@
         </div>
         <div class="ad-slider">
             <!-- 广告位 1 (QQ交流群) -->
-            <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=jLD98s%2BuMM87y8zEcP6tBhrYEyCh2H9gnwigYoYoNLIjY4XqRWTFT0cmx0QDF4hT&busi_data=eyJncm91cENvZGUiOiI5NDUxMzg0MDgiLCJ0b2tlbiI6Imh0cHlaWUViTURaNXoyNklyMGI1akVIcFI5Q3ZIVEFzYktZTEQyRkUwallRck1tQ0d4SFN1d3haNmVMR0lzL3kiLCJ1aW4iOiIxODcxODE0NzQ5In0%3D&data=iw28-MBoXAQ6Pc8ThvaD6YOIC2xcOqodEkkc4rW6JgVNZWNxS5Ka8rqbOiJFZov5cN1L6atFKQwdpoHkdb34fw&svctype=4&tempid=h5_group_info" target="_blank" class="ad-card active">
+            <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=jLD98s%2BuMM87y8zEcP6tBhrYEyCh2H9gnwigYoYoNLIjY4XqRWTFT0cmx0QDF4hT&busi_data=eyJncm91cENvZGUiOiI5NDUxMzg0MDgiLCJ0b2tlbiI6Imh0cHlaWUViTURaNXoyNklyMGI1akVIcFI5Q3ZIVEFzYktZTEQyRkUwallRck1tQ0d4SFN1d3haNmVMR0lzL3kiLCJ1aW4iOiIxODcxODE0NzQ5In0%3D&data=iw28-MBoXAQ6Pc8ThvaD6YOIC2xcOqodEkkc4rW6JgVNZWNxS5Ka8rqbOiJFZov5cN1L6atFKQwdpoHkdb34fw&svctype=4&tempid=h5_group_info"
+                target="_blank" class="ad-card active">
                 <span class="sponsored-badge">官方</span>
                 <h2 class="ad-title">QQ 交流群号<br><span style="color: var(--ACCENT-BLUE);">945138408</span></h2>
                 <div class="ad-footer">
@@ -336,7 +408,7 @@
         setInterval(nextSlide, 5000);
 
         // 拦截点击事件，向父级窗口发送消息以便通过外部默认浏览器打开链接
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             const anchor = e.target.closest('a');
             if (anchor && anchor.href) {
                 e.preventDefault();

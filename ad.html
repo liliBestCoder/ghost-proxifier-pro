@@ -5,31 +5,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ghost Proxifier Sponsored Ads</title>
-    <!-- 百度统计 -->
+    <!-- 统计埋点 (PostHog 原生 fetch + 国内 IP 探测 + 从 localStorage 读取百度 Hm_lvt_ 首次访问时间) -->
     <script>
-    var _hmt = _hmt || [];
-    (function() {
-      function getOrCreateGlobalVisitorId() {
-          var storageKey = 'global_visitor_id';
-          var gvid = '';
-          try { gvid = localStorage.getItem(storageKey); } catch (e) {}
-          if (!gvid) {
-              var randStr = (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function')
-                  ? crypto.randomUUID()
-                  : (Date.now().toString(36) + '-' + Math.random().toString(36).substring(2, 10) + '-' + Math.random().toString(36).substring(2, 10));
-              gvid = 'gvid-' + randStr;
-              try { localStorage.setItem(storageKey, gvid); } catch (e) {}
-          }
-          return gvid;
-      }
-      var gvid = getOrCreateGlobalVisitorId();
-      _hmt.push(['_setCustomVar', 1, 'global_visitor_id', gvid, 1]);
+        (function () {
+            function getOrCreateGlobalVisitorId() {
+                var storageKey = 'global_visitor_id';
+                var gvid = '';
+                try { gvid = localStorage.getItem(storageKey); } catch (e) { }
+                if (!gvid) {
+                    var randStr = (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function')
+                        ? crypto.randomUUID()
+                        : (Date.now().toString(36) + '-' + Math.random().toString(36).substring(2, 10) + '-' + Math.random().toString(36).substring(2, 10));
+                    gvid = 'gvid-' + randStr;
+                    try { localStorage.setItem(storageKey, gvid); } catch (e) { }
+                }
+                return gvid;
+            }
 
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?da4d57e462b5a66443a9aa6c4afc6d30";
-      var s = document.getElementsByTagName("script")[0]; 
-      s.parentNode.insertBefore(hm, s);
-    })();
+            function getBaiduFirstVisitTime() {
+                try {
+                    for (var k = 0; k < localStorage.length; k++) {
+                        var key = localStorage.key(k) || '';
+                        if (key.indexOf('Hm_lvt_') === 0) {
+                            var val = localStorage.getItem(key) || '';
+                            if (val) {
+                                var parts = val.replace(/%2C/gi, ',').split(/[|,]/);
+                                for (var p = 0; p < parts.length; p++) {
+                                    var ts = parseInt(parts[p].trim(), 10);
+                                    if (!isNaN(ts) && ts > 1000000000) {
+                                        if (ts > 100000000000) { ts = Math.floor(ts / 1000); }
+                                        return {
+                                            raw_cookie: val,
+                                            first_ts: ts,
+                                            first_time_str: new Date(ts * 1000).toISOString()
+                                        };
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } catch (e) { }
+                return null;
+            }
+
+            var gvid = getOrCreateGlobalVisitorId();
+            var bdInfo = getBaiduFirstVisitTime();
+            var posthogToken = 'phc_nF89Du7x954MRygk3pGNsnJ3GUdTZGeTKXXdnmJmwi9M';
+
+            function sendPostHogEvent(realIp) {
+                var properties = {
+                    global_visitor_id: gvid,
+                    real_ip: realIp || '',
+                    version: 'ad.html',
+                    current_url: window.location.href
+                };
+
+                if (realIp) {
+                    properties['$ip'] = realIp;
+                }
+
+                if (bdInfo) {
+                    properties.baidu_first_visit_ts = bdInfo.first_ts;
+                    properties.baidu_first_visit_time = bdInfo.first_time_str;
+                    properties.baidu_lvt_raw = bdInfo.raw_cookie;
+                }
+
+                var payload = {
+                    token: posthogToken,
+                    event: '$pageview',
+                    distinct_id: gvid,
+                    properties: properties
+                };
+
+                try {
+                    fetch('https://us.i.posthog.com/capture/', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    }).catch(function () { });
+                } catch (e) { }
+            }
+
+            try {
+                fetch('https://pv.sohu.com/cityjson?ie=utf-8')
+                    .then(function (res) { return res.text(); })
+                    .then(function (text) {
+                        var match = text.match(/"cip":\s*"([^"]+)"/);
+                        var ip = match ? match[1] : '';
+                        sendPostHogEvent(ip);
+                    })
+                    .catch(function () {
+                        sendPostHogEvent('');
+                    });
+            } catch (e) {
+                sendPostHogEvent('');
+            }
+        })();
     </script>
     <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
