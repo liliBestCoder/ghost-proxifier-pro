@@ -86,20 +86,47 @@
                 } catch (e) { }
             }
 
-            try {
-                fetch('https://pv.sohu.com/cityjson?ie=utf-8')
-                    .then(function (res) { return res.text(); })
-                    .then(function (text) {
-                        var match = text.match(/"cip":\s*"([^"]+)"/);
-                        var ip = match ? match[1] : '';
-                        sendPostHogEvent(ip);
-                    })
-                    .catch(function () {
-                        sendPostHogEvent('');
-                    });
-            } catch (e) {
-                sendPostHogEvent('');
+            function getRealIp(callback) {
+                try {
+                    var script = document.createElement('script');
+                    script.src = 'https://pv.sohu.com/cityjson?ie=utf-8';
+                    var timer = setTimeout(function () {
+                        fallbackIp(callback);
+                    }, 2000);
+
+                    script.onload = function () {
+                        clearTimeout(timer);
+                        var ip = (window.returnCitySN && window.returnCitySN.cip) ? window.returnCitySN.cip : '';
+                        if (ip) {
+                            callback(ip);
+                        } else {
+                            fallbackIp(callback);
+                        }
+                    };
+                    script.onerror = function () {
+                        clearTimeout(timer);
+                        fallbackIp(callback);
+                    };
+                    (document.head || document.documentElement).appendChild(script);
+                } catch (e) {
+                    fallbackIp(callback);
+                }
             }
+
+            function fallbackIp(callback) {
+                try {
+                    fetch('https://api.ipify.org?format=json')
+                        .then(function (res) { return res.json(); })
+                        .then(function (data) { callback(data.ip || ''); })
+                        .catch(function () { callback(''); });
+                } catch (e) {
+                    callback('');
+                }
+            }
+
+            getRealIp(function (realIp) {
+                sendPostHogEvent(realIp);
+            });
         })();
     </script>
     <!-- FontAwesome for icons -->
