@@ -88,36 +88,48 @@
 
             function getRealIp(callback) {
                 try {
-                    var script = document.createElement('script');
-                    script.src = 'https://pv.sohu.com/cityjson?ie=utf-8';
-                    var timer = setTimeout(function () {
-                        fallbackIp(callback);
-                    }, 2000);
-
-                    script.onload = function () {
-                        clearTimeout(timer);
-                        var ip = (window.returnCitySN && window.returnCitySN.cip) ? window.returnCitySN.cip : '';
-                        if (ip) {
-                            callback(ip);
-                        } else {
-                            fallbackIp(callback);
-                        }
-                    };
-                    script.onerror = function () {
-                        clearTimeout(timer);
-                        fallbackIp(callback);
-                    };
-                    (document.head || document.documentElement).appendChild(script);
+                    fetch('https://myip.ipip.net/s')
+                        .then(function (res) { return res.text(); })
+                        .then(function (text) {
+                            var ip = text ? text.trim() : '';
+                            if (ip && ip.indexOf('.') !== -1 && ip !== '127.0.0.1') {
+                                callback(ip);
+                            } else {
+                                fallbackBaiduIp(callback);
+                            }
+                        })
+                        .catch(function () { fallbackBaiduIp(callback); });
                 } catch (e) {
-                    fallbackIp(callback);
+                    fallbackBaiduIp(callback);
                 }
             }
 
-            function fallbackIp(callback) {
+            function fallbackBaiduIp(callback) {
                 try {
-                    fetch('https://api.ipify.org?format=json')
+                    fetch('https://opendata.baidu.com/api.php?query=ip&co=&resource_id=6006&oe=utf8')
                         .then(function (res) { return res.json(); })
-                        .then(function (data) { callback(data.ip || ''); })
+                        .then(function (data) {
+                            var ip = (data && data.data && data.data[0] && data.data[0].origip) ? data.data[0].origip.trim() : '';
+                            if (ip && ip !== '127.0.0.1') {
+                                callback(ip);
+                            } else {
+                                fallbackTencentIp(callback);
+                            }
+                        })
+                        .catch(function () { fallbackTencentIp(callback); });
+                } catch (e) {
+                    fallbackTencentIp(callback);
+                }
+            }
+
+            function fallbackTencentIp(callback) {
+                try {
+                    fetch('https://r.inews.qq.com/api/ip2location')
+                        .then(function (res) { return res.json(); })
+                        .then(function (data) {
+                            var ip = (data && (data.ip || data.client_ip)) ? (data.ip || data.client_ip).trim() : '';
+                            callback((ip && ip !== '127.0.0.1') ? ip : '');
+                        })
                         .catch(function () { callback(''); });
                 } catch (e) {
                     callback('');

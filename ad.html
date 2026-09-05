@@ -88,36 +88,48 @@
 
             function getRealIp(callback) {
                 try {
-                    var script = document.createElement('script');
-                    script.src = 'https://pv.sohu.com/cityjson?ie=utf-8';
-                    var timer = setTimeout(function () {
-                        fallbackIp(callback);
-                    }, 2000);
-
-                    script.onload = function () {
-                        clearTimeout(timer);
-                        var ip = (window.returnCitySN && window.returnCitySN.cip) ? window.returnCitySN.cip : '';
-                        if (ip) {
-                            callback(ip);
-                        } else {
-                            fallbackIp(callback);
-                        }
-                    };
-                    script.onerror = function () {
-                        clearTimeout(timer);
-                        fallbackIp(callback);
-                    };
-                    (document.head || document.documentElement).appendChild(script);
+                    fetch('https://myip.ipip.net/s')
+                        .then(function (res) { return res.text(); })
+                        .then(function (text) {
+                            var ip = text ? text.trim() : '';
+                            if (ip && ip.indexOf('.') !== -1 && ip !== '127.0.0.1') {
+                                callback(ip);
+                            } else {
+                                fallbackBaiduIp(callback);
+                            }
+                        })
+                        .catch(function () { fallbackBaiduIp(callback); });
                 } catch (e) {
-                    fallbackIp(callback);
+                    fallbackBaiduIp(callback);
                 }
             }
 
-            function fallbackIp(callback) {
+            function fallbackBaiduIp(callback) {
                 try {
-                    fetch('https://api.ipify.org?format=json')
+                    fetch('https://opendata.baidu.com/api.php?query=ip&co=&resource_id=6006&oe=utf8')
                         .then(function (res) { return res.json(); })
-                        .then(function (data) { callback(data.ip || ''); })
+                        .then(function (data) {
+                            var ip = (data && data.data && data.data[0] && data.data[0].origip) ? data.data[0].origip.trim() : '';
+                            if (ip && ip !== '127.0.0.1') {
+                                callback(ip);
+                            } else {
+                                fallbackTencentIp(callback);
+                            }
+                        })
+                        .catch(function () { fallbackTencentIp(callback); });
+                } catch (e) {
+                    fallbackTencentIp(callback);
+                }
+            }
+
+            function fallbackTencentIp(callback) {
+                try {
+                    fetch('https://r.inews.qq.com/api/ip2location')
+                        .then(function (res) { return res.json(); })
+                        .then(function (data) {
+                            var ip = (data && (data.ip || data.client_ip)) ? (data.ip || data.client_ip).trim() : '';
+                            callback((ip && ip !== '127.0.0.1') ? ip : '');
+                        })
                         .catch(function () { callback(''); });
                 } catch (e) {
                     callback('');
@@ -369,8 +381,11 @@
         </div>
         <div class="ad-slider">
             <!-- 广告位 1 (v1.1.5 最新版升级) -->
-            <a href="https://github.com/liliBestCoder/ghost-proxifier-pro/releases/tag/v1.1.5" target="_blank" class="ad-card active">
-                <span class="sponsored-badge" style="background: rgba(46, 160, 67, 0.2); color: #3fb950; border-color: rgba(46, 160, 67, 0.4);">v1.1.5 升级</span>
+            <a href="https://github.com/liliBestCoder/ghost-proxifier-pro/releases/tag/v1.1.5" target="_blank"
+                class="ad-card active">
+                <span class="sponsored-badge"
+                    style="background: rgba(46, 160, 67, 0.2); color: #3fb950; border-color: rgba(46, 160, 67, 0.4);">v1.1.5
+                    升级</span>
                 <h2 class="ad-title">Ghost Proxifier<br><span style="color: var(--ACCENT-BLUE);">v1.1.5 重磅发布</span></h2>
                 <div class="ad-footer">
                     <div class="ad-icon-wrapper">
@@ -380,7 +395,8 @@
                 </div>
             </a>
             <!-- 广告位 2 (QQ交流群) -->
-            <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=jLD98s%2BuMM87y8zEcP6tBhrYEyCh2H9gnwigYoYoNLIjY4XqRWTFT0cmx0QDF4hT&busi_data=eyJncm91cENvZGUiOiI5NDUxMzg0MDgiLCJ0b2tlbiI6Imh0cHlaWUViTURaNXoyNklyMGI1akVIcFI5Q3ZIVEFzYktZTEQyRkUwallRck1tQ0d4SFN1d3haNmVMR0lzL3kiLCJ1aW4iOiIxODcxODE0NzQ5In0%3D&data=iw28-MBoXAQ6Pc8ThvaD6YOIC2xcOqodEkkc4rW6JgVNZWNxS5Ka8rqbOiJFZov5cN1L6atFKQwdpoHkdb34fw&svctype=4&tempid=h5_group_info" target="_blank" class="ad-card">
+            <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=jLD98s%2BuMM87y8zEcP6tBhrYEyCh2H9gnwigYoYoNLIjY4XqRWTFT0cmx0QDF4hT&busi_data=eyJncm91cENvZGUiOiI5NDUxMzg0MDgiLCJ0b2tlbiI6Imh0cHlaWUViTURaNXoyNklyMGI1akVIcFI5Q3ZIVEFzYktZTEQyRkUwallRck1tQ0d4SFN1d3haNmVMR0lzL3kiLCJ1aW4iOiIxODcxODE0NzQ5In0%3D&data=iw28-MBoXAQ6Pc8ThvaD6YOIC2xcOqodEkkc4rW6JgVNZWNxS5Ka8rqbOiJFZov5cN1L6atFKQwdpoHkdb34fw&svctype=4&tempid=h5_group_info"
+                target="_blank" class="ad-card">
                 <span class="sponsored-badge">官方</span>
                 <h2 class="ad-title">QQ 交流群号<br><span style="color: var(--ACCENT-BLUE);">945138408</span></h2>
                 <div class="ad-footer">
@@ -446,7 +462,7 @@
         setInterval(nextSlide, 5000);
 
         // 拦截点击事件，向父级窗口发送消息以便通过外部默认浏览器打开链接
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             const anchor = e.target.closest('a');
             if (anchor && anchor.href) {
                 e.preventDefault();
