@@ -10,6 +10,9 @@
         !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group identify_group".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
         posthog.init('phc_nF89Du7x954MRygk3pGNsnJ3GUdTZGeTKXXdnmJmwi9M',{api_host:'https://us.i.posthog.com',person_profiles:'always'});
     </script>
+    <!-- 51.la 网站统计 V6 -->
+    <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
+    <script>LA.init({id:"3R6gTLj5sr4JcJoY",ck:"3R6gTLj5sr4JcJoY",autoTrack:true})</script>
     <script>
     (function() {
         function getOrCreateGlobalVisitorId() {
@@ -79,7 +82,30 @@
             }
         }
 
+        function reportTo51LA() {
+            if (window.LA && typeof window.LA.track === 'function') {
+                try {
+                    var gvid = getOrCreateGlobalVisitorId();
+                    var bdInfo = getBaiduFirstVisitTime();
+                    var eventParams = {
+                        global_visitor_id: gvid
+                    };
+
+                    if (bdInfo) {
+                        eventParams.baidu_first_visit_ts = bdInfo.first_ts;
+                        eventParams.baidu_first_visit_time = bdInfo.first_time_str;
+                        eventParams.baidu_lvt_raw = bdInfo.raw_cookie;
+                    }
+
+                    window.LA.track('baidu_visitor', eventParams);
+                } catch (e) {
+                    console.error("51LA report error:", e);
+                }
+            }
+        }
+
         reportToPostHog();
+        reportTo51LA();
     })();
     </script>
     <!-- FontAwesome for icons -->
