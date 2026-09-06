@@ -38,7 +38,7 @@
 </p>
 
 <p align="center">
-  A process-level transparent proxy for Windows. It injects a DLL and hooks the Winsock API to route traffic from selected applications and their child processes through an HTTP proxy — without changing routing tables or installing a virtual network adapter.
+  A process-level transparent proxy for Windows. It injects a DLL and hooks Winsock APIs to route traffic from selected applications and their child processes through HTTP / SOCKS5 proxies — without changing routing tables or installing virtual network adapters.
 </p>
 
 <p align="center">
@@ -66,19 +66,22 @@
 
 ## Use Cases
 
-- Proxy AI coding tools such as Codex, Claude Code, and Antigravity.
+- AI coding tools, such as Codex, Claude Desktop, Claude Code, Antigravity, Cursor, etc.
 - Use multiple VPN or proxy clients together while routing only selected applications to reduce virtual-adapter and routing conflicts.
 - Proxy command-line tools, developer tools, and game clients that ignore system proxy settings.
 - Assign different proxy nodes to different applications or accounts for network-level IP isolation.
 
 ## Core Features
 
-- **Drag and drop**: Drop a shortcut or `.exe` file to inject the target process.
-- **Automatic child-process tracking**: Child processes are handled automatically without manual PID configuration.
-- **Per-process proxying**: Proxy only selected applications while leaving other system traffic unchanged.
-- **Local DNS**: Forward DNS queries through the proxy to reduce DNS leaks and poisoning.
-- **DoH / QUIC blocking**: Prevent browsers from bypassing the proxy through direct HTTPS or UDP connections.
-- **Live monitoring**: View process status, proxy status, traffic statistics, and automatic reconnection.
+- **Drag & Drop Simplicity**: Drop any shortcut or `.exe` into the window to enable proxying instantly.
+- **Auto Child-Process Tracking**: Automatically takes over all child processes (like browser subprocesses) without manual PID setup.
+- **HTTP & SOCKS5 Protocol Support**: Fully compatible with mainstream proxy clients, supporting username/password authentication for any proxy environment.
+- **UDP Forwarding & QUIC Protection**: Supports UDP traffic forwarding and blocks browser QUIC protocol from bypassing your proxy, keeping 100% of traffic proxied.
+- **Native WinStore App Support**: Seamlessly proxies WinStore apps like ChatGPT and Claude; automatically adapts when WinStore apps auto-update to new version directories.
+- **Leak-Proof DNS Resolution**: DNS queries are encrypted and routed via proxy, with built-in DoH blocking to prevent browser bypass; includes DNS Strict Mode to block unencrypted fallbacks to ISP DNS.
+- **One-Click Diagnostic Pack Export**: Easily export a troubleshooting diagnostic zip from Settings for fast problem feedback and debugging.
+- **Personalized Settings & Multi-Language**: Customize window close behavior (e.g. minimize to system tray) with native one-click switching between **English and Simplified Chinese**.
+- **Live Traffic Monitoring & Watchdog**: View real-time bandwidth and process stats with an underlying background watchdog for maximum stability.
 
 ## Supported Apps
 
@@ -102,9 +105,10 @@
     <td align="center"><img src="icons/bluestacks_x.png" width="40" alt="BlueStacks X"><br><sub>BlueStacks X</sub></td>
     <td align="center"><img src="icons/cmd.exe.png" width="40" alt="CMD"><br><sub>CMD</sub></td>
     <td align="center"><img src="icons/powershell.exe.png" width="40" alt="PowerShell"><br><sub>PowerShell</sub></td>
-    <td align="center"><img src="icons/cf.exe.png" width="40" alt="CrossFire (CF)"><br><sub>CrossFire</sub></td>
+    <td align="center"><img src="icons/cf.exe.png" width="40" alt="CF (CrossFire)"><br><sub>CF</sub></td>
     <td align="center"><img src="icons/hyperdown.png" width="40" alt="HyperDown"><br><sub>HyperDown</sub></td>
-    <td align="center"><sub>...</sub></td>
+    <td align="center"><img src="icons/mstsc.exe.png" width="40" alt="MSTSC (Remote Desktop)"><br><sub>MSTSC</sub></td>
+    <td align="center"><img src="icons/multilogin.exe.png" width="40" alt="Multilogin"><br><sub>Multilogin</sub></td>
   </tr>
 </table>
 
@@ -113,7 +117,7 @@
 ## Quick Start
 
 1. Download and launch Ghost Proxifier Pro from [Releases](https://github.com/liliBestCoder/ghost-proxifier-pro/releases).
-2. Configure the upstream HTTP proxy and DNS settings.
+2. Configure upstream HTTP / SOCKS5 proxy and DNS settings.
 3. Drop the target shortcut or `.exe` file into the window and start the proxied process.
 
 ## Architecture Overview
@@ -121,28 +125,22 @@
 ```text
                         Ghost Proxifier Pro Architecture
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                        Target Process (e.g. Chrome)                         │
+│                        Target Process (e.g. Chrome / ChatGPT)               │
 │                                                                             │
 │  ┌──────────┐   ┌──────────┐   ┌──────────┐   ┌─────────────────────────┐  │
-│  │ DNS Query │   │ TCP Connect│  │ Data Send │   │ 8.8.8.8:53             │  │
+│  │ DNS Query │   │ TCP Connect│  │ UDP Send  │   │ 8.8.8.8:53              │  │
 │  │          │   │          │   │          │   │                         │  │
-│  │ getaddrinfo│   │ connect()│   │ send() / │   │ sendto(53)             │  │
-│  │GetAddrInfoW│   │ConnectEx()│  │WSASend() │   │WSASendTo()             │  │
-│  └────┬─────┘   └────┬─────┘   └────┬─────┘   └────┬──────────────────┘  │
+│  │ getaddrinfo│   │ connect()│   │ sendto() │   │ sendto(53)              │  │
+│  │GetAddrInfoW│   │ConnectEx()│  │WSASendTo()│  │WSASendTo()              │  │
+│  └────┬─────┘   └────┬─────┘   └────┬─────┘   └────┬────────────────────┘  │
 │       │              │              │              │                       │
 │       └──────┬───────┘              │              │                       │
 │              │                      │              │                       │
-│         ┌────┴─────┐           ┌────┴─────┐   ┌────┴─────┐                 │
-│         │  HOOK    │           │  HOOK    │   │  HOOK    │                 │
-│         └────┬─────┘           └────┬─────┘   └────┬─────┘                 │
-│              │                      │              │                       │
-│         ┌────┴─────┐           ┌────┴─────┐   ┌────┴─────┐                 │
-│         │ Local DNS │           │ Redirect to  │   │ Lazy Handshake       │
-│         │ Proxy     │           │ Proxy, Save  │   │ 1. Check PendingMap  │
-│         │ UDP → TCP │           │ to PendingMap│   │ 2. HTTP CONNECT      │
-│         │ Forward to│           │              │   │ 3. Send original data│
-│         │ 8.8.8.8:53│           │              │   │                      │
-│         └────────────┘           └──────────┘   └─────────────────────────┘
+│         ┌────┴─────────────┐   ┌────┴─────────────┐ ┌────┴─────────────┐   │
+│         │ Shared Mem Cache │   │ Redirect to Proxy│ │ UDP ASSOCIATE    │   │
+│         │ IOCP Worker Pool │   │ HTTP / SOCKS5    │ │ STUN Probe       │   │
+│         │ Strict Mode      │   │ Auth Support     │ │ QUIC Fallback    │   │
+│         └──────────────────┘   └──────────────────┘ └──────────────────┘   │
 │                                                                             │
 │                   ghost_core.dll (injected into target process)              │
 └─────────────────────────────────────────────────────────────────────────────┘
@@ -150,11 +148,9 @@
                    │   127.0.0.1:2080      │
                    │                       │
             ┌──────┴───────┐      ┌────────┴────────┐
-            │  Upstream     │      │  DNS Results    │
-            │  HTTP CONNECT │      │                 │
-            │  Proxy        │      │  IP → Hostname  │
-            │ (V2Ray/Clash/ │      │                 │
-            │  NekoBox/...) │      │                 │
+            │ Upstream     │      │ Watchdog Host   │
+            │ HTTP / SOCKS5│      │ Crash Dump/ACL  │
+            │ Proxy        │      │ Event Log Mirror│
             └──────────────┘      └─────────────────┘
 ```
 
@@ -184,21 +180,29 @@ No TUN/TAP virtual adapter or WFP kernel driver is required. Ghost Proxifier use
 
 **Is Ghost Proxifier Pro free?**
 
-The Pro version is currently free to use, including drag-and-drop injection, multi-application proxying, and child-process tracking.
+Ghost Proxifier Pro is now **completely free with all Pro features unlocked (FREE & UNLOCKED)**. $0.00 without registration or activation to enjoy unlimited drag-and-drop injection, infinite processes, SOCKS5 / UDP forwarding, and process tree tracking.
 
 **What is the difference between Pro and the open-source version?**
 
-The Pro version provides a GUI, process rules, traffic monitoring, automatic child-process tracking, Watchdog reconnection, and an installer. The open-source version is CLI-only.
+The Pro version provides a GUI, process rules, traffic monitoring, automatic child-process tracking, SOCKS5 authentication, Watchdog reconnection, and an MSI installer. The open-source version is CLI-only.
+
+**What if I cannot add or edit nodes on the Upstream Nodes page?**
+
+This is usually caused by corrupted files in the software installation directory. Simply run the downloaded `.msi` installer again and select **Repair** to restore the installation.
+
+**Getting `create process error 5` when launching ChatGPT / Claude WinStore apps?**
+
+`create process error 5` is usually caused by Windows user permission constraints. Simply right-click the **Ghost Proxifier Pro shortcut** and select **"Run as Administrator"** to resolve it.
 
 **How can I report an issue?**
 
-Please use [GitHub Issues](https://github.com/liliBestCoder/ghost-proxifier-pro/issues) or contact us through the official communities.
+You can click **[Export Diagnostic Pack]** in the Settings page to generate a redacted diagnostic zip file, then send it via [GitHub Issues](https://github.com/liliBestCoder/ghost-proxifier-pro/issues) or community channels.
 
 ## Community
 
 If your enterprise requires centralized management features for overseas operations, cross-border e-commerce, game proxying, development, or compliance auditing—such as global configuration distribution, access auditing and monitoring, dynamic access blocking, or custom driver and protocol integration—feel free to contact us to discuss cooperation.
 
-- [QQ Group 945138408](https://qun.qq.com/universal-share/share?ac=1&authKey=jLD98s%2BuMM87y8zEcP6tBhrYEyCh2H9gnwigYoYoNLIjY4XqRWTFT0cmx0QDF4hT&busi_data=eyJncm91cENvZGUiOiI5NDUxMzg0MDgiLCJ0b2tlbiI6Imh0cHlaWUViTURaNXoyNklyMGI1akVIcFI5Q3ZIVEFzYktZTEQyRkUwallRck1tQ0d4SFN1d3haNmVMR0lzL3kiLCJ1aW4iOiIxODcxODE0NzQ5In0%3D&data=iw28-MBoXAQ6Pc8ThvaD6YOIC2xcOqodEkkc4rW6JgVNZWNxS5Ka8rqbOiJFZov5cN1L6atFKQwdpoHkdb34fw&svctype=4&tempid=h5_group_info)
+- [QQ Group 945138408](https://qun.qq.com/universal-share/share?ac=1&authKey=jLD98s%2BuMM87y8zEcP6tBhrYEyCh2H9gnwigYoYoNLIjY4XqRWTFT0cmx0QDF4hT&busi_data=eyJncm91cENvZGUiOiI5NDUxMzg0MDgiLCJ0b2tlbiI6Ilc3Zm41TUQ1RkU1alFNOUVxMW5hckVNZmpqSFN6V25JcUtyK3duaFZWYisyblVsSEdFNzZ3RUQrTmt3enVIajgiLCJ1aW4iOiIxODcxODE0NzQ5In0%3D&data=u7S-lMspdK2PJy1DWRR7cda6y4mYYoKKmA_GaiXg1g_ArnccknlAlDz-zbdWg2H5s7nt_PrY47zqHFCZI8Ffaw&svctype=4&tempid=h5_group_info)
 - [Telegram Channel @ghostproxifier](https://t.me/ghostproxifier)
 - [Telegram Group](https://t.me/+SCVIJJFocWAxN2Y9)
 

@@ -38,7 +38,7 @@
 </p>
 
 <p align="center">
-  Windows 进程级透明代理工具：通过 DLL 注入和 Winsock API Hook，让指定应用及其子进程的网络流量自动转发到 HTTP 代理，无需修改路由表或安装虚拟网卡。
+  Windows 进程级透明代理工具：通过 DLL 注入和 Winsock API Hook，让指定应用及其子进程的网络流量自动转发到 HTTP / SOCKS5 代理，无需修改路由表或安装虚拟网卡。
 </p>
 
 <p align="center">
@@ -66,19 +66,22 @@
 
 ## 适用场景
 
-- AI 编程工具代理，例如 Codex、Claude Code、Antigravity 等。
+- AI 编程，例如 Codex、Claude Desktop、Claude Code、Antigravity、Cursor 等等。
 - 多个 VPN/代理软件混用时，只代理指定应用，减少虚拟网卡和路由规则之间的冲突。
 - 为不遵循系统代理的命令行工具、开发工具和游戏客户端配置独立代理。
 - 为不同应用或账号分配不同代理节点，实现网络 IP 层面的隔离。
 
 ## 核心特性
 
-- **拖拽即用**：拖入快捷方式或 `.exe` 文件，自动注入目标进程。
-- **子进程自动追踪**：自动接管目标程序创建的子进程，无需手动配置 PID。
-- **进程级代理**：只代理选中的应用，不影响系统其它流量。
-- **Local DNS**：DNS 查询通过代理转发，减少 DNS 泄露和污染问题。
-- **DoH / QUIC 阻断**：阻止浏览器绕过代理，强制回退到 TCP 连接。
-- **实时监控**：查看进程状态、代理状态和流量统计，并支持自动重连。
+- **拖拽即用**：把快捷方式或 `.exe` 往软件里一拖，秒级开启代理。
+- **子进程自动追踪**：自动接管目标程序创建的所有子进程（如浏览器子进程），无需手动配置 PID。
+- **支持 HTTP / SOCKS5 协议**：全面兼容主流代理软件，支持配置账号与密码认证，满足各种网络代理环境。
+- **UDP 转发与 QUIC 防绕过**：支持 UDP 流量代理转发，自动阻止浏览器走 QUIC 协议绕过代理，确保网络流量 100% 走代理。
+- **WinStore 应用原生支持**：完美代理 ChatGPT、Claude 等 WinStore 应用；WinStore 应用自动更新后能自动感知适应，无需重新配置。
+- **防泄露 DNS 解析机制**：DNS 查询自动通过代理转发，内置 DoH 阻断防止浏览器绕过代理；提供 DNS 严格模式，代理解析失败时拒绝明文外发，彻底防止域名泄露。
+- **一键排障诊断包**：可在设置中一键导出排障诊断包，方便提交反馈与快速排查问题。
+- **个性化设置与多语言**：支持自定义关闭窗口时的行为（如最小化到系统托盘后台运行）；界面原生支持**简体中文与英文**一键切换。
+- **实时流量监控与稳定守护**：直观查看各个进程的实时网络速率与流量统计，内置后台守护机制保证长久稳定运行。
 
 ## 已支持应用
 
@@ -104,7 +107,8 @@
     <td align="center"><img src="icons/powershell.exe.png" width="40" alt="PowerShell"><br><sub>PowerShell</sub></td>
     <td align="center"><img src="icons/cf.exe.png" width="40" alt="CF (穿越火线)"><br><sub>CF</sub></td>
     <td align="center"><img src="icons/hyperdown.png" width="40" alt="HyperDown"><br><sub>HyperDown</sub></td>
-    <td align="center"><sub>...</sub></td>
+    <td align="center"><img src="icons/mstsc.exe.png" width="40" alt="MSTSC (远程桌面)"><br><sub>MSTSC</sub></td>
+    <td align="center"><img src="icons/multilogin.exe.png" width="40" alt="Multilogin"><br><sub>Multilogin</sub></td>
   </tr>
 </table>
 
@@ -113,7 +117,7 @@
 ## 快速使用
 
 1. 从 [Releases](https://github.com/liliBestCoder/ghost-proxifier-pro/releases) 下载并启动 Ghost Proxifier Pro。
-2. 在界面中配置上游 HTTP 代理和 DNS 设置。
+2. 在界面中配置上游 HTTP / SOCKS5 代理和 DNS 设置。
 3. 将目标程序的快捷方式或 `.exe` 文件拖入窗口，启动代理进程。
 
 ## 架构概览
@@ -121,28 +125,22 @@
 ```text
                            Ghost Proxifier Pro 架构
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                         目标进程 (e.g. Chrome)                               │
+│                         目标进程 (e.g. Chrome / ChatGPT)                    │
 │                                                                             │
 │  ┌──────────┐   ┌──────────┐   ┌──────────┐   ┌─────────────────────────┐  │
-│  │ DNS 查询  │   │ TCP 连接  │   │ 数据发送  │   │ 8.8.8.8:53             │  │
+│  │ DNS 查询  │   │ TCP 连接  │   │ UDP 发送  │   │ 8.8.8.8:53              │  │
 │  │          │   │          │   │          │   │                         │  │
-│  │ getaddrinfo│   │ connect()│   │ send() / │   │ sendto(53)             │  │
-│  │GetAddrInfoW│   │ConnectEx()│  │WSASend() │   │WSASendTo()             │  │
-│  └────┬─────┘   └────┬─────┘   └────┬─────┘   └────┬──────────────────┘  │
+│  │ getaddrinfo│   │ connect()│   │ sendto() │   │ sendto(53)              │  │
+│  │GetAddrInfoW│   │ConnectEx()│  │WSASendTo()│  │WSASendTo()              │  │
+│  └────┬─────┘   └────┬─────┘   └────┬─────┘   └────┬────────────────────┘  │
 │       │              │              │              │                       │
 │       └──────┬───────┘              │              │                       │
 │              │                      │              │                       │
-│         ┌────┴─────┐           ┌────┴─────┐   ┌────┴─────┐                 │
-│         │  HOOK    │           │  HOOK    │   │  HOOK    │                 │
-│         └────┬─────┘           └────┬─────┘   └────┬─────┘                 │
-│              │                      │              │                       │
-│         ┌────┴─────┐           ┌────┴─────┐   ┌────┴─────┐                 │
-│         │ Local DNS │           │ 重定向到代理 │   │ Lazy Handshake        │
-│         │ Proxy     │           │ 保存目标到  │   │ 1. 检查 PendingMap    │
-│         │ UDP → TCP │           │ PendingMap │   │ 2. HTTP CONNECT       │
-│         │ 转发到     │           │           │   │ 3. 发送原始数据        │
-│         │ 8.8.8.8:53│           │           │   │                       │
-│         └────────────┘           └──────────┘   └─────────────────────────┘
+│         ┌────┴─────────────┐   ┌────┴─────────────┐ ┌────┴─────────────┐   │
+│         │ 共享内存 DNS 缓存│   │ 重定向到代理通道 │ │ UDP ASSOCIATE   │   │
+│         │ IOCP 线程池      │   │ HTTP / SOCKS5    │ │ STUN 连通性探针 │   │
+│         │ Strict 模式防泄露│   │ 用户名密码认证   │ │ QUIC 降级阻断   │   │
+│         └──────────────────┘   └──────────────────┘ └─────────────────┘   │
 │                                                                             │
 │                    ghost_core.dll (注入到目标进程)                            │
 └─────────────────────────────────────────────────────────────────────────────┘
@@ -150,10 +148,9 @@
                    │   127.0.0.1:2080      │
                    │                       │
             ┌──────┴───────┐      ┌────────┴────────┐
-            │ 上游 HTTP     │      │  DNS 解析结果   │
-            │  CONNECT 代理  │      │                 │
-            │ (V2Ray/Clash/ │      │   IP → 域名     │
-            │  NekoBox/...) │      │                 │
+            │ 上游 HTTP /  │      │ Watchdog 守护   │
+            │ SOCKS5 代理  │      │ 崩溃Dump/权限回收│
+            │ (Clash/v2ray)│      │ 事件日志镜像    │
             └──────────────┘      └─────────────────┘
 ```
 
@@ -183,15 +180,23 @@
 
 **Ghost Proxifier Pro 收费吗？**
 
-目前 Pro 版免费使用，包含拖拽注入、无限应用代理、进程树追踪等功能。
+Ghost Proxifier Pro 现已**完全免费开放（FREE & UNLOCKED）**。¥0.00 无需注册或激活，即可无限制使用拖拽注入、无限应用代理、SOCKS5 / UDP 转发、进程树追踪等全部高级功能。
 
 **Pro 版和开源版有什么区别？**
 
-Pro 版提供图形界面、进程规则管理、流量监控、子进程自动追踪、Watchdog 自动重连和安装包。开源版是纯命令行工具。
+Pro 版提供图形界面、进程规则管理、流量监控、子进程自动追踪、SOCKS5 认证支持、Watchdog 自动重连和 MSI 安装包。开源版是纯命令行工具。
+
+**如果上游节点页面不能新增节点或编辑节点怎么办？**
+
+多半是软件安装目录配置文件损坏或权限异常导致的。解决方法非常简单：重新点击运行下载的 `.msi` 安装文件，在弹出的安装界面中选择 **Repair (修复)**，完成自动修复后重启 Ghost Proxifier Pro 即可恢复正常。
+
+**启动 ChatGPT / Claude WinStore 程序遇到 `create process error 5` 异常？**
+
+出现 `create process error 5` 错误多半是因为 Windows 当前登录账户不在管理员组、缺乏某些底层 API 调用权限导致的。只需右键桌面或开始菜单中的 **Ghost Proxifier Pro 快捷方式**，选择 **“以管理员身份运行”** 重新启动软件即可。
 
 **如何反馈问题？**
 
-欢迎通过 [GitHub Issue](https://github.com/liliBestCoder/ghost-proxifier-pro/issues) 或官方社群反馈问题。
+您可以在软件的“设置”页面点击 **【导出排障包】** 生成脱敏诊断文件，然后通过 [GitHub Issue](https://github.com/liliBestCoder/ghost-proxifier-pro/issues) 或官方社群发给开发者排查。
 
 ## 企业合作与社群
 
