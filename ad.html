@@ -134,6 +134,7 @@
                     token: posthogToken,
                     event: '$pageview',
                     distinct_id: gvid,
+                    timestamp: new Date().toISOString(),
                     properties: properties
                 };
 
