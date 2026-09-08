@@ -186,6 +186,12 @@ Ghost Proxifier Pro is now **completely free with all Pro features unlocked (FRE
 
 The Pro version provides a GUI, process rules, traffic monitoring, automatic child-process tracking, SOCKS5 authentication, Watchdog reconnection, and an MSI installer. The open-source version is CLI-only.
 
+**Getting "Unsupported Win11/Win10" or unable to open/run the installer?**
+
+This is **not an OS compatibility issue**, but occurs when browser or security tools block the unsigned `.msi` download, leaving an incomplete placeholder file on your disk (causing launch failures or corruption errors).
+
+Please directly follow the steps in the **【⚠️ Usage Notes】** section above: unblock the download per the instructions, and click **"More info → Run anyway"** on the SmartScreen dialog. Ensure the downloaded `.msi` file size is around **3 MB – 5 MB**. Ghost Proxifier Pro natively supports **Windows 10 / Windows 11 (64-bit)** systems.
+
 **What if I cannot add or edit nodes on the Upstream Nodes page?**
 
 This is usually caused by corrupted files in the software installation directory. Simply run the downloaded `.msi` installer again and select **Repair** to restore the installation.
