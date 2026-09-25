@@ -1,0 +1,4 @@
+# Signed update files: the client verifies a signature over their exact bytes,
+# so any line-ending conversion breaks every client's check. Never convert.
+update/*.json     -text
+update/*.json.sig -text
