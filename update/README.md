@@ -1,50 +1,52 @@
-# update/latest.json
+# update/
 
-应用内自动更新读的就是这一个文件,地址是 `https://ghostproxifier.com/update/latest.json`。
+应用内自动更新从这个目录取更新信息。站点地址：
 
-JSON 里放不下注释,所以约定写在这里。
+- `https://ghostproxifier.com/update/personal.json`
+- `https://ghostproxifier.com/update/personal.json.sig`
 
-## 字段
+同样的两个文件也会作为 Release 资产发布，客户端在站点不可达时改从 `https://github.com/liliBestCoder/ghost-proxifier-pro/releases/latest/download/personal.json`（及 `.sig`）获取。两处是**同一份签名字节**。
+
+## 不要手工编辑
+
+这两个文件由发版流水线在每次发版时生成、签名并提交到这里。**手工改动任何一个字节都会让签名失效**，客户端会拒收整份清单，结果是所有用户收不到这次更新。
+
+同样，**不要对这两个文件做换行符转换**（例如编辑器自动补一个末尾换行）：被签名的是文件的原始字节。
+
+## 格式
+
+`personal.json`（企业版将来使用 `enterprise.json`）：
 
 ```json
-{
-  "version":  "1.2.0",
-  "url":      "https://.../GhostProxifier-Pro-Installer.msi",
-  "sha256":   "<64 位小写十六进制>",
-  "notesUrl": "https://..."
-}
+{ "sku": "personal",
+  "version": "1.3.0",
+  "url": "https://github.com/liliBestCoder/ghost-proxifier-pro/releases/download/v1.3.0/GhostProxifier-1.3.0-win64.msi",
+  "size": 4718592,
+  "sha256": "<64 位小写十六进制>",
+  "notesUrl": "https://github.com/liliBestCoder/ghost-proxifier-pro/releases/tag/v1.3.0" }
 ```
 
-四个字段**全部会被客户端校验**,任何一条不满足,整份清单作废(不存在「部分可用的清单」),客户端退回到只通知不安装的兜底模式:
+`personal.json.sig` 装着签名证书与两个签名（ECDSA P-256）：
 
-| 字段 | 规则 | 不满足会怎样 |
-|---|---|---|
-| `version` | 三段纯数字,可带 `v` 前缀。后缀(`-dev.x`/`-SNAPSHOT.x`)会被解析后丢弃 | 清单作废 |
-| `url` | **必须 https**,且主机必须在客户端编译期写死的白名单里:`ghostproxifier.com`、`www.ghostproxifier.com`、`github.com`、`objects.githubusercontent.com` | 清单作废 |
-| `sha256` | **恰好 64 位小写十六进制**。大写不行,长短不行 | 清单作废 |
-| `notesUrl` | 可选,必须 https | 该字段被丢弃,清单其余部分仍然有效 |
+```json
+{ "cert": "<base64>", "certSig": "<base64>", "sig": "<base64>" }
+```
 
-`sha256` 是**强制**的,没有任何开关能关掉它。下载下来的字节必须逐位等于这个值,否则文件被删除、安装中止。这是目前唯一挡在「一个错误的文件」和「以管理员身份运行 msiexec」之间的东西——因为 MSI 目前**没有 Authenticode 签名**(实测:release 资产里没有 `DigitalSignature` 流,整个文件里也没有任何 PKCS#7 结构)。
+客户端的校验顺序：用编译进程序的根公钥验证书 → 检查证书没被吊销、没过期 → 用证书里的签名公钥验 `personal.json` 的原始字节 → 逐字段检查（`sku` 与本机一致、`url` 在允许的地址前缀内、`size`/`sha256` 合法）。任何一步失败，这份清单就不被信任，客户端不会提示任何更新，更不会下载。下载完成后，安装包的大小和 SHA-256 必须与清单一致，否则删除、不安装。
 
-客户端的兜底源是 GitHub 的 releases 接口。那个接口不发布校验和,所以**从兜底源发现的新版本只能通知、不能安装**——用户点到的是下载页链接。想让「缺校验和就跳过校验」是不行的:能把字段拿掉的人,也就能把校验跳过。
+信任只来自签名，不来自文件放在哪里：即使站点或 GitHub 被攻破，没有签名密钥也推不出一个能被安装的文件。
 
-## 发版时要做什么
+## 发版后怎么确认
 
-提升版本发布之后,改这个文件的三个字段:
+流水线在提交后会自动轮询站点和兜底地址，逐字节比对并完整验签，最多等 15 分钟；不一致会让发版流水线失败。手工确认可以：
 
 ```bash
-# 1. 算 MSI 的 sha256(和客户端算的是同一个东西)
-certutil -hashfile GhostProxifier-Pro-Installer.msi SHA256
-
-# 2. 改 version / url / sha256 / notesUrl,提交推送
+curl -sS https://ghostproxifier.com/update/personal.json
+curl -sS -o /dev/null -w "%{http_code}\n" https://ghostproxifier.com/update/personal.json.sig
 ```
 
-推到 master 即生效,GitHub Pages 没有构建步骤。
+两个都应返回 200。如果 Pages 部署失败导致长时间拿不到新文件，可以重新触发一次 Pages 构建。
 
-⚠️ **改完请自己 `curl` 一下确认 200 且 JSON 合法。** 这个文件 404 或者格式坏掉,表现不是报错,而是**所有用户静默退回兜底模式**——他们仍然会被通知有新版本,但从此只能手动下载,而你在客户端这边看不到任何异常。
+## 历史
 
-## 安装包托管在哪
-
-现在 `url` 指向 GitHub Release。这对国内用户是薄弱环节:GitHub 的下载域在国内经常不可达,而自动更新的**主要服务对象恰好就是这批用户**。
-
-把 MSI 一并放进本仓库(约 4.4 MB/版本),`url` 改指 `https://ghostproxifier.com/dl/...`,就能把 GitHub 从关键路径上摘掉——白名单里已经包含本站域名,客户端不需要改动。代价是仓库每发一版涨 4 MB 左右(当前 `.git` 约 10 MB)。
+早期版本曾在这里放过一个未签名的 `latest.json`。没有任何正式发布的客户端读过它，新格式上线时已删除，不需要兼容。
