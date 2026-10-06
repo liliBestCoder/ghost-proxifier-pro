@@ -38,7 +38,7 @@
 </p>
 
 <p align="center">
-  A process-level transparent proxy for Windows. It injects a DLL and hooks Winsock APIs to route traffic from selected applications and their child processes through HTTP / SOCKS5 proxies — without changing routing tables or installing virtual network adapters.
+  A native Windows process-level transparent proxy with full TCP & UDP protocol support. Routes all network traffic from designated applications and their child processes through HTTP / SOCKS5 proxies — without virtual network adapters, kernel drivers, or routing table modifications.
 </p>
 
 <p align="center">
@@ -73,15 +73,15 @@
 
 ## Core Features
 
-- **Drag & Drop Simplicity**: Drop any shortcut or `.exe` into the window to enable proxying instantly.
-- **Auto Child-Process Tracking**: Automatically takes over all child processes (like browser subprocesses) without manual PID setup.
-- **HTTP & SOCKS5 Protocol Support**: Fully compatible with mainstream proxy clients, supporting username/password authentication for any proxy environment.
-- **UDP Forwarding & QUIC Protection**: Supports UDP traffic forwarding and blocks browser QUIC protocol from bypassing your proxy, keeping 100% of traffic proxied.
+- **Full TCP & UDP Protocol Support**: Completely captures network traffic for target processes. Transparently routes both TCP connections (HTTP, HTTPS, WebSocket, etc.) and UDP datagrams (games, voice, DNS, etc.) through HTTP / SOCKS5 proxies.
+- **No Virtual Adapters, Zero Kernel Drivers**: Requires no TUN/TAP adapters, no WFP kernel drivers, and no routing table modifications. Extremely lightweight, strictly isolated to chosen processes, and completely eliminates bluescreens or global network disruptions.
+- **Drag & Drop with Auto Child-Process Tracking**: Drop any shortcut or `.exe` into the window to enable proxying instantly. Automatically tracks and captures all child processes (such as multi-process browser architectures) without manual PID configuration.
+- **Leak-Proof DNS, DoH & QUIC Protection**: DNS queries are resolved remotely via the proxy, with support for DNS Strict Mode. Built-in DoH blocking and automatic QUIC fallback to TCP ensure applications cannot bypass the proxy.
 - **Native WinStore App Support**: Seamlessly proxies WinStore apps like ChatGPT and Claude; automatically adapts when WinStore apps auto-update to new version directories.
-- **Leak-Proof DNS Resolution**: DNS queries are encrypted and routed via proxy, with built-in DoH blocking to prevent browser bypass; includes DNS Strict Mode to block unencrypted fallbacks to ISP DNS.
-- **One-Click Diagnostic Pack Export**: Easily export a troubleshooting diagnostic zip from Settings for fast problem feedback and debugging.
-- **Personalized Settings & Multi-Language**: Customize window close behavior (e.g. minimize to system tray) with native one-click switching between **English and Simplified Chinese**.
-- **Live Traffic Monitoring & Watchdog**: View real-time bandwidth and process stats with an underlying background watchdog for maximum stability.
+- **Proxy Protocols & Authentication**: Fully compatible with mainstream HTTP and SOCKS5 proxies, supporting username and password authentication for any environment.
+- **Live Traffic Monitoring & Watchdog**: View real-time bandwidth and connection stats per process, with an underlying background watchdog ensuring connection stability.
+- **Personalized Settings & Multi-Language**: Customize window close behavior (e.g. minimize to system tray) with native one-click switching between English and Simplified Chinese.
+- **One-Click Diagnostic Pack Export**: Easily export a sanitized troubleshooting diagnostic zip from Settings for fast problem feedback and debugging.
 
 ## Supported Apps
 
@@ -160,6 +160,8 @@ No TUN/TAP virtual adapter or WFP kernel driver is required. Ghost Proxifier use
 
 | Feature | Ghost Proxifier Pro | Proxifier | ProxyBridge | Antigravity-Proxy |
 | :--- | :---: | :---: | :---: | :---: |
+| TCP Proxying | ✅ Full support | ✅ Supported | ✅ Supported | ⚠️ Partial support |
+| UDP Forwarding | ✅ Full support | ✅ Supported | ⚠️ Depends on system | ❌ Not supported |
 | GUI and drag-and-drop | ✅ | ⚠️ Rules required | ⚠️ Rules required | ❌ |
 | Automatic child-process tracking | ✅ | ⚠️ Rule matching | ⚠️ Rule matching | ❌ |
 | Virtual adapter/driver required | ❌ | ⚠️ WFP driver | ⚠️ WinDivert driver | ❌ |
