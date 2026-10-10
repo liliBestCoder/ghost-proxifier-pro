@@ -6,36 +6,12 @@ on:
 jobs:
   telegram-notify:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - name: Fetch Release Data and Send Telegram Message
-        run: |
-          if [ -n "${{ github.event.release.tag_name }}" ]; then
-            tag="${{ github.event.release.tag_name }}"
-            url="${{ github.event.release.html_url }}"
-            body="${{ github.event.release.body }}"
-          else
-            rel=$(curl -s https://api.github.com/repos/liliBestCoder/ghost-proxifier-pro/releases/latest)
-            tag=$(echo "$rel" | jq -r '.tag_name')
-            url=$(echo "$rel" | jq -r '.html_url')
-            body=$(echo "$rel" | jq -r '.body')
-          fi
+      - uses: actions/checkout@v4
 
-          echo "Tag: $tag"
-          echo "URL: $url"
-
-          # Send directly via Telegram Bot API
-          res=$(curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_TOKEN }}/sendMessage" \
-            -H "Content-Type: application/json" \
-            -d "$(jq -n \
-              --arg chat_id "@ghostproxifier" \
-              --arg parse_mode "HTML" \
-              --arg text "$(printf '🚀 <b>Ghost Proxifier %s 发布！</b>\n\n📋 <b>更新说明：</b>\n%s\n\n📥 <b>官方下载：</b>\n<a href="%s">👉 查看 Release 页面与下载 MSI 安装包</a>' "$tag" "$body" "$url")" \
-              '{chat_id: $chat_id, parse_mode: $parse_mode, text: $text, disable_web_page_preview: false}')")
-
-          echo "Telegram Response: $res"
-          if echo "$res" | grep -q '"ok":true'; then
-            echo "Successfully sent Telegram message!"
-          else
-            echo "Failed to send Telegram message!"
-            exit 1
-          fi
+      - name: Render release notes and send Telegram message
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        run: python3 .github/scripts/telegram_notify.py
