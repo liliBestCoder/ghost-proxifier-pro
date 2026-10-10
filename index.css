@@ -157,6 +157,13 @@ body {
     gap: 15px;
 }
 
+.hero-btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+}
+
 .version {
     font-size: 0.85rem;
     color: var(--text-dim);
@@ -200,19 +207,23 @@ body {
 
 .btn-outline {
     display: inline-block;
-    padding: 12px 24px;
+    padding: 18px 36px;
     border: 1px solid var(--primary);
+    background: rgba(0, 242, 255, 0.05);
     color: var(--primary);
     text-decoration: none;
     border-radius: 50px;
     font-weight: 600;
     text-align: center;
-    transition: background 0.3s, color 0.3s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(8px);
 }
 
 .btn-outline:hover {
     background: var(--primary);
     color: var(--bg-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 242, 255, 0.3);
 }
 
 /* Sections General */
@@ -697,10 +708,18 @@ section {
         font-size: 0.95rem;
     }
 
-    .btn-gradient {
+    .hero-btn-group {
+        flex-direction: column;
+        width: 100%;
+        gap: 12px;
+    }
+
+    .btn-gradient,
+    .btn-outline {
         padding: 14px 28px;
         font-size: 0.9rem;
         width: 100%;
+        box-sizing: border-box;
     }
 
     section {
