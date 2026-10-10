@@ -32,7 +32,163 @@
     <link rel="canonical" href="https://ghostproxifier.com/">
     <link rel="icon" type="image/png" href="logo.png">
 
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="index.css?v=1.2.1-spec">
+    <style>
+        .spec-cards {
+            display: grid !important;
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            gap: 16px !important;
+            width: 100% !important;
+            max-width: 520px !important;
+            margin-bottom: 6px !important;
+        }
+        .spec-card {
+            position: relative !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
+            padding: 16px 16px 12px !important;
+            border-radius: 16px !important;
+            text-decoration: none !important;
+            color: #ffffff !important;
+            background: rgba(14, 18, 28, 0.75) !important;
+            border: 1px solid rgba(255, 255, 255, 0.09) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35) !important;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            overflow: hidden !important;
+        }
+        .spec-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transition: background 0.3s ease;
+        }
+        .primary-spec {
+            border-color: rgba(0, 242, 255, 0.28) !important;
+            background: linear-gradient(160deg, rgba(0, 242, 255, 0.06) 0%, rgba(13, 17, 26, 0.88) 100%) !important;
+        }
+        .primary-spec::before {
+            background: linear-gradient(90deg, transparent, rgba(0, 242, 255, 0.6), transparent) !important;
+        }
+        .primary-spec:hover {
+            transform: translateY(-3px) !important;
+            border-color: rgba(0, 242, 255, 0.55) !important;
+            box-shadow: 0 14px 35px rgba(0, 242, 255, 0.18), 0 0 20px rgba(0, 242, 255, 0.08) !important;
+        }
+        .secondary-spec {
+            border-color: rgba(255, 255, 255, 0.1) !important;
+            background: linear-gradient(160deg, rgba(255, 255, 255, 0.03) 0%, rgba(13, 17, 26, 0.88) 100%) !important;
+        }
+        .secondary-spec::before {
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent) !important;
+        }
+        .secondary-spec:hover {
+            transform: translateY(-3px) !important;
+            border-color: rgba(255, 255, 255, 0.3) !important;
+            box-shadow: 0 14px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.05) !important;
+        }
+        .spec-card-top {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            margin-bottom: 12px !important;
+        }
+        .spec-badge {
+            font-family: 'SF Mono', Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace !important;
+            font-size: 0.68rem !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.5px !important;
+            padding: 2px 7px !important;
+            border-radius: 5px !important;
+            display: inline-block !important;
+        }
+        .msi-badge {
+            background: rgba(0, 242, 255, 0.12) !important;
+            color: #00f2ff !important;
+            border: 1px solid rgba(0, 242, 255, 0.25) !important;
+        }
+        .zip-badge {
+            background: rgba(255, 255, 255, 0.06) !important;
+            color: rgba(255, 255, 255, 0.8) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        }
+        .spec-status {
+            font-size: 0.7rem !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.3px !important;
+            display: inline-block !important;
+        }
+        .msi-status {
+            color: #00f2ff !important;
+        }
+        .zip-status {
+            color: #94a3b8 !important;
+        }
+        .spec-card-body {
+            flex: 1 !important;
+            margin-bottom: 12px !important;
+        }
+        .spec-card-title {
+            font-size: 0.98rem !important;
+            font-weight: 700 !important;
+            color: #ffffff !important;
+            line-height: 1.3 !important;
+            margin: 0 0 5px 0 !important;
+            text-decoration: none !important;
+        }
+        .spec-card-desc {
+            font-size: 0.76rem !important;
+            color: rgba(255, 255, 255, 0.65) !important;
+            line-height: 1.45 !important;
+            margin: 0 !important;
+            text-decoration: none !important;
+        }
+        .spec-card-action {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            padding-top: 9px !important;
+            border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+            font-size: 0.8rem !important;
+            font-weight: 600 !important;
+            text-decoration: none !important;
+            transition: all 0.25s ease !important;
+        }
+        .msi-action {
+            color: #00f2ff !important;
+        }
+        .primary-spec:hover .msi-action {
+            color: #ffffff !important;
+        }
+        .zip-action {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+        .secondary-spec:hover .zip-action {
+            color: #ffffff !important;
+        }
+        .spec-arrow {
+            display: inline-block !important;
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+        .spec-card:hover .spec-arrow {
+            transform: translateX(4px) !important;
+        }
+        @media (max-width: 768px) {
+            .spec-cards {
+                grid-template-columns: 1fr !important;
+                gap: 12px !important;
+                max-width: 400px !important;
+                width: 100% !important;
+                text-align: left !important;
+            }
+        }
+    </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
