@@ -157,17 +157,199 @@ body {
     gap: 15px;
 }
 
-.hero-btn-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-    align-items: center;
-}
-
 .version {
     font-size: 0.85rem;
     color: var(--text-dim);
-    padding-left: 20px;
+    padding-left: 4px;
+}
+
+/* Download Cards Grid in Hero */
+.download-cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.download-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 22px 20px 18px;
+    border-radius: 20px;
+    text-decoration: none;
+    color: var(--text-main);
+    background: rgba(14, 16, 22, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.download-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: transparent;
+    transition: background 0.3s ease;
+}
+
+.primary-card {
+    border-color: rgba(0, 242, 255, 0.25);
+    background: linear-gradient(145deg, rgba(0, 242, 255, 0.08) 0%, rgba(14, 16, 22, 0.85) 100%);
+}
+
+.primary-card::before {
+    background: var(--gradient);
+}
+
+.primary-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0, 242, 255, 0.55);
+    box-shadow: 0 16px 40px rgba(0, 242, 255, 0.22), 0 0 20px rgba(0, 242, 255, 0.1);
+}
+
+.secondary-card {
+    border-color: rgba(255, 255, 255, 0.12);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.04) 0%, rgba(14, 16, 22, 0.85) 100%);
+}
+
+.secondary-card::before {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.secondary-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.05);
+}
+
+.download-card-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: rgba(0, 242, 255, 0.15);
+    color: var(--primary);
+    border: 1px solid rgba(0, 242, 255, 0.3);
+}
+
+.secondary-badge {
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.85);
+    border-color: rgba(255, 255, 255, 0.18);
+}
+
+.download-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.download-card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.msi-icon {
+    background: rgba(0, 242, 255, 0.12);
+    color: var(--primary);
+    border: 1px solid rgba(0, 242, 255, 0.25);
+}
+
+.zip-icon {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.download-card:hover .download-card-icon {
+    transform: scale(1.08) rotate(2deg);
+}
+
+.download-card-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.download-card-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.3;
+}
+
+.download-card-format {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-top: 2px;
+}
+
+.download-card-desc {
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.5;
+    margin-bottom: 18px;
+    min-height: 38px;
+}
+
+.download-card-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 42px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.msi-btn {
+    background: var(--gradient);
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(0, 242, 255, 0.25);
+}
+
+.download-card.primary-card:hover .msi-btn {
+    box-shadow: 0 6px 22px rgba(0, 242, 255, 0.5);
+    filter: brightness(1.08);
+}
+
+.zip-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+}
+
+.download-card.secondary-card:hover .zip-btn {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.download-card:hover .download-card-btn svg {
+    transform: translateY(2px);
+}
+
+.download-card-btn svg {
+    transition: transform 0.3s ease;
 }
 
 /* Buttons */
@@ -642,6 +824,14 @@ section {
 
     .hero-btns {
         align-items: center;
+    }
+
+    .download-cards {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        max-width: 420px;
+        width: 100%;
+        text-align: left;
     }
 
     .btn-gradient {
