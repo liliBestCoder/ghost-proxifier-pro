@@ -114,14 +114,55 @@
             var bdRaw = getBaiduLvtRaw();
             var posthogToken = 'phc_nF89Du7x954MRygk3pGNsnJ3GUdTZGeTKXXdnmJmwi9M';
 
+            function getClientTimeInfo() {
+                var now = new Date();
+                var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+                var year = now.getFullYear();
+                var month = pad(now.getMonth() + 1);
+                var day = pad(now.getDate());
+                var hours = pad(now.getHours());
+                var minutes = pad(now.getMinutes());
+                var seconds = pad(now.getSeconds());
+                var localTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+
+                var offsetMin = -now.getTimezoneOffset();
+                var sign = offsetMin >= 0 ? '+' : '-';
+                var absOffset = Math.abs(offsetMin);
+                var offHours = pad(Math.floor(absOffset / 60));
+                var offMinutes = pad(absOffset % 60);
+                var offsetStr = 'UTC' + sign + offHours + ':' + offMinutes;
+
+                var timezone = '';
+                try {
+                    if (typeof Intl !== 'undefined' && Intl.DateTimeFormat) {
+                        timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+                    }
+                } catch (e) { }
+
+                return {
+                    localTime: localTime,
+                    timezone: timezone,
+                    timezoneOffset: offsetStr
+                };
+            }
+
             function sendPostHogEvent(realIp) {
+                var timeInfo = getClientTimeInfo();
                 var properties = {
                     global_visitor_id: gvid,
                     real_ip: realIp || '',
                     version: 'ad.html',
                     current_url: window.location.href,
-                    client_event_time: new Date().toISOString()
+                    client_event_time: new Date().toISOString(),
+                    client_local_time: timeInfo.localTime,
+                    local_time: timeInfo.localTime,
+                    timezone: timeInfo.timezone || timeInfo.timezoneOffset,
+                    timezone_offset: timeInfo.timezoneOffset
                 };
+
+                if (timeInfo.timezone) {
+                    properties['$timezone'] = timeInfo.timezone;
+                }
 
                 if (realIp) {
                     properties['$ip'] = realIp;
