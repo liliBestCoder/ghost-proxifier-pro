@@ -981,3 +981,9 @@ section {
     background: rgba(255, 255, 255, 0.05);
     color: var(--primary) !important;
 }
+
+@media (max-width: 1120px) and (min-width: 769px) {
+    .nav-links {
+        gap: 16px;
+    }
+}
