@@ -78,9 +78,9 @@
 
 ### 看看已经有人做了什么
 
-- **端口转发**把本机端口映射到远端服务，支持 TCP 和 UDP，可直连或经 Ghost 的上游节点。 [查看项目](https://github.com/xieyos/ghost-plugin-port-forwarder)
-- **茄盒（Snagbox）**采集应用流量并保存结构化记录，再通过 MCP 交给 AI Agent 查询和分析。 [查看项目](https://github.com/liliBestCoder/snagbox)
-- **事件查看器**订阅 Ghost 的控制事件，并在自己的页面里展示。它也是一个适合上手的 Python 示例。 [查看源码](https://github.com/liliBestCoder/ghost-plugin-events-viewer)
+- **端口转发** 把本机端口映射到远端服务，支持 TCP 和 UDP，可直连或经 Ghost 的上游节点。 [查看项目](https://github.com/xieyos/ghost-plugin-port-forwarder)
+- **茄盒（Snagbox）** 采集应用流量并保存结构化记录，再通过 MCP 交给 AI Agent 查询和分析。 [查看项目](https://github.com/liliBestCoder/snagbox)
+- **事件查看器** 订阅 Ghost 的控制事件，并在自己的页面里展示。它也是一个适合上手的 Python 示例。 [查看源码](https://github.com/liliBestCoder/ghost-plugin-events-viewer)
 
 你的第一个插件可以很小。例如，用一个面板展示某个开发项目的代理配置和进程状态，或者在目标进程启动后发送一条通知。
 
