@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghost Proxifier Sponsored Ads</title>
+    <!-- 统计埋点 (PostHog 原生 fetch + 国内 IP 探测 + 从 localStorage 读取百度 Hm_lvt_ 首次访问时间) -->
+    <script>
+        (function () {
+            var QUEUE_KEY = 'ph_event_queue';
+
+            function getQueue() {
+                try {
+                    var data = localStorage.getItem(QUEUE_KEY);
+                    return data ? JSON.parse(data) : [];
+                } catch (e) {
+                    return [];
+                }
+            }
+
+            function saveQueue(queue) {
+                try {
+                    localStorage.setItem(QUEUE_KEY, JSON.stringify(queue));
+                } catch (e) { }
+            }
+
+            function enqueueEvent(payload) {
+                var queue = getQueue();
+                var item = {
+                    id: 'evt_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7),
+                    payload: payload,
+                    status: 'pending',
+                    created_at: Date.now(),
+                    retries: 0
+                };
+                queue.push(item);
+                saveQueue(queue);
+                flushQueue();
+            }
+
+            var isFlushing = false;
+            function flushQueue() {
+                if (isFlushing) return;
+                var queue = getQueue();
+                if (!queue.length) return;
+
+                isFlushing = true;
+                var pendingItems = queue.filter(function (item) { return item.status === 'pending'; });
+                if (!pendingItems.length) {
+                    isFlushing = false;
+                    return;
+                }
+
+                var promises = pendingItems.map(function (item) {
+                    return fetch('https://t.ghostproxifier.com/capture/', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(item.payload)
+                    }).then(function (res) {
+                        if (res.ok) {
+                            item.status = 'sent';
+                            return item.id;
+                        }
+                        item.retries = (item.retries || 0) + 1;
+                        return null;
+                    }).catch(function () {
+                        item.retries = (item.retries || 0) + 1;
+                        return null;
+                    });
+                });
+
+                Promise.all(promises).then(function (sentIds) {
+                    var currentQueue = getQueue();
+                    var remaining = currentQueue.filter(function (item) {
+                        var isSent = sentIds.indexOf(item.id) !== -1 || item.status === 'sent';
+                        var isTooManyRetries = (item.retries || 0) >= 10;
+                        return !isSent && !isTooManyRetries;
+                    });
+                    saveQueue(remaining);
+                    isFlushing = false;
+                }).catch(function () {
+                    isFlushing = false;
+                });
+            }
+
+            setInterval(flushQueue, 5000);
+            try { window.addEventListener('online', flushQueue); } catch (e) { }
+            setTimeout(flushQueue, 300);
+
+            function getOrCreateGlobalVisitorId() {
+                var storageKey = 'global_visitor_id';
+                var gvid = '';
+                try { gvid = localStorage.getItem(storageKey); } catch (e) { }
+                if (!gvid) {
+                    var randStr = (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function')
+                        ? crypto.randomUUID()
+                        : (Date.now().toString(36) + '-' + Math.random().toString(36).substring(2, 10) + '-' + Math.random().toString(36).substring(2, 10));
+                    gvid = 'gvid-' + randStr;
+                    try { localStorage.setItem(storageKey, gvid); } catch (e) { }
+                }
+                return gvid;
+            }
+
+            function getBaiduLvtRaw() {
+                try {
+                    return localStorage.getItem('Hm_lvt_c447bf587e485cdd1d8d1fa846e460bf') || '';
+                } catch (e) {
+                    return '';
+                }
+            }
+
+            var gvid = getOrCreateGlobalVisitorId();
+            var bdRaw = getBaiduLvtRaw();
+            var posthogToken = 'phc_nF89Du7x954MRygk3pGNsnJ3GUdTZGeTKXXdnmJmwi9M';
+
+            function getClientTimeInfo() {
+                var now = new Date();
+                var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+                var year = now.getFullYear();
+                var month = pad(now.getMonth() + 1);
+                var day = pad(now.getDate());
+                var hours = pad(now.getHours());
+                var minutes = pad(now.getMinutes());
+                var seconds = pad(now.getSeconds());
+                var localTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+
+                var offsetMin = -now.getTimezoneOffset();
+                var sign = offsetMin >= 0 ? '+' : '-';
+                var absOffset = Math.abs(offsetMin);
+                var offHours = pad(Math.floor(absOffset / 60));
+                var offMinutes = pad(absOffset % 60);
+                var offsetStr = 'UTC' + sign + offHours + ':' + offMinutes;
+
+                var timezone = '';
+                try {
+                    if (typeof Intl !== 'undefined' && Intl.DateTimeFormat) {
+                        timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+                    }
+                } catch (e) { }
+
+                return {
+                    localTime: localTime,
+                    timezone: timezone,
+                    timezoneOffset: offsetStr
+                };
+            }
+
+            function sendPostHogEvent(realIp) {
+                var timeInfo = getClientTimeInfo();
+                var properties = {
+                    global_visitor_id: gvid,
+                    real_ip: realIp || '',
+                    version: 'ad-v1.2.2.html',
+                    current_url: window.location.href,
+                    client_event_time: new Date().toISOString(),
+                    client_local_time: timeInfo.localTime,
+                    local_time: timeInfo.localTime,
+                    timezone: timeInfo.timezone || timeInfo.timezoneOffset,
+                    timezone_offset: timeInfo.timezoneOffset
+                };
+
+                if (timeInfo.timezone) {
+                    properties['$timezone'] = timeInfo.timezone;
+                }
+
+                if (realIp) {
+                    properties['$ip'] = realIp;
+                }
+
+                if (bdRaw) {
+                    properties.baidu_lvt_raw = bdRaw;
+                }
+
+                var payload = {
+                    token: posthogToken,
+                    event: '$pageview',
+                    distinct_id: gvid,
+                    properties: properties
+                };
+
+                enqueueEvent(payload);
+            }
+
+            function getRealIp(callback) {
+                try {
+                    fetch('https://myip.ipip.net/s')
+                        .then(function (res) { return res.text(); })
+                        .then(function (text) {
+                            var ip = text ? text.trim() : '';
+                            if (ip && ip.indexOf('.') !== -1 && ip !== '127.0.0.1') {
+                                callback(ip);
+                            } else {
+                                fallbackBaiduIp(callback);
+                            }
+                        })
+                        .catch(function () { fallbackBaiduIp(callback); });
+                } catch (e) {
+                    fallbackBaiduIp(callback);
+                }
+            }
+
+            function fallbackBaiduIp(callback) {
+                try {
+                    fetch('https://opendata.baidu.com/api.php?query=ip&co=&resource_id=6006&oe=utf8')
+                        .then(function (res) { return res.json(); })
+                        .then(function (data) {
+                            var ip = (data && data.data && data.data[0] && data.data[0].origip) ? data.data[0].origip.trim() : '';
+                            if (ip && ip !== '127.0.0.1') {
+                                callback(ip);
+                            } else {
+                                fallbackTencentIp(callback);
+                            }
+                        })
+                        .catch(function () { fallbackTencentIp(callback); });
+                } catch (e) {
+                    fallbackTencentIp(callback);
+                }
+            }
+
+            function fallbackTencentIp(callback) {
+                try {
+                    fetch('https://r.inews.qq.com/api/ip2location')
+                        .then(function (res) { return res.json(); })
+                        .then(function (data) {
+                            var ip = (data && (data.ip || data.client_ip)) ? (data.ip || data.client_ip).trim() : '';
+                            callback((ip && ip !== '127.0.0.1') ? ip : '');
+                        })
+                        .catch(function () { callback(''); });
+                } catch (e) {
+                    callback('');
+                }
+            }
+
+            getRealIp(function (realIp) {
+                sendPostHogEvent(realIp);
+            });
+        })();
+    </script>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --ACCENT-BLUE: #58a6ff;
+            --TEXT-MAIN: #c9d1d9;
+            --TEXT-MUTED: #8b949e;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            background: transparent;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 轮播外容器 */
+        .ad-slider {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 单个广告卡片样式 */
+        .ad-card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(88, 166, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border: 1px solid rgba(88, 166, 255, 0.25);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 16px;
+            cursor: pointer;
+            color: var(--TEXT-MAIN);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+
+            /* 默认隐藏，配合淡入淡出动画 */
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.95);
+            transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out, visibility 0.6s;
+            pointer-events: none;
+        }
+
+        /* 呼吸发光动画 */
+        @keyframes border-glow {
+            0% {
+                border-color: rgba(88, 166, 255, 0.2);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 4px rgba(88, 166, 255, 0.05);
+            }
+
+            100% {
+                border-color: rgba(88, 166, 255, 0.4);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 10px rgba(88, 166, 255, 0.2);
+            }
+        }
+
+        /* 激活（显示）的广告卡片 */
+        .ad-card.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+            pointer-events: auto;
+            animation: border-glow 3s infinite alternate ease-in-out;
+        }
+
+        /* 悬停发光 */
+        .ad-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--ACCENT-BLUE);
+            box-shadow: 0 8px 24px rgba(88, 166, 255, 0.25), 0 0 15px rgba(88, 166, 255, 0.15);
+            background: linear-gradient(135deg, rgba(88, 166, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%);
+            animation: none;
+        }
+
+        /* 赞助商标签 */
+        .sponsored-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 10px;
+            color: var(--ACCENT-BLUE);
+            background: rgba(88, 166, 255, 0.12);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(88, 166, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .ad-card:hover .sponsored-badge {
+            background: var(--ACCENT-BLUE);
+            color: #0d1117;
+            border-color: var(--ACCENT-BLUE);
+        }
+
+        /* 标题样式 */
+        .ad-title {
+            font-size: 21px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-top: 16px;
+            margin-bottom: auto;
+            letter-spacing: 1px;
+            line-height: 1.3;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* 底部信息 */
+        .ad-footer {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .ad-icon-wrapper {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(88, 166, 255, 0.1);
+            border: 1px solid rgba(88, 166, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ACCENT-BLUE);
+            font-size: 14px;
+            flex-shrink: 0;
+            transition: all 0.3s;
+        }
+
+        .ad-card:hover .ad-icon-wrapper {
+            background: var(--ACCENT-BLUE);
+            color: #0d1117;
+            border-color: var(--ACCENT-BLUE);
+            transform: scale(1.05) rotate(15deg);
+        }
+
+        .ad-desc {
+            font-size: 11px;
+            color: var(--TEXT-MUTED);
+            line-height: 1.4;
+            font-weight: 600;
+        }
+
+        .ad-card:hover .ad-desc {
+            color: #ffffff;
+        }
+
+        /* 底部指示器 (Dots) */
+        .slider-dots {
+            position: absolute;
+            bottom: 12px;
+            right: 16px;
+            display: flex;
+            gap: 6px;
+            z-index: 10;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dot.active {
+            background: var(--ACCENT-BLUE);
+            width: 14px;
+            /* 横向拉伸效果 */
+            border-radius: 3px;
+        }
+
+        /* 广告容器布局 */
+        .ad-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            padding-bottom: 2px;
+        }
+
+        .ad-header-title {
+            font-size: 11px;
+            color: var(--TEXT-MUTED);
+            margin-bottom: 10px;
+            padding-left: 2px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            user-select: none;
+            font-weight: 500;
+        }
+
+        .ad-badge {
+            font-size: 8px;
+            font-weight: 700;
+            padding: 1px 4px;
+            border-radius: 3px;
+            background: rgba(88, 166, 255, 0.12);
+            color: var(--ACCENT-BLUE);
+            border: 1px solid rgba(88, 166, 255, 0.25);
+            line-height: 1.1;
+            text-transform: uppercase;
+        }
+
+        .ad-slider {
+            position: relative;
+            width: 100%;
+            flex: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="ad-container">
+        <div class="ad-header-title">
+            <span class="ad-badge">AD</span>
+            <span>我是一个广告</span>
+        </div>
+        <div class="ad-slider">
+            <!-- 广告位 1 (插件开发) -->
+            <a href="https://ghostproxifier.com/docs-plugin-sdk.html" target="_blank" class="ad-card active">
+                <span class="sponsored-badge">开发者</span>
+                <h2 class="ad-title">插件开发<br><span style="color: var(--ACCENT-BLUE);">分享你的工具</span></h2>
+                <div class="ad-footer">
+                    <div class="ad-icon-wrapper">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <p class="ad-desc">从 SDK 示例开始<br>本地调试与商店上架</p>
+                </div>
+            </a>
+            <!-- 广告位 2 (QQ交流群) -->
+            <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=jLD98s%2BuMM87y8zEcP6tBhrYEyCh2H9gnwigYoYoNLIjY4XqRWTFT0cmx0QDF4hT&busi_data=eyJncm91cENvZGUiOiI5NDUxMzg0MDgiLCJ0b2tlbiI6Imh0cHlaWUViTURaNXoyNklyMGI1akVIcFI5Q3ZIVEFzYktZTEQyRkUwallRck1tQ0d4SFN1d3haNmVMR0lzL3kiLCJ1aW4iOiIxODcxODE0NzQ5In0%3D&data=iw28-MBoXAQ6Pc8ThvaD6YOIC2xcOqodEkkc4rW6JgVNZWNxS5Ka8rqbOiJFZov5cN1L6atFKQwdpoHkdb34fw&svctype=4&tempid=h5_group_info"
+                target="_blank" class="ad-card">
+                <span class="sponsored-badge">官方</span>
+                <h2 class="ad-title">QQ 交流群号<br><span style="color: var(--ACCENT-BLUE);">945138408</span></h2>
+                <div class="ad-footer">
+                    <div class="ad-icon-wrapper">
+                        <i class="fab fa-qq"></i>
+                    </div>
+                    <p class="ad-desc">最新版预览 · 提需求<br>欢迎加群交流与反馈</p>
+                </div>
+            </a>
+            <!-- 广告位 3 (搬瓦工) -->
+            <a href="https://bandwagonhost.com/aff.php?aff=83283" target="_blank" class="ad-card">
+                <span class="sponsored-badge">赞助商</span>
+                <h2 class="ad-title">搬瓦工 VPS<br><span style="color: var(--ACCENT-BLUE);">优质线路特惠</span></h2>
+                <div class="ad-footer">
+                    <div class="ad-icon-wrapper">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <p class="ad-desc">尊享 CN2 GIA 高速线路<br>稳定靠谱 · 限量版特惠通道</p>
+                </div>
+            </a>
+            <!-- 广告位 4 (DMIT) -->
+            <a href="https://www.dmit.io/aff.php?aff=26371" target="_blank" class="ad-card">
+                <span class="sponsored-badge">特惠</span>
+                <h2 class="ad-title">DMIT 选购通道<br><span style="color: var(--ACCENT-BLUE);">顶级海外云服务器</span></h2>
+                <div class="ad-footer">
+                    <div class="ad-icon-wrapper">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <p class="ad-desc">洛杉矶/香港/东京 Pro 系列线路<br>高速稳定 · 点击前往官网</p>
+                </div>
+            </a>
+            <!-- 指示器 -->
+            <div class="slider-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.ad-card');
+        const dots = document.querySelectorAll('.dot');
+
+        function showSlide(index) {
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+
+            currentSlide = index;
+
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            let nextIndex = (currentSlide + 1) % slides.length;
+            showSlide(nextIndex);
+        }
+
+        // 默认每隔 5 秒切换一次广告
+        setInterval(nextSlide, 5000);
+
+        // 拦截点击事件，向父级窗口发送消息以便通过外部默认浏览器打开链接
+        document.addEventListener('click', function (e) {
+            const anchor = e.target.closest('a');
+            if (anchor && anchor.href) {
+                e.preventDefault();
+                window.parent.postMessage({ type: 'openLink', url: anchor.href }, '*');
+            }
+        });
+    </script>
+</body>
+
+</html>
