@@ -214,13 +214,80 @@
 
 ## 运行截图
 
-<img src="process.png" width="880" alt="进程管理" />
+### 一、进程管理与工作空间编排 (Process Workspaces & Lifecycle)
+现代化应用资产卡片工作台，支持单应用独立管控与多进程卡片组（Card Group）一键批量生命周期治理。
 
-<img src="flow.png" width="880" alt="流量监控" />
+<p align="center">
+  <img src="process.png" width="880" alt="进程管理工作台" /><br>
+  <sub><b>图 1-1：进程管理工作台（资产卡片网格与状态指示）</b></sub>
+</p>
 
-<img src="safe_dns.png" width="880" alt="安全 DNS" />
+<p align="center">
+  <img src="process_menu.png" width="880" alt="单进程右键菜单" /><br>
+  <sub><b>图 1-2：单应用独立快捷菜单（独立节点 / DNS / 路由名单 / 强制终止）</b></sub>
+</p>
 
-<img src="upstream.png" width="880" alt="上游代理设置" />
+<p align="center">
+  <img src="card_group.png" width="880" alt="应用卡片组与批量生命周期管控" /><br>
+  <sub><b>图 1-3：业务工作空间与卡片组批量管控（批量启动 / 终止 / 解散）</b></sub>
+</p>
+
+### 二、专属路由名单与规则命中仿真器 (Smart Routing & Rule Simulator)
+为每个应用定制专属分流名单，支持与 AI Agent（Claude Code / Antigravity）联动，内置本地规则命中即时仿真测试器。
+
+<p align="center">
+  <img src="target_config.png" width="880" alt="配置新程序" /><br>
+  <sub><b>图 2-1：配置新目标程序（紧凑视图与执行路径参数）</b></sub>
+</p>
+
+<p align="center">
+  <img src="routing_rules.png" width="880" alt="专属路由名单展开" /><br>
+  <sub><b>图 2-2：单程序专属路由名单与 AI Agent 规则联动配置</b></sub>
+</p>
+
+<p align="center">
+  <img src="direct_routing_tester.png" width="880" alt="路由名单与规则命中测试器" /><br>
+  <sub><b>图 2-3：独立路由名单编辑与实时规则命中仿真测试器</b></sub>
+</p>
+
+### 三、网络安全与代理分流核心 (Network Security & Core Engine)
+底层零泄漏安全 DNS 防护、多协议上游节点链式分流与秒级健康探测、实时连接会话监控。
+
+<p align="center">
+  <img src="safe_dns.png" width="880" alt="安全 DNS" /><br>
+  <sub><b>图 3-1：零泄漏安全 DNS 隧道防护（严格模式与防泄漏策略）</b></sub>
+</p>
+
+<p align="center">
+  <img src="upstream.png" width="880" alt="上游代理设置" /><br>
+  <sub><b>图 3-2：上游节点调度与节点健康自动探测</b></sub>
+</p>
+
+<p align="center">
+  <img src="flow.png" width="880" alt="流量监控" /><br>
+  <sub><b>图 3-3：实时流量透视、吞吐趋势与活跃连接会话明细</b></sub>
+</p>
+
+### 四、插件生态与应用市场 (Modular Plugin Ecosystem)
+开放的沙箱化插件架构，支持一键安装管理本地插件与官方插件市场海量扩展（如事件查看器、端口转发、茄盒 Snagbox 等）。
+
+<p align="center">
+  <img src="plugins.png" width="880" alt="插件管理" /><br>
+  <sub><b>图 4-1：插件中心（本地已安装插件管理与状态监控）</b></sub>
+</p>
+
+<p align="center">
+  <img src="plugin_store.png" width="880" alt="插件商店" /><br>
+  <sub><b>图 4-2：官方插件商店（海量生态扩展与一键安装）</b></sub>
+</p>
+
+### 五、全局系统设置 (Global Settings & Engine Preferences)
+内核级行为微调，包含严格防泄漏模式、网络存活探测间隔与 Watchdog 守护配置。
+
+<p align="center">
+  <img src="settings.png" width="880" alt="全局系统设置" /><br>
+  <sub><b>图 5-1：全局设置（泄漏防护、网络存活探测与引擎参数）</b></sub>
+</p>
 
 ## FAQ
 
