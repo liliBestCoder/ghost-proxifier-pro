@@ -215,33 +215,69 @@
 ## 运行截图
 
 ### 进程管理
-<img src="process.png" width="880" alt="进程管理" />
+<p align="center">
+  <img src="process.png" width="880" alt="进程管理工作台" /><br>
+  <sub>进程管理工作台（资产卡片网格与状态指示）</sub>
+</p>
 
-<img src="process_menu.png" width="880" alt="单进程右键菜单" />
+<p align="center">
+  <img src="process_menu.png" width="880" alt="单应用快捷菜单" /><br>
+  <sub>单应用快捷菜单（独立上游 / DNS / 路由名单 / 强制终止）</sub>
+</p>
 
-<img src="card_group.png" width="880" alt="卡片组管理" />
+<p align="center">
+  <img src="card_group.png" width="880" alt="卡片组管控" /><br>
+  <sub>卡片组批量管控（批量启动 / 终止 / 解散）</sub>
+</p>
 
 ### 路由名单与规则
-<img src="target_config.png" width="880" alt="配置新程序" />
+<p align="center">
+  <img src="target_config.png" width="880" alt="配置新程序" /><br>
+  <sub>配置目标程序（程序路径与参数）</sub>
+</p>
 
-<img src="routing_rules.png" width="880" alt="专属路由名单与规则" />
+<p align="center">
+  <img src="routing_rules.png" width="880" alt="专属路由名单与规则" /><br>
+  <sub>单程序专属路由名单与 AI Agent 规则联动配置</sub>
+</p>
 
-<img src="direct_routing_tester.png" width="880" alt="路由名单与规则命中测试器" />
+<p align="center">
+  <img src="direct_routing_tester.png" width="880" alt="路由名单与规则命中测试器" /><br>
+  <sub>独立路由名单编辑与实时规则命中仿真测试器</sub>
+</p>
 
 ### DNS 与网络核心
-<img src="safe_dns.png" width="880" alt="安全 DNS" />
+<p align="center">
+  <img src="safe_dns.png" width="880" alt="安全 DNS" /><br>
+  <sub>零泄漏安全 DNS 隧道防护（严格模式与防泄漏策略）</sub>
+</p>
 
-<img src="upstream.png" width="880" alt="上游代理设置" />
+<p align="center">
+  <img src="upstream.png" width="880" alt="上游代理设置" /><br>
+  <sub>上游节点调度与节点健康自动探测</sub>
+</p>
 
-<img src="flow.png" width="880" alt="流量监控" />
+<p align="center">
+  <img src="flow.png" width="880" alt="流量监控" /><br>
+  <sub>实时流量透视、吞吐趋势与活跃连接会话明细</sub>
+</p>
 
 ### 插件中心
-<img src="plugins.png" width="880" alt="插件管理" />
+<p align="center">
+  <img src="plugins.png" width="880" alt="插件管理" /><br>
+  <sub>插件中心（本地已安装插件管理与状态监控）</sub>
+</p>
 
-<img src="plugin_store.png" width="880" alt="插件商店" />
+<p align="center">
+  <img src="plugin_store.png" width="880" alt="插件商店" /><br>
+  <sub>官方插件商店（海量生态扩展与一键安装）</sub>
+</p>
 
 ### 全局设置
-<img src="settings.png" width="880" alt="全局设置" />
+<p align="center">
+  <img src="settings.png" width="880" alt="全局设置" /><br>
+  <sub>全局设置（泄漏防护、网络存活探测与引擎参数）</sub>
+</p>
 
 ## FAQ
 
