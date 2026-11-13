@@ -230,7 +230,7 @@
   <sub>卡片组批量管控（批量启动 / 终止 / 解散）</sub>
 </p>
 
-### 路由名单与规则
+### 配置程序和路由名单管理
 <p align="center">
   <img src="target_config.png" width="880" alt="配置新程序" /><br>
   <sub>配置目标程序（程序路径与参数）</sub>
